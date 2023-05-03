@@ -1,6 +1,8 @@
 package com.ltizzi.ecommerce.model.user;
 
+import com.ltizzi.ecommerce.model.cart.CartEntity;
 import com.ltizzi.ecommerce.model.product.ProductEntity;
+import com.ltizzi.ecommerce.model.purchase.PurchaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -13,6 +15,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -76,6 +79,14 @@ public class UserEntity {
     @Column(name = "soft_delete")
     private Boolean soft_delete = Boolean.FALSE;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="cart_id")
+    private CartEntity cart;
+
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "purchase_id")
+    private ArrayList<PurchaseEntity> purchases = new ArrayList<>();
 
 //TODO: cart object with productDTO+quantity
 

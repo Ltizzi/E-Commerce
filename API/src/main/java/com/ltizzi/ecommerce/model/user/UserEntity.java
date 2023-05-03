@@ -1,5 +1,6 @@
 package com.ltizzi.ecommerce.model.user;
 
+import com.ltizzi.ecommerce.model.product.ProductEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -75,6 +76,8 @@ public class UserEntity {
     @Column(name = "soft_delete")
     private Boolean soft_delete = Boolean.FALSE;
 
+
+//TODO: cart object with productDTO+quantity
 
 
 

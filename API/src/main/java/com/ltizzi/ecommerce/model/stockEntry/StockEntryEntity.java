@@ -24,7 +24,7 @@ public class StockEntryEntity {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
-    private Long entrie_id;
+    private Long entry_id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
@@ -33,7 +33,7 @@ public class StockEntryEntity {
     @Column(nullable = false)
     private int cantidad;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name= "stock_id")
     private StockEntity stock;
 

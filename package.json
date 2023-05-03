@@ -1,0 +1,11 @@
+{
+  "name": "e-commerce",
+  "version": "0.1.0",
+  "description": "an e-commerce project for my portfolio.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ltizzi",
+  "license": "ISC"
+}

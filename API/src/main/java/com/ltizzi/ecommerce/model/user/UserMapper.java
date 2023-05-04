@@ -5,6 +5,8 @@ import com.ltizzi.ecommerce.model.cart.CartResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 /**
  * @author Leonardo Terlizzi
  */
@@ -25,8 +27,8 @@ public class UserMapper {
         userRes.setName(user.getName());
         userRes.setLastname(user.getLastname());
         userRes.setEmail(user.getEmail());
-        CartResponse cart = cartMapper.toCartResponse(user.getCart());
-        userRes.setCart(cart);
+        ArrayList<CartResponse> carts = cartMapper.toArrayCartResponse(user.getCarts());
+        userRes.setCarts(carts);
         userRes.setAvatar(user.getAvatar());
         userRes.setBirthday(user.getBirthday());
         //userRes.setPurchases(purchases);

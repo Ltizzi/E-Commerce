@@ -1,6 +1,6 @@
 package com.ltizzi.ecommerce.model.cart;
 
-import com.ltizzi.ecommerce.model.user.UserResponse;
+import com.ltizzi.ecommerce.model.product.ProductResponse;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,7 +16,7 @@ public class CartResponse {
 
     private Long id;
     private BigDecimal total;
-    private ArrayList<CartItem> items = new ArrayList<>();
+    private ProductResponse product;
   //  private UserResponse user;
     private Long user_id;
 }

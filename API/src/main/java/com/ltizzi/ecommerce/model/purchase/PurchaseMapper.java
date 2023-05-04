@@ -5,6 +5,8 @@ import com.ltizzi.ecommerce.model.shoporder.ShopOrderResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 /**
  * @author Leonardo Terlizzi
  */
@@ -18,11 +20,13 @@ public class PurchaseMapper {
     public PurchaseResponse toPurchaseResponse(PurchaseEntity purchase){
         PurchaseResponse purchaseRes = new PurchaseResponse();
         purchaseRes.setPurchase_id(purchase.getPurchase_id());
-        ShopOrderResponse order = orderMapper.toShopOrderResponse(purchase.getOrder());
-        purchaseRes.setOrder(order);
+        ArrayList<ShopOrderResponse> orders = orderMapper.toArrayShopOrderResponse(purchase.getOrders());
+        purchaseRes.setOrders(orders);
         purchaseRes.setUser_id(purchase.getUser().getUser_id());
         purchaseRes.setCreatedAt(purchase.getCreatedAt());
 
         return purchaseRes;
     }
+
+
 }

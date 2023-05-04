@@ -1,7 +1,8 @@
 package com.ltizzi.ecommerce.model.user;
 
+import com.ltizzi.ecommerce.model.cart.CartRequest;
 import com.ltizzi.ecommerce.model.cart.CartResponse;
-import com.ltizzi.ecommerce.model.purchase.PurchaseResponse;
+import com.ltizzi.ecommerce.model.purchase.PurchaseRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,9 +12,10 @@ import java.util.Date;
 /**
  * @author Leonardo Terlizzi
  */
+
 @Data
 @NoArgsConstructor
-public class UserResponse {
+public class UserRequest {
 
     private Long user_id;
     private String username;
@@ -22,7 +24,6 @@ public class UserResponse {
     private String email;
     private String avatar;
     private Date birthday;
-    private ArrayList<CartResponse> carts = new ArrayList<>();
-    private ArrayList<PurchaseResponse> purchases = new ArrayList<>();
-
+    private ArrayList<CartRequest> carts = new ArrayList<>();
+    private ArrayList<PurchaseRequest> purchases = new ArrayList<>();
 }

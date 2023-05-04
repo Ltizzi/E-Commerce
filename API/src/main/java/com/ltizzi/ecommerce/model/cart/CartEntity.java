@@ -1,5 +1,6 @@
 package com.ltizzi.ecommerce.model.cart;
 
+import com.ltizzi.ecommerce.model.product.ProductEntity;
 import com.ltizzi.ecommerce.model.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -25,7 +26,11 @@ public class CartEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cart_id;
     private BigDecimal total;
-    private ArrayList<CartItem> items = new ArrayList<>();
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "cart")
+    private ProductEntity product;
+
+    private int cantidad;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

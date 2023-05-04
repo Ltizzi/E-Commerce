@@ -30,6 +30,7 @@ public class StockMapper {
         stockRes.setProduct(product);
         stockRes.setCantidad(stock.getCantidad());
         ArrayList<StockEntryResponse> entries = entryMapper.toArrayStockEntryResponse(stock.getEntries());
+        stockRes.setEntries(entries);
         return stockRes;
     }
 }

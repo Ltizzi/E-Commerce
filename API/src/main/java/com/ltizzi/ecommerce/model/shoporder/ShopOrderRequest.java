@@ -5,19 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 /**
  * @author Leonardo Terlizzi
  */
 
 @Data @NoArgsConstructor
-public class ShopOrderResponse {
+public class ShopOrderRequest {
 
     private Long shop_order_id;
     private BigDecimal total;
     private CartResponse cart;
     private Long user_id;
     private String order_state;
-
 }

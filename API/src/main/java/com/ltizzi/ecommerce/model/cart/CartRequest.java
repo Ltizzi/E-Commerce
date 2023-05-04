@@ -1,6 +1,6 @@
 package com.ltizzi.ecommerce.model.cart;
 
-import com.ltizzi.ecommerce.model.product.ProductResponse;
+import com.ltizzi.ecommerce.model.product.ProductRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,10 +9,11 @@ import java.math.BigDecimal;
 /**
  * @author Leonardo Terlizzi
  */
-@Data @NoArgsConstructor
-public class CartItem {
+@Data
+@NoArgsConstructor
+public class CartRequest {
 
-    private int cantidad;
-    private ProductResponse product;
     private BigDecimal total;
+    private ProductRequest product;
+    private Long user_id;
 }

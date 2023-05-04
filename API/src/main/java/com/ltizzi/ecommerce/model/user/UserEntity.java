@@ -79,9 +79,8 @@ public class UserEntity {
     @Column(name = "soft_delete")
     private Boolean soft_delete = Boolean.FALSE;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="cart_id")
-    private CartEntity cart;
+    @OneToMany(fetch = FetchType.LAZY)
+    private ArrayList<CartEntity> carts = new ArrayList<>();
 
 
     @OneToMany(fetch = FetchType.LAZY)

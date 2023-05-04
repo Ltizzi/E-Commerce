@@ -1,6 +1,6 @@
 package com.ltizzi.ecommerce.model.shoporder;
 
-import com.ltizzi.ecommerce.model.cart.CartItem;
+import com.ltizzi.ecommerce.model.cart.CartEntity;
 import com.ltizzi.ecommerce.model.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -12,7 +12,6 @@ import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 
 /**
  * @author Leonardo Terlizzi
@@ -31,7 +30,9 @@ public class ShopOrderEntity {
     private Long shop_order_id;
 
     private BigDecimal total;
-    private ArrayList<CartItem> items = new ArrayList<>();
+
+    @OneToOne
+    private CartEntity cart;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

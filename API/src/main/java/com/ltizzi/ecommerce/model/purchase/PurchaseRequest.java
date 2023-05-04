@@ -1,11 +1,9 @@
 package com.ltizzi.ecommerce.model.purchase;
 
-import com.ltizzi.ecommerce.model.shoporder.ShopOrderResponse;
-import com.ltizzi.ecommerce.model.user.UserResponse;
+import com.ltizzi.ecommerce.model.shoporder.ShopOrderRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Array;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -14,11 +12,10 @@ import java.util.ArrayList;
  */
 
 @Data @NoArgsConstructor
-public class PurchaseResponse {
+public class PurchaseRequest {
 
     private Long purchase_id;
-    private ArrayList<ShopOrderResponse> orders = new ArrayList<>();
+    private ArrayList<ShopOrderRequest> orders = new ArrayList<>();
     private Long user_id;
     private Timestamp createdAt;
-
 }

@@ -11,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  * @author Leonardo Terlizzi
@@ -29,7 +30,7 @@ public class PurchaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="shop_order_id")
-    private ShopOrderEntity order;
+    private ArrayList<ShopOrderEntity> orders = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="user_id")

@@ -16,6 +16,7 @@ import org.hibernate.annotations.Where;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Leonardo Terlizzi
@@ -48,7 +49,7 @@ public class ProductEntity {
     private String about;
 
     @Column(name = "image_url")
-    private ArrayList<String> imageUrl = new ArrayList<>();
+    private List<String> imageUrl = new ArrayList<>();
 
     @NotNull(message = "Price can't be null")
     private BigDecimal price;

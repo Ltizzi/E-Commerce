@@ -1,7 +1,9 @@
 package com.ltizzi.ecommerce.service;
 
+import com.ltizzi.ecommerce.exception.InvalidUserException;
 import com.ltizzi.ecommerce.model.user.UserRequest;
 import com.ltizzi.ecommerce.model.user.UserResponse;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -12,13 +14,13 @@ import java.util.List;
 
 public interface UserService {
 
-    public List<UserRequest> getUsers();
+    public List<UserResponse> getUsers();
 
-    public UserRequest getUserById(Long id);
+    public UserResponse getUserById(Long id) throws HttpClientErrorException.NotFound;
 
-    public UserRequest saveUser(UserResponse user);
+    public UserResponse saveUser(UserRequest user) throws InvalidUserException;
 
-    public void deleteUserById(Long id);
+    public void deleteUserById(Long id) throws HttpClientErrorException.NotFound;
 
-    public UserRequest updateUser(Long id, UserResponse user);
+    public UserResponse updateUser(Long id, UserRequest user) throws HttpClientErrorException.NotFound, InvalidUserException;
 }

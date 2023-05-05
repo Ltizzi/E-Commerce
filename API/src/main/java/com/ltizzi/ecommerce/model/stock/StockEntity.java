@@ -6,6 +6,7 @@ import com.ltizzi.ecommerce.model.stockEntry.StockEntryEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -13,12 +14,13 @@ import org.hibernate.annotations.Where;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Leonardo Terlizzi
  */
 
-@Entity @Data @AllArgsConstructor
+@Entity @Data @NoArgsConstructor
 @Table(name = "stocks")
 @SQLDelete(sql = "UPDATE stocks SET soft_delete = true where stock_id=?")
 @Where(clause = "soft_delete=false")
@@ -37,7 +39,7 @@ public class StockEntity {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="entrie_id", nullable = false)
-    private ArrayList<StockEntryEntity> entries = new ArrayList<>();
+    private List<StockEntryEntity> entries = new ArrayList<>();
 
     @CreationTimestamp
     @Column(updatable = false)

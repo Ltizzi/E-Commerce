@@ -17,6 +17,7 @@ public class CartResponse {
     private Long id;
     private BigDecimal total;
     private ProductResponse product;
+    private int cantidad;
   //  private UserResponse user;
     private Long user_id;
 }

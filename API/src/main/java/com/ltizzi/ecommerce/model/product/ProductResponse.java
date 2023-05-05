@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Leonardo Terlizzi
@@ -18,7 +19,7 @@ public class ProductResponse {
     private String name;
     private String brand;
     private String about;
-    private ArrayList<String> imageUrl = new ArrayList<>();
+    private List<String> imageUrl = new ArrayList<>();
     private BigDecimal price;
     private ProductTypeResponse prod_type;
 

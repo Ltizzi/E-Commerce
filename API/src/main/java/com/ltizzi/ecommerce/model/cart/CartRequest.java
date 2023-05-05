@@ -13,7 +13,9 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class CartRequest {
 
+    private Long id;
     private BigDecimal total;
     private ProductRequest product;
+    private int cantidad;
     private Long user_id;
 }

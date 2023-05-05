@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Leonardo Terlizzi
@@ -24,6 +25,6 @@ public class UserRequest {
     private String email;
     private String avatar;
     private Date birthday;
-    private ArrayList<CartRequest> carts = new ArrayList<>();
-    private ArrayList<PurchaseRequest> purchases = new ArrayList<>();
+    private List<CartRequest> carts = new ArrayList<>();
+    private List<PurchaseRequest> purchases = new ArrayList<>();
 }

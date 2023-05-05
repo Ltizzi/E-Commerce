@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Leonardo Terlizzi
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class PurchaseRequest {
 
     private Long purchase_id;
-    private ArrayList<ShopOrderRequest> orders = new ArrayList<>();
+    private List<ShopOrderRequest> orders = new ArrayList<>();
     private Long user_id;
     private Timestamp createdAt;
 }

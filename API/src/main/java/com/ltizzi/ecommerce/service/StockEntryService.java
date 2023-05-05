@@ -1,7 +1,9 @@
 package com.ltizzi.ecommerce.service;
 
+import com.ltizzi.ecommerce.exception.InvalidStockEntryException;
 import com.ltizzi.ecommerce.model.stockEntry.StockEntryRequest;
 import com.ltizzi.ecommerce.model.stockEntry.StockEntryResponse;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -12,14 +14,14 @@ import java.util.List;
 
 public interface StockEntryService {
 
-    public List<StockEntryRequest> getStockEntries();
+    public List<StockEntryResponse> getStockEntries();
 
-    public StockEntryRequest getStockEntryById(Long id);
+    public StockEntryResponse getStockEntryById(Long id) throws HttpClientErrorException.NotFound;
 
-    public StockEntryRequest saveStockEntry(StockEntryResponse stockEntry);
+    public StockEntryResponse saveStockEntry(StockEntryRequest stockEntry) throws InvalidStockEntryException;
 
-    public void deleteStockEntryById(Long id);
+    public void deleteStockEntryById(Long id) throws HttpClientErrorException.NotFound;
 
-    public StockEntryRequest updateStockEntry(Long id, StockEntryResponse stockEntry);
+    public StockEntryResponse updateStockEntry(Long id, StockEntryRequest stockEntry) throws HttpClientErrorException.NotFound, InvalidStockEntryException;
 
 }

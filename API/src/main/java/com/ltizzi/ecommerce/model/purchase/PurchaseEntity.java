@@ -30,7 +30,7 @@ public class PurchaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long purchase_id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="shop_order_id")
     private List<ShopOrderEntity> orders = new ArrayList<>();
 

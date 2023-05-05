@@ -55,7 +55,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public List<PurchaseResponse> getPurchaseByUserId(Long user_id) throws HttpClientErrorException.NotFound {
-        return purchMapper.toArrayPurchaseResponse(purchRepo.findByUserId(user_id));
+        return purchMapper.toArrayPurchaseResponse(purchRepo.findByUser(userRepo.findById(user_id).orElseThrow()));
     }
 
     @Override

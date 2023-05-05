@@ -30,7 +30,7 @@ public class CartEntity {
     private Long cart_id;
     private BigDecimal total;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "cart")
+    @OneToOne(fetch = FetchType.LAZY)
     private ProductEntity product;
 
     private int cantidad;

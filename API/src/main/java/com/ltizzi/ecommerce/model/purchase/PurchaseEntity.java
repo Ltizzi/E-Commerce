@@ -10,8 +10,10 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Leonardo Terlizzi
@@ -30,7 +32,9 @@ public class PurchaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="shop_order_id")
-    private ArrayList<ShopOrderEntity> orders = new ArrayList<>();
+    private List<ShopOrderEntity> orders = new ArrayList<>();
+
+    private BigDecimal total_income;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="user_id")

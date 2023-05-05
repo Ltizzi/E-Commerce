@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Leonardo Terlizzi
@@ -16,5 +17,5 @@ public class StockRequest {
     private Long stock_id;
     private ProductRequest product;
     private int cantidad;
-    private ArrayList<StockEntryRequest> entries = new ArrayList<>();
+    private List<StockEntryRequest> entries = new ArrayList<>();
 }

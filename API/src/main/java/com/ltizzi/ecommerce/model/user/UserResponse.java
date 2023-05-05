@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Leonardo Terlizzi
@@ -22,7 +23,7 @@ public class UserResponse {
     private String email;
     private String avatar;
     private Date birthday;
-    private ArrayList<CartResponse> carts = new ArrayList<>();
-    private ArrayList<PurchaseResponse> purchases = new ArrayList<>();
+    private List<CartResponse> carts = new ArrayList<>();
+    private List<PurchaseResponse> purchases = new ArrayList<>();
 
 }

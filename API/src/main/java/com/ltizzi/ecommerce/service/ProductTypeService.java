@@ -1,9 +1,13 @@
 package com.ltizzi.ecommerce.service;
 
-import com.ltizzi.ecommerce.model.product.ProductResponse;
+
+import com.ltizzi.ecommerce.exception.InvalidProductTypeException;
 import com.ltizzi.ecommerce.model.productType.ProductTypeRequest;
+import com.ltizzi.ecommerce.model.productType.ProductTypeResponse;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+
 
 /**
  * @author Leonardo Terlizzi
@@ -12,13 +16,13 @@ import java.util.List;
 
 public interface ProductTypeService {
 
-    public List<ProductTypeRequest> getProductTypes();
+    public List<ProductTypeResponse> getProductTypes();
 
-    public ProductTypeRequest getProductTypeById(Long id);
+    public ProductTypeResponse getProductTypeById(Long id) throws HttpClientErrorException.NotFound;
 
-    public ProductTypeRequest saveProductType(ProductResponse product);
+    public ProductTypeResponse saveProductType(ProductTypeRequest product) throws InvalidProductTypeException;
 
-    public void deleteProductTypeById(Long id);
+    public void deleteProductTypeById(Long id) throws HttpClientErrorException.NotFound;
 
-    public ProductTypeRequest updateProductType(Long product_id, ProductResponse product);
+    public ProductTypeResponse updateProductType(Long product_id, ProductTypeRequest product) throws HttpClientErrorException.NotFound, InvalidProductTypeException;
 }

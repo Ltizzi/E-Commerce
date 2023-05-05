@@ -1,7 +1,9 @@
 package com.ltizzi.ecommerce.service;
 
+import com.ltizzi.ecommerce.exception.InvalidPurchaseException;
 import com.ltizzi.ecommerce.model.purchase.PurchaseRequest;
 import com.ltizzi.ecommerce.model.purchase.PurchaseResponse;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -12,15 +14,15 @@ import java.util.List;
 
 public interface PurchaseService {
 
-    public List<PurchaseRequest> getPurchases();
+    public List<PurchaseResponse> getPurchases();
 
-    public PurchaseRequest getPurchaseById(Long id);
+    public PurchaseResponse getPurchaseById(Long id) throws HttpClientErrorException.NotFound;
 
-    public List<PurchaseRequest> getPurchaseByUserId(Long user_id);
+    public List<PurchaseResponse> getPurchaseByUserId(Long user_id) throws HttpClientErrorException.NotFound;
 
-    public PurchaseRequest savePurchase(PurchaseResponse purchase);
+    public PurchaseResponse savePurchase(PurchaseRequest purchase) throws InvalidPurchaseException;
 
-    public void deletePurchaseById(Long id);
+    public void deletePurchaseById(Long id) throws HttpClientErrorException.NotFound;
 
-    public PurchaseRequest updatePurchase(Long id, PurchaseResponse purchase);
+    public PurchaseResponse updatePurchase(Long id, PurchaseRequest purchase) throws HttpClientErrorException.NotFound, InvalidPurchaseException;
 }

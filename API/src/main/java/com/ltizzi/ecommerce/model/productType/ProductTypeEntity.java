@@ -38,7 +38,7 @@ public class ProductTypeEntity {
 
     private Boolean soft_delete = Boolean.FALSE;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name= "product_id", nullable = false)
-    private ProductEntity product;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name= "product_id", nullable = false)
+//    private ProductEntity product;
 }

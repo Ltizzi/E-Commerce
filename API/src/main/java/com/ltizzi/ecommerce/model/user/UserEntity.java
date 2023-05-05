@@ -17,6 +17,7 @@ import org.hibernate.annotations.Where;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Leonardo Terlizzi
@@ -80,12 +81,12 @@ public class UserEntity {
     private Boolean soft_delete = Boolean.FALSE;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private ArrayList<CartEntity> carts = new ArrayList<>();
+    private List<CartEntity> carts = new ArrayList<>();
 
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "purchase_id")
-    private ArrayList<PurchaseEntity> purchases = new ArrayList<>();
+    private List<PurchaseEntity> purchases = new ArrayList<>();
 
 //TODO: cart object with productDTO+quantity
 

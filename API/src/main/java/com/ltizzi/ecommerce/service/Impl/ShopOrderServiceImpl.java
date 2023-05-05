@@ -1,8 +1,10 @@
 package com.ltizzi.ecommerce.service.Impl;
 
 import com.ltizzi.ecommerce.exception.InvalidPurchaseException;
+import com.ltizzi.ecommerce.exception.InvalidShopOrderException;
 import com.ltizzi.ecommerce.model.cart.CartEntity;
 import com.ltizzi.ecommerce.model.cart.CartMapper;
+import com.ltizzi.ecommerce.model.cart.CartRequest;
 import com.ltizzi.ecommerce.model.cart.CartResponse;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderEntity;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderMapper;
@@ -42,8 +44,6 @@ public class ShopOrderServiceImpl implements ShopOrderService {
     private CartMapper cartMapper;
 
 
-
-
     @Override
     public List<ShopOrderResponse> getShopOrders() throws HttpClientErrorException.NotFound {
         return orderMapper.toArrayShopOrderResponse(orderRepo.findAll());
@@ -61,8 +61,8 @@ public class ShopOrderServiceImpl implements ShopOrderService {
     }
 
     @Override
-    public ShopOrderResponse saveShopOrder(CartResponse cartRes) throws InvalidPurchaseException {
-        CartEntity cart = cartRepo.findById(cartRes.getId()).orElseThrow();
+    public ShopOrderResponse saveShopOrder(CartRequest cartReq) throws InvalidShopOrderException {
+        CartEntity cart = cartRepo.findById(cartReq.getId()).orElseThrow();
         ShopOrderEntity order = new ShopOrderEntity();
         order.setCart(cart);
         order.setTotal(cart.getTotal());
@@ -78,7 +78,7 @@ public class ShopOrderServiceImpl implements ShopOrderService {
     }
 
     @Override
-    public ShopOrderResponse updateShopOrder(Long id, ShopOrderRequest orderReq) throws HttpClientErrorException.NotFound, InvalidPurchaseException {
+    public ShopOrderResponse updateShopOrder(Long id, ShopOrderRequest orderReq) throws HttpClientErrorException.NotFound, InvalidShopOrderException {
         ShopOrderEntity order = orderRepo.findById(id).orElseThrow();
         order.setOrder_state(orderReq.getOrder_state());
         order.setTotal(orderReq.getTotal());

@@ -1,6 +1,8 @@
 package com.ltizzi.ecommerce.service;
 
 import com.ltizzi.ecommerce.exception.InvalidPurchaseException;
+import com.ltizzi.ecommerce.exception.InvalidShopOrderException;
+import com.ltizzi.ecommerce.model.cart.CartRequest;
 import com.ltizzi.ecommerce.model.cart.CartResponse;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderRequest;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderResponse;
@@ -21,9 +23,9 @@ public interface ShopOrderService {
 
     public ShopOrderResponse getShopOrderById(Long id) throws HttpClientErrorException.NotFound;
 
-    public ShopOrderResponse saveShopOrder(CartResponse cartRes) throws InvalidPurchaseException;
+    public ShopOrderResponse saveShopOrder(CartRequest cartRequest) throws InvalidShopOrderException;
 
     public void deleteShopOrderById(Long id) throws HttpClientErrorException.NotFound;
 
-    public ShopOrderResponse updateShopOrder(Long id, ShopOrderRequest shopOrder) throws HttpClientErrorException.NotFound, InvalidPurchaseException;
+    public ShopOrderResponse updateShopOrder(Long id, ShopOrderRequest shopOrder) throws HttpClientErrorException.NotFound, InvalidShopOrderException;
 }

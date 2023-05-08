@@ -48,4 +48,7 @@ public class ShopOrderEntity {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
+    @Column(name = "soft_delete")
+    private Boolean soft_delete = Boolean.FALSE;
+
 }

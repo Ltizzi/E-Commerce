@@ -1,6 +1,7 @@
 package com.ltizzi.ecommerce.controller;
 
 import com.ltizzi.ecommerce.exception.InvalidCartException;
+import com.ltizzi.ecommerce.exception.NotFoundException;
 import com.ltizzi.ecommerce.model.cart.CartRequest;
 import com.ltizzi.ecommerce.model.cart.CartResponse;
 import com.ltizzi.ecommerce.service.CartService;
@@ -36,7 +37,7 @@ public class CartController {
 
     @PostMapping("/new")
     @ResponseBody
-    public ResponseEntity<CartResponse> saveCart(@RequestBody CartRequest cartRequest) throws InvalidCartException {
+    public ResponseEntity<CartResponse> saveCart(@RequestBody CartRequest cartRequest) throws InvalidCartException, NotFoundException {
         return new ResponseEntity<>(cartServ.saveCart(cartRequest), HttpStatus.OK);
     }
 

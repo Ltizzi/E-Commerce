@@ -1,6 +1,7 @@
 package com.ltizzi.ecommerce.service.Impl;
 
 import com.ltizzi.ecommerce.exception.InvalidStockEntryException;
+import com.ltizzi.ecommerce.exception.NotFoundException;
 import com.ltizzi.ecommerce.model.product.ProductEntity;
 import com.ltizzi.ecommerce.model.product.ProductMapper;
 import com.ltizzi.ecommerce.model.stock.StockEntity;
@@ -44,7 +45,7 @@ public class StockEntryServiceImpl implements StockEntryService {
     }
 
     @Override
-    public StockEntryResponse getStockEntryById(Long id) throws HttpClientErrorException.NotFound {
+    public StockEntryResponse getStockEntryById(Long id) throws NotFoundException {
         return entryMapper.toStockEntryResponse(entryRepo.findById(id).orElseThrow());
     }
 
@@ -64,7 +65,7 @@ public class StockEntryServiceImpl implements StockEntryService {
     }
 
     @Override
-    public void deleteStockEntryById(Long id) throws HttpClientErrorException.NotFound {
+    public void deleteStockEntryById(Long id) throws NotFoundException {
         StockEntryEntity entry = entryRepo.findById(id).orElseThrow();
 
         //remueve cantidad del stock si se borra la entrada
@@ -76,7 +77,7 @@ public class StockEntryServiceImpl implements StockEntryService {
     }
 
     @Override
-    public StockEntryResponse updateStockEntry(Long id, StockEntryRequest stockEntry) throws HttpClientErrorException.NotFound, InvalidStockEntryException {
+    public StockEntryResponse updateStockEntry(Long id, StockEntryRequest stockEntry) throws NotFoundException, InvalidStockEntryException {
         StockEntryEntity oldEntry = entryRepo.findById(id).orElseThrow();
         int oldQuantity = oldEntry.getCantidad();
         int newQuantity = stockEntry.getCantidad();
@@ -87,7 +88,7 @@ public class StockEntryServiceImpl implements StockEntryService {
         List<StockEntryEntity> entries = stock.getEntries();
 
         entries.add(entryMapper.toStockEntryEntity(stockEntry));
-        
+
         stock.setEntries(entries);
 
         stockRepo.save(stock);

@@ -1,6 +1,7 @@
 package com.ltizzi.ecommerce.controller;
 
 import com.ltizzi.ecommerce.exception.InvalidStockEntryException;
+import com.ltizzi.ecommerce.exception.NotFoundException;
 import com.ltizzi.ecommerce.model.stockEntry.StockEntryRequest;
 import com.ltizzi.ecommerce.model.stockEntry.StockEntryResponse;
 import com.ltizzi.ecommerce.service.StockEntryService;
@@ -29,7 +30,7 @@ public class StockEntryController {
 
     @GetMapping("/byId")
     @ResponseBody
-    public ResponseEntity<StockEntryResponse> getEntryById(@RequestParam Long entry_id) {
+    public ResponseEntity<StockEntryResponse> getEntryById(@RequestParam Long entry_id) throws NotFoundException {
         return new ResponseEntity<>(entryServ.getStockEntryById(entry_id), HttpStatus.OK);
     }
 
@@ -40,14 +41,14 @@ public class StockEntryController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteEntryById(@RequestParam Long entry_id) {
+    public ResponseEntity<Void> deleteEntryById(@RequestParam Long entry_id) throws NotFoundException {
         entryServ.deleteStockEntryById(entry_id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PatchMapping("/update")
     @ResponseBody
-    public ResponseEntity<StockEntryResponse> updateEntry(@RequestParam Long entry_id, @RequestBody StockEntryRequest entryRequest) throws InvalidStockEntryException {
+    public ResponseEntity<StockEntryResponse> updateEntry(@RequestParam Long entry_id, @RequestBody StockEntryRequest entryRequest) throws InvalidStockEntryException, NotFoundException {
         return new ResponseEntity<>(entryServ.updateStockEntry(entry_id, entryRequest), HttpStatus.OK);
     }
 }

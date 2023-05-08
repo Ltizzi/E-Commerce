@@ -1,6 +1,7 @@
 package com.ltizzi.ecommerce.service;
 
 import com.ltizzi.ecommerce.exception.InvalidCartException;
+import com.ltizzi.ecommerce.exception.NotFoundException;
 import com.ltizzi.ecommerce.model.cart.CartEntity;
 import com.ltizzi.ecommerce.model.cart.CartRequest;
 import com.ltizzi.ecommerce.model.cart.CartResponse;
@@ -22,15 +23,13 @@ public interface CartService {
 
     public CartResponse getCartById(Long id) throws HttpClientErrorException.NotFound;
 
-    public CartResponse saveCart(CartRequest cart) throws InvalidCartException;
+    public CartResponse saveCart(CartRequest cart) throws InvalidCartException, NotFoundException;
 
     public void deleteCart(Long id) throws HttpClientErrorException.NotFound;
 
-    public CartResponse updateCart(Long id, CartRequest cart) throws  InvalidCartException;
+    public CartResponse updateCart(Long id, CartRequest cart) throws InvalidCartException;
 
     public List<CartResponse> findCartsByUserId(Long user_id) throws HttpClientErrorException.NotFound;
 
 
-
-
-    }
+}

@@ -31,7 +31,7 @@ public class PurchaseEntity {
     private Long purchase_id;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shop_order_id")
+//    @JoinColumn(name = "shop_order_id")
     private List<ShopOrderEntity> orders = new ArrayList<>();
 
     private BigDecimal total_income;

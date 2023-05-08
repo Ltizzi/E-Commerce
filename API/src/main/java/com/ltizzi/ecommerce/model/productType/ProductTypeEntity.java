@@ -16,17 +16,17 @@ import java.sql.Timestamp;
  */
 @Data
 @Entity
-@Table(name="tipo_producto")
-@SQLDelete(sql = "UPDATE tipo_producto SET soft_delete = true where prod_type_id=?")
-@Where(clause= "soft_delete=false")
+@Table(name = "product_types")
+@SQLDelete(sql = "UPDATE product_types SET soft_delete = true where prod_type_id=?")
+@Where(clause = "soft_delete=false")
 public class ProductTypeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long prod_type_id;
 
     @NotNull(message = "Product type name can't be null")
-    @Column(name="name", length = 20, nullable = false)
+    @Column(name = "name", length = 20, nullable = false)
     private String name;
 
     @CreationTimestamp

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class StockEntryResponse {
 
     private Long entry_id;
-    private ProductResponse product;
+    //private ProductResponse product;
     private int cantidad;
     private StockResponse stock;
 }

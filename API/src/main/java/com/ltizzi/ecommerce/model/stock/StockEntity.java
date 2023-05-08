@@ -20,25 +20,27 @@ import java.util.List;
  * @author Leonardo Terlizzi
  */
 
-@Entity @Data @NoArgsConstructor
+@Entity
+@Data
+@NoArgsConstructor
 @Table(name = "stocks")
 @SQLDelete(sql = "UPDATE stocks SET soft_delete = true where stock_id=?")
 @Where(clause = "soft_delete=false")
 public class StockEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long stock_id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="product_id", nullable = false)
+    @JoinColumn(name = "product_id", nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ProductEntity product;
 
     private int cantidad;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name="entrie_id", nullable = false)
+//    @JoinColumn(name = "entries", nullable = false)
     private List<StockEntryEntity> entries = new ArrayList<>();
 
     @CreationTimestamp
@@ -48,6 +50,6 @@ public class StockEntity {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    @Column(name="soft_delete")
+    @Column(name = "soft_delete")
     private Boolean soft_delete = Boolean.FALSE;
 }

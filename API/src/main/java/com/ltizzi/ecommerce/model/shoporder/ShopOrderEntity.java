@@ -17,16 +17,17 @@ import java.sql.Timestamp;
  * @author Leonardo Terlizzi
  */
 
-@Data @NoArgsConstructor
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "shop_orders")
-@SQLDelete(sql="UPDATE shop_orders SET soft_delete = true where shop_order_id=?")
+@SQLDelete(sql = "UPDATE shop_orders SET soft_delete = true where shop_order_id=?")
 @Where(clause = "soft_delete = false")
 
 public class ShopOrderEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shop_order_id;
 
     private BigDecimal total;

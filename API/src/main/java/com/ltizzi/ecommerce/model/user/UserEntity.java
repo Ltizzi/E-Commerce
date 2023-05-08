@@ -23,48 +23,51 @@ import java.util.List;
  * @author Leonardo Terlizzi
  */
 
-@Entity @AllArgsConstructor @NoArgsConstructor @Data
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Table(name = "users")
-@SQLDelete(sql ="UPDATE users SET soft_delete = true where user_id=?")
-@Where(clause="soft_delete=false")
+@SQLDelete(sql = "UPDATE users SET soft_delete = true where user_id=?")
+@Where(clause = "soft_delete=false")
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_id;
 
     @NotNull(message = "Username can't be null")
     @NotBlank(message = "username can't be blank")
     @NotEmpty(message = "Username can't be empty")
-    @Column(name ="username", nullable = false, length = 12)
+    @Column(name = "username", nullable = false, length = 12)
     private String username;
 
     @NotNull(message = "Name can't be null")
     @NotBlank(message = "Name can't be blank")
     @NotEmpty(message = "Name can't be empty")
-    @Column(name="name", nullable = false, length = 15)
+    @Column(name = "name", nullable = false, length = 15)
     private String name;
 
     @NotNull(message = "Lastname can't be null")
     @NotBlank(message = "Lastname can't be blank")
     @NotEmpty(message = "Lastname can't be empty")
-    @Column(name="lastname", nullable = false, length = 15)
+    @Column(name = "lastname", nullable = false, length = 15)
     private String lastname;
 
     @NotNull(message = "Email can't be null")
     @NotBlank(message = "Email can't be blank")
     @NotEmpty(message = "Email can't be empty")
     @Email(message = "Please use a valid email")
-    @Column(name="email", nullable = false, length = 25)
+    @Column(name = "email", nullable = false, length = 25)
     private String email;
 
     @NotNull(message = "googleId can't be null")
     @NotBlank(message = "googleId can't be blank")
     @NotEmpty(message = "googleId can't be empty")
-    @Column(name="googleId", nullable = false)
+    @Column(name = "googleId", nullable = false)
     private Long googleId;
 
-    @Column(name="avatar", nullable = true)
+    @Column(name = "avatar", nullable = true)
     private String avatar;
 
     @Temporal(TemporalType.DATE)
@@ -89,7 +92,6 @@ public class UserEntity {
     private List<PurchaseEntity> purchases = new ArrayList<>();
 
 //TODO: cart object with productDTO+quantity
-
 
 
 }

@@ -24,8 +24,7 @@ public class ProductMapper {
     private ProductRepository prodRepo;
 
 
-
-   public ProductResponse toProductResponse(ProductEntity prod) {
+    public ProductResponse toProductResponse(ProductEntity prod) {
         ProductResponse prodRes = new ProductResponse();
         prodRes.setId(prod.getProduct_id());
         prodRes.setName(prod.getName());
@@ -38,24 +37,28 @@ public class ProductMapper {
         return prodRes;
     }
 
-    public ProductEntity toProductEntity(ProductRequest prodReq)  {
-       ProductEntity product = prodRepo.findById(prodReq.getId()).orElse(new ProductEntity());
-       product.setProduct_id(prodReq.getId());
-       product.setName(prodReq.getName());
-       product.setBrand(prodReq.getBrand());
-       product.setPrice(prodReq.getPrice());
-       product.setAbout(prodReq.getAbout());
-       product.setImageUrl(prodReq.getImageUrl());
-       product.setProduct_type(prodTypeMapper.toProductTypeEntity(prodReq.getProd_type()));
+    public ProductEntity toProductEntity(ProductRequest prodReq) {
+        ProductEntity product = new ProductEntity();
+        if (prodReq.getId() != null) {
+            product = prodRepo.findById(prodReq.getId()).orElse(null);
+            assert product != null;
+            product.setProduct_id(prodReq.getId());
+        }
+        product.setName(prodReq.getName());
+        product.setBrand(prodReq.getBrand());
+        product.setPrice(prodReq.getPrice());
+        product.setAbout(prodReq.getAbout());
+        product.setImageUrl(prodReq.getImageUrl());
+        product.setProduct_type(prodTypeMapper.toProductTypeEntity(prodReq.getProd_type()));
 
-       return product;
+        return product;
     }
 
-    public List<ProductResponse> toArrayProductResponse(List<ProductEntity> products){
-       List<ProductResponse> prodsRes = new ArrayList<>();
-       products.forEach(prod ->{
-           prodsRes.add(toProductResponse(prod));
-       });
-       return prodsRes;
+    public List<ProductResponse> toArrayProductResponse(List<ProductEntity> products) {
+        List<ProductResponse> prodsRes = new ArrayList<>();
+        products.forEach(prod -> {
+            prodsRes.add(toProductResponse(prod));
+        });
+        return prodsRes;
     }
 }

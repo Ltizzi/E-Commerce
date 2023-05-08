@@ -1,4 +1,5 @@
 package com.ltizzi.ecommerce.model.productType;
+
 import com.ltizzi.ecommerce.repository.ProductTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,15 +25,19 @@ public class ProductTypeMapper {
     }
 
     public ProductTypeEntity toProductTypeEntity(ProductTypeRequest typeReq) {
-        ProductTypeEntity type = typeRepo.findById(typeReq.getId()).orElse(new ProductTypeEntity());
-        type.setProd_type_id(typeReq.getId());
+        ProductTypeEntity type = new ProductTypeEntity();
+        if (typeReq.getId() != null) {
+            type = typeRepo.findById(typeReq.getId()).orElse(null);
+            assert type != null;
+            type.setProd_type_id(typeReq.getId());
+        }
         type.setName(typeReq.getName());
         return type;
     }
 
     public List<ProductTypeResponse> toArrayProductTypeResponse(List<ProductTypeEntity> tipos) {
         List<ProductTypeResponse> tiposRes = new ArrayList<>();
-        tipos.forEach(tipo->{
+        tipos.forEach(tipo -> {
             tiposRes.add(toProductTypeResponse(tipo));
         });
         return tiposRes;
@@ -40,7 +45,7 @@ public class ProductTypeMapper {
 
     public List<ProductTypeEntity> toArrayProductTypeEntity(List<ProductTypeRequest> tiposReq) {
         List<ProductTypeEntity> tipos = new ArrayList<>();
-        tiposReq.forEach(req->{
+        tiposReq.forEach(req -> {
             tipos.add(toProductTypeEntity(req));
         });
         return tipos;

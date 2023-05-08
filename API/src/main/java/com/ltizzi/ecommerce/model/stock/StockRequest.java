@@ -11,7 +11,8 @@ import java.util.List;
 /**
  * @author Leonardo Terlizzi
  */
-@Data @NoArgsConstructor
+@Data
+@NoArgsConstructor
 public class StockRequest {
 
     private Long stock_id;

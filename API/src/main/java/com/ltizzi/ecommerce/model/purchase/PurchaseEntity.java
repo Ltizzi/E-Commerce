@@ -21,23 +21,23 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name="purchases")
-@SQLDelete(sql="UPDATE purchases SET soft_delete purchase_id=?")
+@Table(name = "purchases")
+@SQLDelete(sql = "UPDATE purchases SET soft_delete purchase_id=?")
 @Where(clause = "soft_delete = false")
 public class PurchaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long purchase_id;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name="shop_order_id")
+    @JoinColumn(name = "shop_order_id")
     private List<ShopOrderEntity> orders = new ArrayList<>();
 
     private BigDecimal total_income;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="user_id")
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @CreationTimestamp

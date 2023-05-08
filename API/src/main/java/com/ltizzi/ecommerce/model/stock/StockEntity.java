@@ -39,7 +39,7 @@ public class StockEntity {
 
     private int cantidad;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "stock", cascade = CascadeType.PERSIST, orphanRemoval = true)
 //    @JoinColumn(name = "entries", nullable = false)
     private List<StockEntryEntity> entries = new ArrayList<>();
 

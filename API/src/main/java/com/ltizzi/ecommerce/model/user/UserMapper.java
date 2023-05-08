@@ -44,7 +44,10 @@ public class UserMapper {
     }
 
     public UserEntity toUserEntity(UserRequest userReq) throws HttpClientErrorException.NotFound {
-        UserEntity user = userRepo.findById(userReq.getUser_id()).orElseThrow();
+        UserEntity user = new UserEntity();
+        if (userReq.getUser_id() != null) {
+            user = userRepo.findById(userReq.getUser_id()).orElseThrow();
+        }
         user.setAvatar(userReq.getAvatar());
         user.setBirthday(userReq.getBirthday());
         user.setCarts(cartMapper.toArrayCartEntity(userReq.getCarts()));
@@ -59,7 +62,7 @@ public class UserMapper {
 
     public List<UserResponse> toArrayUserResponse(List<UserEntity> users) {
         List<UserResponse> usersReq = new ArrayList<>();
-        users.forEach(user->{
+        users.forEach(user -> {
             usersReq.add(toUserResponse(user));
         });
         return usersReq;

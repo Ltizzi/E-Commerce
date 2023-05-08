@@ -1,12 +1,15 @@
 package com.ltizzi.ecommerce.service.Impl;
 
+import com.ltizzi.ecommerce.exception.NotFoundException;
 import com.ltizzi.ecommerce.model.cart.CartEntity;
 import com.ltizzi.ecommerce.model.cart.CartMapper;
 import com.ltizzi.ecommerce.model.cart.CartRequest;
 import com.ltizzi.ecommerce.model.cart.CartResponse;
+import com.ltizzi.ecommerce.model.product.ProductEntity;
 import com.ltizzi.ecommerce.model.product.ProductResponse;
 import com.ltizzi.ecommerce.model.user.UserEntity;
 import com.ltizzi.ecommerce.repository.CartRepository;
+import com.ltizzi.ecommerce.repository.ProductRepository;
 import com.ltizzi.ecommerce.repository.UserRepository;
 import com.ltizzi.ecommerce.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,9 @@ public class CartServiceImpl implements CartService {
     private CartRepository cartRepo;
 
     @Autowired
+    private ProductRepository prodRepo;
+
+    @Autowired
     private CartMapper cartMapper;
 
     @Autowired
@@ -53,8 +59,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartResponse saveCart(CartRequest cart) {
-        BigDecimal total = cart.getProduct().getPrice().multiply(BigDecimal.valueOf(cart.getCantidad()));
+    public CartResponse saveCart(CartRequest cart) throws NotFoundException {
+        ProductEntity prod = prodRepo.findById(cart.getProduct().getId()).orElseThrow();
+        BigDecimal total = prod.getPrice().multiply(BigDecimal.valueOf(cart.getCantidad()));
         cart.setTotal(total);
         CartEntity newCart = cartRepo.save(cartMapper.toCartEntity(cart));
         return cartMapper.toCartResponse(newCart);

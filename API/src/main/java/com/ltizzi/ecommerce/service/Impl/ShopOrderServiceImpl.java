@@ -2,6 +2,7 @@ package com.ltizzi.ecommerce.service.Impl;
 
 import com.ltizzi.ecommerce.exception.InvalidPurchaseException;
 import com.ltizzi.ecommerce.exception.InvalidShopOrderException;
+import com.ltizzi.ecommerce.exception.NotFoundException;
 import com.ltizzi.ecommerce.model.cart.CartEntity;
 import com.ltizzi.ecommerce.model.cart.CartMapper;
 import com.ltizzi.ecommerce.model.cart.CartRequest;
@@ -61,7 +62,7 @@ public class ShopOrderServiceImpl implements ShopOrderService {
     }
 
     @Override
-    public ShopOrderResponse saveShopOrder(CartRequest cartReq) throws InvalidShopOrderException {
+    public ShopOrderResponse saveShopOrder(CartRequest cartReq) throws NotFoundException, InvalidShopOrderException {
         CartEntity cart = cartRepo.findById(cartReq.getId()).orElseThrow();
         ShopOrderEntity order = new ShopOrderEntity();
         order.setCart(cart);

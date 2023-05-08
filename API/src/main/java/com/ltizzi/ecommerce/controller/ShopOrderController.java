@@ -1,6 +1,7 @@
 package com.ltizzi.ecommerce.controller;
 
 import com.ltizzi.ecommerce.exception.InvalidShopOrderException;
+import com.ltizzi.ecommerce.exception.NotFoundException;
 import com.ltizzi.ecommerce.model.cart.CartRequest;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderRequest;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderResponse;
@@ -42,7 +43,7 @@ public class ShopOrderController {
 
     @PostMapping("/new")
     @ResponseBody
-    public ResponseEntity<ShopOrderResponse> saveOrder(@RequestBody CartRequest cartRequest) throws InvalidShopOrderException {
+    public ResponseEntity<ShopOrderResponse> saveOrder(@RequestBody CartRequest cartRequest) throws InvalidShopOrderException, NotFoundException {
         return new ResponseEntity<>(orderServ.saveShopOrder(cartRequest), HttpStatus.OK);
     }
 

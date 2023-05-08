@@ -58,13 +58,13 @@ public class UserEntity {
     @NotBlank(message = "Email can't be blank")
     @NotEmpty(message = "Email can't be empty")
     @Email(message = "Please use a valid email")
-    @Column(name = "email", nullable = false, length = 25)
+    @Column(name = "email", nullable = false, length = 35)
     private String email;
 
-    @NotNull(message = "googleId can't be null")
-    @NotBlank(message = "googleId can't be blank")
-    @NotEmpty(message = "googleId can't be empty")
-    @Column(name = "googleId", nullable = false)
+    //    @NotNull(message = "googleId can't be null")
+//    @NotBlank(message = "googleId can't be blank")
+//    @NotEmpty(message = "googleId can't be empty")
+    @Column(name = "googleId")
     private Long googleId;
 
     @Column(name = "avatar", nullable = true)

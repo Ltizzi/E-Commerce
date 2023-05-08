@@ -1,11 +1,13 @@
 package com.ltizzi.ecommerce.model.cart;
 
+import com.ltizzi.ecommerce.model.product.ProductEntity;
 import com.ltizzi.ecommerce.model.product.ProductMapper;
 import com.ltizzi.ecommerce.model.product.ProductResponse;
 import com.ltizzi.ecommerce.model.user.UserEntity;
 import com.ltizzi.ecommerce.model.user.UserMapper;
 import com.ltizzi.ecommerce.model.user.UserResponse;
 import com.ltizzi.ecommerce.repository.CartRepository;
+import com.ltizzi.ecommerce.repository.ProductRepository;
 import com.ltizzi.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,6 +15,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Leonardo Terlizzi
@@ -23,19 +26,22 @@ public class CartMapper {
 //    @Autowired
 //    private UserMapper userMapper;
 
-        @Autowired
-        private ProductMapper productMapper;
+    @Autowired
+    private ProductMapper productMapper;
 
-        @Autowired
-        private CartRepository cartRepo;
+    @Autowired
+    private ProductRepository prodRepo;
 
-        @Autowired
-        private UserRepository userRepo;
+    @Autowired
+    private CartRepository cartRepo;
+
+    @Autowired
+    private UserRepository userRepo;
 
 
     public CartResponse toCartResponse(CartEntity cart) {
         CartResponse cartRes = new CartResponse();
-        cartRes.setId(cartRes.getId());
+        cartRes.setId(cart.getCart_id());
         cartRes.setTotal(cart.getTotal());
         cartRes.setCantidad(cart.getCantidad());
         ProductResponse prod = productMapper.toProductResponse(cart.getProduct());
@@ -44,13 +50,18 @@ public class CartMapper {
         return cartRes;
     }
 
-    public CartEntity toCartEntity(CartRequest cartReq){
-        CartEntity cart = cartRepo.findById(cartReq.getId()).orElse(new CartEntity());
-        cart.setCart_id(cartReq.getId());
+    public CartEntity toCartEntity(CartRequest cartReq) {
+        CartEntity cart = new CartEntity();
+        if (cartReq.getId() != null) {
+            cart = cartRepo.findById(cartReq.getId()).orElseThrow();
+
+        }
         cart.setUser(userRepo.findById(cartReq.getUser_id()).orElse(null));
         cart.setCantidad(cartReq.getCantidad());
         cart.setTotal(cartReq.getTotal());
-        cart.setProduct(productMapper.toProductEntity(cartReq.getProduct()));
+        Long id = cartReq.getProduct().getId();
+        Optional<ProductEntity> product = prodRepo.findById(id);
+        cart.setProduct(product.get());
         return cart;
     }
 
@@ -64,7 +75,7 @@ public class CartMapper {
 
     public List<CartEntity> toArrayCartEntity(List<CartRequest> cartsReq) {
         List<CartEntity> carts = new ArrayList<>();
-        cartsReq.forEach(cart->{
+        cartsReq.forEach(cart -> {
             carts.add(toCartEntity(cart));
         });
         return carts;

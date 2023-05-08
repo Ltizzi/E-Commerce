@@ -18,15 +18,16 @@ import java.util.ArrayList;
  * @author Leonardo Terlizzi
  */
 
-@Data @NoArgsConstructor
+@Data
+@NoArgsConstructor
 @Entity
-@Table(name ="carts")
-@SQLDelete(sql=" UPDATE carts SET soft_delete = true where cart_id= =? ")
+@Table(name = "carts")
+@SQLDelete(sql = " UPDATE carts SET soft_delete = true where cart_id= =? ")
 @Where(clause = "soft_delete = false")
 public class CartEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cart_id;
     private BigDecimal total;
 

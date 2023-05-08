@@ -63,7 +63,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProductById(Long id) {
-        stockRepo.deleteById(id);
+        ProductEntity product = prodRepo.findById(id).orElseThrow();
+        StockEntity stock = stockRepo.findByProduct(product);
+        prodRepo.deleteById(id);
+        if (stock != null) {
+            stockRepo.deleteById(stock.getStock_id());
+        }
     }
 
     @Override

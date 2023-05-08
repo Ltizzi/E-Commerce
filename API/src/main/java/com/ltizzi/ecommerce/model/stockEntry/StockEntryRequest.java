@@ -8,11 +8,12 @@ import lombok.NoArgsConstructor;
 /**
  * @author Leonardo Terlizzi
  */
-@Data @NoArgsConstructor
+@Data
+@NoArgsConstructor
 public class StockEntryRequest {
 
     private Long entry_id;
-    private ProductRequest product;
+    //private ProductRequest product;
     private int cantidad;
     private StockRequest stock;
 }

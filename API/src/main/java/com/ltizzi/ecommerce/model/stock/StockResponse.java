@@ -19,5 +19,5 @@ public class StockResponse {
     private Long stock_id;
     private ProductResponse product;
     private int cantidad;
-    private List<StockEntryResponse> entries = new ArrayList<>();
+    //  private List<StockEntryResponse> entries = new ArrayList<>();
 }

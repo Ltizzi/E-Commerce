@@ -55,6 +55,9 @@ public class StockEntryServiceImpl implements StockEntryService {
         //update stock's quantity
         StockEntity stock = entry.getStock();
         stock.setCantidad(stock.getCantidad() + stockEntry.getCantidad());
+        List<StockEntryEntity> entries = stock.getEntries();
+        entries.add(entry);
+        stock.setEntries(entries);
         stockRepo.save(stock);
 
         return entryMapper.toStockEntryResponse(entry);
@@ -81,6 +84,12 @@ public class StockEntryServiceImpl implements StockEntryService {
         StockEntity stock = oldEntry.getStock();
         stock.setCantidad(stock.getCantidad() - oldQuantity);
         stock.setCantidad(stock.getCantidad() + newQuantity);
+        List<StockEntryEntity> entries = stock.getEntries();
+
+        entries.add(entryMapper.toStockEntryEntity(stockEntry));
+        
+        stock.setEntries(entries);
+
         stockRepo.save(stock);
 
         stockEntry.setEntry_id(id);

@@ -87,11 +87,8 @@ public class UserEntity {
     private List<CartEntity> carts = new ArrayList<>();
 
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "purchase_id")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PurchaseEntity> purchases = new ArrayList<>();
-
-//TODO: cart object with productDTO+quantity
 
 
 }

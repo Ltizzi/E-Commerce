@@ -1,6 +1,7 @@
 package com.ltizzi.ecommerce.model.shoporder;
 
 import com.ltizzi.ecommerce.model.cart.CartEntity;
+import com.ltizzi.ecommerce.model.purchase.PurchaseEntity;
 import com.ltizzi.ecommerce.model.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -38,6 +39,9 @@ public class ShopOrderEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private PurchaseEntity purchase;
 
     private String order_state;
 

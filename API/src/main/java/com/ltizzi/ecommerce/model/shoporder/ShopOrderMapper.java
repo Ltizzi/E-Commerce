@@ -29,7 +29,7 @@ public class ShopOrderMapper {
     private ShopOrderRepository orderRepo;
 
 
-    public ShopOrderResponse toShopOrderResponse(ShopOrderEntity order){
+    public ShopOrderResponse toShopOrderResponse(ShopOrderEntity order) {
         ShopOrderResponse orderRes = new ShopOrderResponse();
         orderRes.setShop_order_id(order.getShop_order_id());
         CartResponse cart = cartMapper.toCartResponse(order.getCart());
@@ -41,8 +41,11 @@ public class ShopOrderMapper {
     }
 
     public ShopOrderEntity toShopOrderEntity(ShopOrderRequest orderReq) throws HttpClientErrorException.NotFound {
-        ShopOrderEntity newOrder = orderRepo.findById(orderReq.getShop_order_id()).orElse(new ShopOrderEntity());
-        newOrder.setUser(userRepo.findById(orderReq.getUser_id()).orElseThrow());
+        ShopOrderEntity newOrder = new ShopOrderEntity();
+        if (orderReq.getShop_order_id() != null) {
+            newOrder = orderRepo.findById(orderReq.getShop_order_id()).get();
+        }
+        newOrder.setUser(userRepo.findById(orderReq.getUser_id()).get());
         newOrder.setOrder_state(orderReq.getOrder_state());
         newOrder.setCart(cartMapper.toCartEntity(orderReq.getCart()));
         newOrder.setTotal(orderReq.getTotal());
@@ -51,7 +54,7 @@ public class ShopOrderMapper {
 
     public List<ShopOrderResponse> toArrayShopOrderResponse(List<ShopOrderEntity> orders) {
         List<ShopOrderResponse> ordersRes = new ArrayList<>();
-        orders.forEach(order->{
+        orders.forEach(order -> {
             ordersRes.add(toShopOrderResponse(order));
         });
         return ordersRes;
@@ -59,7 +62,7 @@ public class ShopOrderMapper {
 
     public List<ShopOrderEntity> toArrayShopOrderEntity(List<ShopOrderRequest> ordersReq) {
         List<ShopOrderEntity> newOrders = new ArrayList<>();
-        ordersReq.forEach(orderReq->{
+        ordersReq.forEach(orderReq -> {
             newOrders.add(toShopOrderEntity(orderReq));
         });
         return newOrders;

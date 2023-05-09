@@ -63,7 +63,8 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 
     @Override
     public ShopOrderResponse saveShopOrder(CartRequest cartReq) throws NotFoundException, InvalidShopOrderException {
-        CartEntity cart = cartRepo.findById(cartReq.getId()).orElseThrow();
+        System.out.println(cartReq.toString());
+        CartEntity cart = cartRepo.findById(cartReq.getId()).get();
         ShopOrderEntity order = new ShopOrderEntity();
         order.setCart(cart);
         order.setTotal(cart.getTotal());

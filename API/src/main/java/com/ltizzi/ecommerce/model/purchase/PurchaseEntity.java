@@ -30,8 +30,7 @@ public class PurchaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long purchase_id;
 
-    @OneToMany(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "shop_order_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShopOrderEntity> orders = new ArrayList<>();
 
     private BigDecimal total_income;
@@ -49,4 +48,5 @@ public class PurchaseEntity {
 
     @Column(name = "soft_delete")
     private Boolean soft_delete = Boolean.FALSE;
+
 }

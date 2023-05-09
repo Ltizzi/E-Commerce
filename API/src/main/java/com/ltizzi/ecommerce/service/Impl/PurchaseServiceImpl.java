@@ -87,13 +87,13 @@ public class PurchaseServiceImpl implements PurchaseService {
         PurchaseEntity purchase = purchRepo.findById(id).orElseThrow();
         List<ShopOrderEntity> items = purchase.getOrders();
         List<StockEntity> stocks = new ArrayList<>();
-        for(ShopOrderEntity item : items) {
+        for (ShopOrderEntity item : items) {
             ProductEntity product = item.getCart().getProduct();
             StockEntity stock = stockRepo.findByProduct(product);
             stock.setCantidad(stock.getCantidad() - item.getCart().getCantidad());
             stocks.add(stock);
         }
-        for(StockEntity stock: stocks) {
+        for (StockEntity stock : stocks) {
             stockRepo.save(stock);
         }
         purchRepo.deleteById(id);
@@ -116,7 +116,7 @@ public class PurchaseServiceImpl implements PurchaseService {
             stocks.add(stock);
         }
 
-        for(StockEntity stock : stocks) {
+        for (StockEntity stock : stocks) {
             stockRepo.save(stock);
         }
         PurchaseEntity newPurchase = new PurchaseEntity();

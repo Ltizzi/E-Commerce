@@ -1,7 +1,9 @@
 package com.ltizzi.ecommerce.model.purchase;
 
+import com.ltizzi.ecommerce.model.shoporder.ShopOrderEntity;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderMapper;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderResponse;
+import com.ltizzi.ecommerce.model.user.UserEntity;
 import com.ltizzi.ecommerce.model.user.UserMapper;
 import com.ltizzi.ecommerce.repository.PurchaseRepository;
 import com.ltizzi.ecommerce.repository.UserRepository;
@@ -28,7 +30,7 @@ public class PurchaseMapper {
     @Autowired
     private PurchaseRepository purchRepo;
 
-    public PurchaseResponse toPurchaseResponse(PurchaseEntity purchase){
+    public PurchaseResponse toPurchaseResponse(PurchaseEntity purchase) {
         PurchaseResponse purchaseRes = new PurchaseResponse();
         purchaseRes.setPurchase_id(purchase.getPurchase_id());
         List<ShopOrderResponse> orders = orderMapper.toArrayShopOrderResponse(purchase.getOrders());
@@ -41,16 +43,20 @@ public class PurchaseMapper {
     }
 
     public PurchaseEntity toPurchaseEntity(PurchaseRequest purReq) {
-        PurchaseEntity purchase = purchRepo.findById(purReq.getPurchase_id()).orElse(new PurchaseEntity());
-        purchase.setPurchase_id(purReq.getPurchase_id());
+        PurchaseEntity purchase = new PurchaseEntity();
+        if (purReq.getPurchase_id() != null) {
+            purchase = purchRepo.findById(purReq.getPurchase_id()).get();
+        }
+//        purchase.setPurchase_id(purReq.getPurchase_id());
         purchase.setUser(userRepo.findById(purReq.getUser_id()).orElseThrow());
-        purchase.setOrders(orderMapper.toArrayShopOrderEntity(purReq.getOrders()));
+        List<ShopOrderEntity> orders = orderMapper.toArrayShopOrderEntity(purReq.getOrders());
+        purchase.setOrders(orders);
         return purchase;
     }
 
     public List<PurchaseResponse> toArrayPurchaseResponse(List<PurchaseEntity> purchases) {
         List<PurchaseResponse> purchasesRes = new ArrayList<>();
-        purchases.forEach(purchase->{
+        purchases.forEach(purchase -> {
             purchasesRes.add(toPurchaseResponse(purchase));
         });
         return purchasesRes;
@@ -58,7 +64,7 @@ public class PurchaseMapper {
 
     public List<PurchaseEntity> toArrayPurchaseEntity(List<PurchaseRequest> purchasesReq) {
         List<PurchaseEntity> purchases = new ArrayList<>();
-        purchasesReq.forEach(purchReq->{
+        purchasesReq.forEach(purchReq -> {
             purchases.add(toPurchaseEntity(purchReq));
         });
         return purchases;

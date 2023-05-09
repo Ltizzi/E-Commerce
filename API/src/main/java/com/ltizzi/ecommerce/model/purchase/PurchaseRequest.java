@@ -12,11 +12,12 @@ import java.util.List;
  * @author Leonardo Terlizzi
  */
 
-@Data @NoArgsConstructor
+@Data
+@NoArgsConstructor
 public class PurchaseRequest {
 
     private Long purchase_id;
     private List<ShopOrderRequest> orders = new ArrayList<>();
     private Long user_id;
-    private Timestamp createdAt;
+//    private Timestamp createdAt;
 }

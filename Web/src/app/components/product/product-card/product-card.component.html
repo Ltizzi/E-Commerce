@@ -1,4 +1,4 @@
-<a href="#" class="group relative block overflow-hidden">
+<a href="#" class="group relative block overflow-hidden w-72">
   <button
     class="absolute end-4 top-4 z-10 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75"
   >
@@ -21,25 +21,28 @@
   </button>
 
   <img
-    src=""
+    src="{{ product.imageUrl[0] }}"
     alt=""
-    class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
+    class="h-48 w-full object-contain transition duration-500 group-hover:scale-105 sm:h-72 2xl:h-48"
+    (click)="goToProduct(product.id, $event)"
   />
 
-  <div class="relative border border-gray-100 bg-white p-6">
+  <div class="relative border border-gray-100 bg-white p-3">
     <span
-      class="whitespace-nowrap bg-yellow-400 px-3 py-1.5 text-xs font-medium"
+      class="whitespace-nowrap bg-rose-400 text-white px-3 py-1.5 text-xs font-medium rounded-xl"
     >
-      New
+      {{ product.prod_type.name }}
     </span>
 
-    <h3 class="mt-4 text-lg font-medium text-gray-900"></h3>
+    <h3 class="mt-4 text-lg font-medium text-gray-900">
+      {{ product.name }}
+    </h3>
 
-    <p class="mt-1.5 text-sm text-gray-700"></p>
-
+    <p class="mt-1.5 text-sm text-gray-700">{{ product.brand }}</p>
+    <p class="mt-1.5 text-sm text-gray-700">{{ product.price }}</p>
     <form class="mt-4">
       <button
-        class="block w-full rounded bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105"
+        class="block w-full rounded bg-indigo-500 p-4 text-yellow-50 text-sm font-medium transition hover:scale-105"
       >
         Add to Cart
       </button>

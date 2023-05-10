@@ -13,6 +13,16 @@ import { ProductPageComponent } from './components/product/product-page/product-
 import { CategoryNavComponent } from './components/product/category-nav/category-nav.component';
 import { LandingComponent } from './components/layout/landing/landing.component';
 import { CartComponent } from './components/layout/cart/cart.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DataService } from './services/data.service';
+import { ProductService } from './services/product.service';
+import { StockService } from './services/stock.service';
+import { EntryService } from './services/entry.service';
+import { ProductTypeService } from './services/product-type.service';
+import { PurchaseService } from './services/purchase.service';
+import { UserService } from './services/user.service';
+import { CartService } from './services/cart.service';
+import { ShopOrderService } from './services/shop-order.service';
 
 @NgModule({
   declarations: [
@@ -28,8 +38,18 @@ import { CartComponent } from './components/layout/cart/cart.component';
     LandingComponent,
     CartComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
-  providers: [],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  providers: [
+    DataService,
+    ProductService,
+    StockService,
+    EntryService,
+    ProductTypeService,
+    PurchaseService,
+    UserService,
+    CartService,
+    ShopOrderService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

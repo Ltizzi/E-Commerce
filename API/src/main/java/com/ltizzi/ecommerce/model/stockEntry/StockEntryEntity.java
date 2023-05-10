@@ -1,8 +1,8 @@
-package com.ltizzi.ecommerce.model.productType;
+package com.ltizzi.ecommerce.model.stockEntry;
 
 import com.ltizzi.ecommerce.model.product.ProductEntity;
+import com.ltizzi.ecommerce.model.stock.StockEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
@@ -14,20 +14,28 @@ import java.sql.Timestamp;
 /**
  * @author Leonardo Terlizzi
  */
+
 @Data
 @Entity
-@Table(name = "product_types")
-@SQLDelete(sql = "UPDATE product_types SET soft_delete = true where prod_type_id=?")
-@Where(clause = "soft_delete=false")
-public class ProductTypeEntity {
+@Table(name = "stock-entries")
+@SQLDelete(sql = "UPDATE stock-entries SET soft_delete = true where entry_id =?")
+@Where(clause = "soft_delete = false")
+public class StockEntryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long prod_type_id;
+    private Long entry_id;
 
-    @NotNull(message = "Product type name can't be null")
-    @Column(name = "name", length = 20, nullable = false)
-    private String name;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private ProductEntity product;
+
+    @Column(nullable = false)
+    private int cantidad;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "stock_id")
+    private StockEntity stock;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -36,9 +44,6 @@ public class ProductTypeEntity {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
+    @Column(name = "soft_delete")
     private Boolean soft_delete = Boolean.FALSE;
-
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name= "product_id", nullable = false)
-//    private ProductEntity product;
 }

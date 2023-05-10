@@ -16,19 +16,23 @@ import org.hibernate.annotations.Where;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Leonardo Terlizzi
  */
 
-@Entity @Data @AllArgsConstructor @NoArgsConstructor
-@Table(name ="products")
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "products")
 @SQLDelete(sql = "UPDATE products SET soft_delete = true where product_id=?")
-@Where(clause= "soft_delete=false")
+@Where(clause = "soft_delete=false")
 public class ProductEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long product_id;
 
 
@@ -48,7 +52,7 @@ public class ProductEntity {
     private String about;
 
     @Column(name = "image_url")
-    private ArrayList<String> imageUrl = new ArrayList<>();
+    private List<String> imageUrl = new ArrayList<>();
 
     @NotNull(message = "Price can't be null")
     private BigDecimal price;
@@ -64,7 +68,7 @@ public class ProductEntity {
     private Boolean soft_delete = Boolean.FALSE;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="prod_type_id", nullable = false)
+    @JoinColumn(name = "prod_type_id", nullable = false)
     private ProductTypeEntity product_type;
 
 }

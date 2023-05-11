@@ -1,7 +1,7 @@
 import { ProductType } from './type';
 
 export interface Product {
-  id: number;
+  id?: number;
   name: string;
   brand: string;
   about: string;

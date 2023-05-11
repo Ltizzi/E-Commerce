@@ -13,7 +13,7 @@ export class ProductCardComponent {
 
   constructor(private router: Router) {}
 
-  goToProduct(id: number, event: Event) {
+  goToProduct(id: number | undefined, event: Event) {
     event.preventDefault();
     this.router.navigate(['/product'], { queryParams: { id: id } });
   }

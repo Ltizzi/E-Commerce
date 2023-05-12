@@ -114,7 +114,6 @@ export class NewProductModalComponent {
   }
 
   submitForm() {
-    console.log(this.newProductForm);
     if (this.newProductForm.valid) {
       let type = this.types.find(
         (type: ProductType) =>
@@ -124,14 +123,13 @@ export class NewProductModalComponent {
       let newProduct: Product = {
         name: this.newProductForm.value.name as string,
         brand: this.newProductForm.value.brand as string,
-        price: parseInt(this.newProductForm.value.price as string),
+        price: parseFloat(this.newProductForm.value.price as string),
         about: this.newProductForm.value.about as string,
         imageUrl: this.urls,
         prod_type: type as ProductType,
       };
-      console.log(newProduct);
+
       this.prodServ.create(newProduct).subscribe((data) => {
-        console.log(data);
         this.successOperation = true;
       });
     }

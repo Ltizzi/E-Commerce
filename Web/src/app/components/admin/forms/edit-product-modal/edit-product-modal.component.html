@@ -1,0 +1,231 @@
+<div
+  id="new-product-modal"
+  class="lg:items-center 2xl:items-center fixed left-0 top-0 z-50 flex h-screen w-screen items-start justify-center"
+  *ngIf="show"
+>
+  <div
+    class="fixed left-0 top-0 z-20 h-full w-full bg-black/50 backdrop-blur-lg"
+    (clic)="close()"
+  >
+    <div
+      class="container fixed z-50 2xl:bottom-1/4 2xl:left-1/4 2xl:right-1/4 w-auto rounded-xl border-2 bg-white px-5 shadow-xl"
+    >
+      <!-- class="container fixed z-50 2xl:bottom-1/4 2xl:left-1/4 2xl:right-1/4 w-auto rounded-xl border-2 bg-white px-5 shadow-xl" -->
+      <h1 class="font-semibold text-xl text-center mb-5">Edit Product</h1>
+
+      <div class="flex flex-col justify-center w-full mx-5">
+        <div class="grid grid-cols-5 gap-4">
+          <div class="mx-auto flex flex-row">
+            <img
+              *ngFor="let url of urls"
+              class="h-40 max-w-full rounded-lg"
+              [src]="url"
+              alt=""
+            />
+          </div>
+        </div>
+
+        <div class="flex flex-col justify-start">
+          <label class="block mb-2" for="imageUrl"
+            >Editar URLs de imágenes</label
+          >
+          <div class="flex flex-row justify-start gap-5">
+            <input
+              class="block w-auto border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+              type="text"
+              name="url"
+              [(ngModel)]="url"
+            />
+            <button
+              class="py-0.5 h-10 px-1 rounded-lg text-white bg-rose-500 hover:bg-rose-800"
+              type="button"
+              (click)="addUrl(url)"
+            >
+              Add URL
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="editProductForm" (ngSubmit)="submitForm()">
+        <div class="flex flex-col justify-center m-5">
+          <div class="grid md:grid-cols-2 md:gap-6 text-gray-900 text-lg">
+            <div class="grid grid-rows-3">
+              <div class="relative z-0 w-72 mb-6 group">
+                <input
+                  type="text"
+                  class="block py-2.5 px-0 w-full bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=""
+                  required
+                  formControlName="name"
+                  [ngClass]="{
+                    'border-rose-600':
+                      editProductForm.get('name')?.invalid &&
+                      editProductForm.get('name')?.touched
+                  }"
+                />
+                <label
+                  for="floating_first_name"
+                  class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  >Name:</label
+                >
+                <div *ngFor="let error of errorMessages.name">
+                  <span
+                    *ngIf="
+                      editProductForm.get('name')?.hasError(error.type) &&
+                      editProductForm.get('name')?.touched
+                    "
+                    class="text-sm text-rose-600 w-full"
+                  >
+                    {{ error.message }}
+                  </span>
+                </div>
+              </div>
+              <div class="relative z-0 w-72 mb-6 group">
+                <input
+                  type="number"
+                  class="block py-2.5 px-0 w-full bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-indigo-600 peer"
+                  placeholder=" "
+                  required
+                  formControlName="price"
+                  [ngClass]="{
+                    'border-rose-600':
+                      editProductForm.get('price')?.invalid &&
+                      editProductForm.get('price')?.touched
+                  }"
+                />
+                <label
+                  for="price"
+                  class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  >Price:</label
+                >
+                <div *ngFor="let error of errorMessages.price">
+                  <span
+                    *ngIf="
+                      editProductForm.get('price')?.hasError(error.type) &&
+                      editProductForm.get('price')?.touched
+                    "
+                    class="text-sm text-rose-600"
+                  >
+                    {{ error.message }}
+                  </span>
+                </div>
+              </div>
+              <div class="relative z-0 w-72 mb-6 group">
+                <input
+                  type="text"
+                  class="block py-2.5 px-0 w-full bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                  required
+                  formControlName="brand"
+                  [ngClass]="{
+                    'border-rose-600':
+                      editProductForm.get('brand')?.invalid &&
+                      editProductForm.get('brand')?.touched
+                  }"
+                />
+                <label
+                  for="brand"
+                  class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  >Brand:</label
+                >
+                <div *ngFor="let error of errorMessages.brand">
+                  <span
+                    *ngIf="
+                      editProductForm.get('brand')?.hasError(error.type) &&
+                      editProductForm.get('brand')?.touched
+                    "
+                    class="text-sm text-rose-600"
+                  >
+                    {{ error.message }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col">
+              <div class="relative z-0 w-80 mb-6 group">
+                <label for="about" class="block mb-2 text-lg">About:</label>
+                <textarea
+                  id="about"
+                  rows="4"
+                  cols="10"
+                  class="block p-2.5 w-full bg-gray-50 rounded-lg border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                  placeholder="Information about the product..."
+                  formControlName="about"
+                  [ngClass]="{
+                    'border-rose-600':
+                      editProductForm.get('about')?.invalid &&
+                      editProductForm.get('about')?.touched
+                  }"
+                ></textarea>
+                <div *ngFor="let error of errorMessages.about">
+                  <span
+                    *ngIf="
+                      editProductForm.get('about')?.hasError(error.type) &&
+                      editProductForm.get('about')?.touched
+                    "
+                    class="text-sm text-rose-600"
+                  >
+                    {{ error.message }}
+                  </span>
+                </div>
+              </div>
+
+              <label for="type" class="block mb-2">Select product type</label>
+              <select
+                id="type"
+                class="bg-gray-50 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+                formControlName="prod_type"
+                [ngClass]="{
+                  'border-rose-600':
+                    editProductForm.get('prod_type')?.invalid &&
+                    editProductForm.get('prod_type')?.touched
+                }"
+              >
+                <option selected>Pick a type</option>
+                <option [ngValue]="type.name" *ngFor="let type of types">
+                  {{ type.name }}
+                </option>
+              </select>
+              <div *ngFor="let error of errorMessages.prod_type">
+                <span
+                  *ngIf="
+                    editProductForm.get('prod_type')?.hasError(error.type) &&
+                    editProductForm.get('prod_type')?.touched
+                  "
+                  class="text-sm text-rose-600"
+                >
+                  {{ error.message }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-row justify-center gap-5 py-5">
+            <!--               [disabled]="editProductForm.invalid" -->
+            <button
+              type="submit"
+              class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            >
+              Submit
+            </button>
+            <button
+              class="text-white bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+              type="button"
+              (click)="close()"
+            >
+              Close
+            </button>
+            <p
+              class="text-xl text-green-600 font-bold"
+              *ngIf="successOperation"
+            >
+              Success!
+            </p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

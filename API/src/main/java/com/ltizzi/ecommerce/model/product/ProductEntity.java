@@ -48,7 +48,7 @@ public class ProductEntity {
     @Column(length = 20, nullable = false)
     private String brand;
 
-    @Column(columnDefinition = "TEXT", length = 500)
+    @Column(columnDefinition = "TEXT", length = 2000)
     private String about;
 
     @Column(name = "image_url")

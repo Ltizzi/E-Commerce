@@ -1,0 +1,62 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">
+  <table class="w-full text-sm text-left text-gray-500">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3">Product Id</th>
+        <th scope="col" class="px-6 py-3">Product name</th>
+        <th scope="col" class="px-6 py-3">Brand</th>
+        <th scope="col" class="px-6 py-3">Category</th>
+        <th scope="col" class="px-6 py-3">Price</th>
+        <th scope="col" class="px-6 py-3">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        class="bg-white border-b hover:bg-indigo-100"
+        *ngFor="let product of products"
+      >
+        <td class="px-6 py-4">{{ product.id }}</td>
+        <th
+          scope="row"
+          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap cursor-pointer"
+          (click)="goToProduct(product.id, $event)"
+        >
+          {{ product.name }}
+        </th>
+        <td class="px-6 py-4">{{ product.brand }}</td>
+        <td class="px-6 py-4">{{ product.prod_type.name }}</td>
+        <td class="px-6 py-4">${{ product.price }}</td>
+        <td class="px-6 py-4 text-right">
+          <div class="flex flex-row gap-2">
+            <fa-icon
+              [icon]="faPen"
+              class="bg-violet-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer"
+              (click)="showEditModal(product)"
+            ></fa-icon>
+            <fa-icon
+              [icon]="faTrashCan"
+              class="bg-rose-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer"
+              (click)="deleteProduct(product)"
+            ></fa-icon>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-edit-product-modal
+    *ngIf="isEditModalDisplayed"
+    [data]="isEditModalDisplayed"
+    [product]="productToEdit"
+    (closeModal)="(closeModal)"
+    (reloadProducts)="(reloadProducts)"
+  ></app-edit-product-modal>
+  <app-delete-product-modal
+    *ngIf="showDeleteDialog"
+    [data]="showDeleteDialog"
+    [product]="productToDelete"
+    (closeModal)="(closeDeleteDialog)"
+    (reloadProducts)="(reloadProducts)"
+  >
+  </app-delete-product-modal>
+</div>

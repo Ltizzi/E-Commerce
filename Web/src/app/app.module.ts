@@ -26,6 +26,8 @@ import { ShopOrderService } from './services/shop-order.service';
 import { NewProductModalComponent } from './components/admin/forms/new-product-modal/new-product-modal.component';
 import { ModalService } from './services/ui/modal.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProductTableComponent } from './components/admin/tables/product-table/product-table.component';
+import { ProductsPanelComponent } from './components/admin/layout/products-panel/products-panel.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LandingComponent,
     CartComponent,
     NewProductModalComponent,
+    ProductTableComponent,
+    ProductsPanelComponent,
   ],
   imports: [
     BrowserModule,

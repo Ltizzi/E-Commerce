@@ -1,12 +1,33 @@
 <section class="text-gray-600 body-font overflow-hidden" *ngIf="isLoaded">
   <div class="container px-5 py-24 mx-auto">
     <div class="lg:w-4/5 mx-auto flex flex-wrap">
-      <img
+      <div class="grid gap-0 2xl:w-1/2">
+        <div>
+          <img
+            class="rounded-lg lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center 2xl:w-2/3"
+            src="{{ product.imageUrl[0] }}"
+            alt=""
+          />
+        </div>
+        <div class="grid grid-cols-5 gap-4 mt-5">
+          <div *ngFor="let img of product.imageUrl">
+            <img
+              class="h-32 w-auto max-w-full rounded-lg"
+              src="{{ img }}"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- <img
         alt="ecommerce"
         class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded 2xl:w-1/3"
         src="{{ product.imageUrl[0] }}"
-      />
-      <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+      /> -->
+      <div
+        class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0 2xl:w-1/2 flex flex-col 2xl:mt-20"
+      >
         <h2 class="text-sm title-font text-gray-500 tracking-widest">
           {{ product.brand }}
         </h2>
@@ -133,7 +154,7 @@
           {{ product.about }}
         </p>
 
-        <div class="flex">
+        <div class="flex mt-10">
           <span class="title-font font-medium text-2xl text-gray-900"
             >${{ product.price }}</span
           >

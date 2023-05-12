@@ -25,7 +25,7 @@ import { CartService } from './services/cart.service';
 import { ShopOrderService } from './services/shop-order.service';
 import { NewProductModalComponent } from './components/admin/forms/new-product-modal/new-product-modal.component';
 import { ModalService } from './services/ui/modal.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -47,6 +47,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [
     DataService,

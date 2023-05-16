@@ -41,6 +41,7 @@ export class ProductTableComponent {
     });
 
     this.fetchProducts(1, this.ITEMS_PER_PAGE);
+    this.currentPage = this.pagination.getCurrentPage();
   }
 
   //DATA FETCH
@@ -51,11 +52,12 @@ export class ProductTableComponent {
       .getAllWithPagination(correctPage, limit)
       .subscribe((data: any) => {
         this.products = data;
+        this.currentPage = page;
       });
   }
 
   reloadProducts() {
-    this.prodServ.getAll().subscribe((data: any) => (this.products = data));
+    this.fetchProducts(this.currentPage, this.ITEMS_PER_PAGE);
   }
 
   //PAGINATION

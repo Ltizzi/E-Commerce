@@ -58,6 +58,7 @@ export class PaginationService {
   }
 
   buildPages() {
+    this.pages = [];
     for (let i = 1; i <= this.totalPages; i++) {
       this.pages.push(i);
     }

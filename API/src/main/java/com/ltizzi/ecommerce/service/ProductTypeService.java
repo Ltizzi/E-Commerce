@@ -4,6 +4,7 @@ package com.ltizzi.ecommerce.service;
 import com.ltizzi.ecommerce.exception.InvalidProductTypeException;
 import com.ltizzi.ecommerce.model.productType.ProductTypeRequest;
 import com.ltizzi.ecommerce.model.productType.ProductTypeResponse;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.List;
 public interface ProductTypeService {
 
     public List<ProductTypeResponse> getProductTypes();
+
+    public CountTable countTypes();
 
     public ProductTypeResponse getProductTypeById(Long id) throws HttpClientErrorException.NotFound;
 

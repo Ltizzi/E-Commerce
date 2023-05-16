@@ -4,6 +4,7 @@ package com.ltizzi.ecommerce.controller;
 import com.ltizzi.ecommerce.exception.InvalidPurchaseException;
 import com.ltizzi.ecommerce.model.purchase.PurchaseRequest;
 import com.ltizzi.ecommerce.model.purchase.PurchaseResponse;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +25,15 @@ public class PurchaseController {
 
     @GetMapping("/all")
     @ResponseBody
-    public ResponseEntity<List<PurchaseResponse>> getPurchases() {
-        return new ResponseEntity<>(purchServ.getPurchases(), HttpStatus.OK);
+    public ResponseEntity<List<PurchaseResponse>> getPurchases(@RequestParam(defaultValue = "0") int page,
+                                                               @RequestParam(defaultValue = "" + Integer.MAX_VALUE) int limit) {
+        return new ResponseEntity<>(purchServ.getPurchases(page, limit), HttpStatus.OK);
+    }
+
+    @GetMapping("/count")
+    @ResponseBody
+    public ResponseEntity<CountTable> countPurchases() {
+        return new ResponseEntity<>(purchServ.countPurchases(), HttpStatus.OK);
     }
 
     @GetMapping("/byId")

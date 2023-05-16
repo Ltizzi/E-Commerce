@@ -5,13 +5,18 @@ import com.ltizzi.ecommerce.model.user.UserEntity;
 import com.ltizzi.ecommerce.model.user.UserMapper;
 import com.ltizzi.ecommerce.model.user.UserRequest;
 import com.ltizzi.ecommerce.model.user.UserResponse;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.repository.UserRepository;
 import com.ltizzi.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.awt.print.Pageable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Leonardo Terlizzi
@@ -26,8 +31,17 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public List<UserResponse> getUsers() {
-        return userMapper.toArrayUserResponse(userRepo.findAll());
+    public List<UserResponse> getUsers(int page, int limit) {
+        PageRequest pageReq = PageRequest.of(page, limit);
+        Page<UserEntity> usersPage = userRepo.findAll(pageReq);
+        List<UserEntity> usersList = usersPage.getContent();
+        return userMapper.toArrayUserResponse(usersList);
+    }
+
+    @Override
+    public CountTable countUsers() {
+        long totalUsers = userRepo.countBy();
+        return new CountTable((int) totalUsers);
     }
 
     @Override

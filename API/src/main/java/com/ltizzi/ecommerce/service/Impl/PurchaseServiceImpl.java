@@ -9,11 +9,14 @@ import com.ltizzi.ecommerce.model.purchase.PurchaseResponse;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderEntity;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderMapper;
 import com.ltizzi.ecommerce.model.stock.StockEntity;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.repository.PurchaseRepository;
 import com.ltizzi.ecommerce.repository.StockRepository;
 import com.ltizzi.ecommerce.repository.UserRepository;
 import com.ltizzi.ecommerce.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -44,8 +47,17 @@ public class PurchaseServiceImpl implements PurchaseService {
     private UserRepository userRepo;
 
     @Override
-    public List<PurchaseResponse> getPurchases() {
-        return purchMapper.toArrayPurchaseResponse(purchRepo.findAll());
+    public List<PurchaseResponse> getPurchases(int page, int limit) {
+        PageRequest pageReq = PageRequest.of(page, limit);
+        Page<PurchaseEntity> purchPage = purchRepo.findAll(pageReq);
+        List<PurchaseEntity> purchList = purchPage.getContent();
+        return purchMapper.toArrayPurchaseResponse(purchList);
+    }
+
+    @Override
+    public CountTable countPurchases() {
+        long totalPurchases = purchRepo.countBy();
+        return new CountTable((int) totalPurchases);
     }
 
     @Override

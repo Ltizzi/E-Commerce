@@ -3,6 +3,7 @@ package com.ltizzi.ecommerce.controller;
 import com.ltizzi.ecommerce.exception.InvalidStockException;
 import com.ltizzi.ecommerce.model.stock.StockRequest;
 import com.ltizzi.ecommerce.model.stock.StockResponse;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,15 @@ public class StockController {
 
     @GetMapping("/all")
     @ResponseBody
-    public ResponseEntity<List<StockResponse>> getStocks() {
-        return new ResponseEntity<>(stockServ.getStocks(), HttpStatus.OK);
+    public ResponseEntity<List<StockResponse>> getStocks(@RequestParam(defaultValue = "0") int page,
+                                                         @RequestParam(defaultValue = "" + Integer.MAX_VALUE) int limit) {
+        return new ResponseEntity<>(stockServ.getStocks(page, limit), HttpStatus.OK);
+    }
+
+    @GetMapping("/count")
+    @ResponseBody
+    public ResponseEntity<CountTable> countStocks() {
+        return new ResponseEntity<>(stockServ.countStocks(), HttpStatus.OK);
     }
 
     @GetMapping("/byId")

@@ -3,6 +3,7 @@ package com.ltizzi.ecommerce.service;
 import com.ltizzi.ecommerce.exception.InvalidPurchaseException;
 import com.ltizzi.ecommerce.model.purchase.PurchaseRequest;
 import com.ltizzi.ecommerce.model.purchase.PurchaseResponse;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
@@ -14,7 +15,9 @@ import java.util.List;
 
 public interface PurchaseService {
 
-    public List<PurchaseResponse> getPurchases();
+    public List<PurchaseResponse> getPurchases(int page, int limit);
+
+    public CountTable countPurchases();
 
     public PurchaseResponse getPurchaseById(Long id) throws HttpClientErrorException.NotFound;
 

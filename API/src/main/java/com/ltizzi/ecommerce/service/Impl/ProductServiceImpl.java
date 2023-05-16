@@ -7,11 +7,14 @@ import com.ltizzi.ecommerce.model.product.ProductResponse;
 import com.ltizzi.ecommerce.model.productType.ProductTypeMapper;
 import com.ltizzi.ecommerce.model.stock.StockEntity;
 import com.ltizzi.ecommerce.model.stockEntry.StockEntryEntity;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.repository.ProductRepository;
 import com.ltizzi.ecommerce.repository.StockRepository;
 import com.ltizzi.ecommerce.service.ProductService;
 import com.ltizzi.ecommerce.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,8 +41,17 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<ProductResponse> getProducts() {
-        return prodMapper.toArrayProductResponse((ArrayList<ProductEntity>) prodRepo.findAll());
+    public List<ProductResponse> getProducts(int page, int limit) {
+        PageRequest pageReq = PageRequest.of(page, limit);
+        Page<ProductEntity> productPage = prodRepo.findAll(pageReq);
+        List<ProductEntity> productsList = productPage.getContent();
+        return prodMapper.toArrayProductResponse(productsList);
+    }
+
+    @Override
+    public CountTable countProducts() {
+        long totalProducts = prodRepo.countBy();
+        return new CountTable((int) totalProducts);
     }
 
     @Override

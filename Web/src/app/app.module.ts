@@ -25,7 +25,12 @@ import { CartService } from './services/cart.service';
 import { ShopOrderService } from './services/shop-order.service';
 import { NewProductModalComponent } from './components/admin/forms/new-product-modal/new-product-modal.component';
 import { ModalService } from './services/ui/modal.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProductTableComponent } from './components/admin/tables/product-table/product-table.component';
+import { ProductsPanelComponent } from './components/admin/layout/products-panel/products-panel.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { EditProductModalComponent } from './components/admin/forms/edit-product-modal/edit-product-modal.component';
+import { DeleteProductModalComponent } from './components/admin/ui/delete-product-modal/delete-product-modal.component';
 
 @NgModule({
   declarations: [
@@ -41,12 +46,18 @@ import { ReactiveFormsModule } from '@angular/forms';
     LandingComponent,
     CartComponent,
     NewProductModalComponent,
+    ProductTableComponent,
+    ProductsPanelComponent,
+    EditProductModalComponent,
+    DeleteProductModalComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
+    FontAwesomeModule,
   ],
   providers: [
     DataService,

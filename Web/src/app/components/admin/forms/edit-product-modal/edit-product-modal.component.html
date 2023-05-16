@@ -11,7 +11,7 @@
       class="container fixed z-50 2xl:bottom-1/4 2xl:left-1/4 2xl:right-1/4 w-auto rounded-xl border-2 bg-white px-5 shadow-xl"
     >
       <!-- class="container fixed z-50 2xl:bottom-1/4 2xl:left-1/4 2xl:right-1/4 w-auto rounded-xl border-2 bg-white px-5 shadow-xl" -->
-      <h1 class="font-semibold text-xl text-center mb-5">New Product</h1>
+      <h1 class="font-semibold text-xl text-center mb-5">Edit Product</h1>
 
       <div class="flex flex-col justify-center w-full mx-5">
         <div class="grid grid-cols-5 gap-4">
@@ -27,7 +27,7 @@
 
         <div class="flex flex-col justify-start">
           <label class="block mb-2" for="imageUrl"
-            >Agregar URLs de imágenes</label
+            >Editar URLs de imágenes</label
           >
           <div class="flex flex-row justify-start gap-5">
             <input
@@ -47,7 +47,7 @@
         </div>
       </div>
 
-      <form [formGroup]="newProductForm" (ngSubmit)="submitForm()">
+      <form [formGroup]="editProductForm" (ngSubmit)="submitForm()">
         <div class="flex flex-col justify-center m-5">
           <div class="grid md:grid-cols-2 md:gap-6 text-gray-900 text-lg">
             <div class="grid grid-rows-3">
@@ -60,8 +60,8 @@
                   formControlName="name"
                   [ngClass]="{
                     'border-rose-600':
-                      newProductForm.get('name')?.invalid &&
-                      newProductForm.get('name')?.touched
+                      editProductForm.get('name')?.invalid &&
+                      editProductForm.get('name')?.touched
                   }"
                 />
                 <label
@@ -72,8 +72,8 @@
                 <div *ngFor="let error of errorMessages.name">
                   <span
                     *ngIf="
-                      newProductForm.get('name')?.hasError(error.type) &&
-                      newProductForm.get('name')?.touched
+                      editProductForm.get('name')?.hasError(error.type) &&
+                      editProductForm.get('name')?.touched
                     "
                     class="text-sm text-rose-600 w-full"
                   >
@@ -90,8 +90,8 @@
                   formControlName="price"
                   [ngClass]="{
                     'border-rose-600':
-                      newProductForm.get('price')?.invalid &&
-                      newProductForm.get('price')?.touched
+                      editProductForm.get('price')?.invalid &&
+                      editProductForm.get('price')?.touched
                   }"
                 />
                 <label
@@ -102,8 +102,8 @@
                 <div *ngFor="let error of errorMessages.price">
                   <span
                     *ngIf="
-                      newProductForm.get('price')?.hasError(error.type) &&
-                      newProductForm.get('price')?.touched
+                      editProductForm.get('price')?.hasError(error.type) &&
+                      editProductForm.get('price')?.touched
                     "
                     class="text-sm text-rose-600"
                   >
@@ -120,8 +120,8 @@
                   formControlName="brand"
                   [ngClass]="{
                     'border-rose-600':
-                      newProductForm.get('brand')?.invalid &&
-                      newProductForm.get('brand')?.touched
+                      editProductForm.get('brand')?.invalid &&
+                      editProductForm.get('brand')?.touched
                   }"
                 />
                 <label
@@ -132,8 +132,8 @@
                 <div *ngFor="let error of errorMessages.brand">
                   <span
                     *ngIf="
-                      newProductForm.get('brand')?.hasError(error.type) &&
-                      newProductForm.get('brand')?.touched
+                      editProductForm.get('brand')?.hasError(error.type) &&
+                      editProductForm.get('brand')?.touched
                     "
                     class="text-sm text-rose-600"
                   >
@@ -155,15 +155,15 @@
                   formControlName="about"
                   [ngClass]="{
                     'border-rose-600':
-                      newProductForm.get('about')?.invalid &&
-                      newProductForm.get('about')?.touched
+                      editProductForm.get('about')?.invalid &&
+                      editProductForm.get('about')?.touched
                   }"
                 ></textarea>
                 <div *ngFor="let error of errorMessages.about">
                   <span
                     *ngIf="
-                      newProductForm.get('about')?.hasError(error.type) &&
-                      newProductForm.get('about')?.touched
+                      editProductForm.get('about')?.hasError(error.type) &&
+                      editProductForm.get('about')?.touched
                     "
                     class="text-sm text-rose-600"
                   >
@@ -179,8 +179,8 @@
                 formControlName="prod_type"
                 [ngClass]="{
                   'border-rose-600':
-                    newProductForm.get('prod_type')?.invalid &&
-                    newProductForm.get('prod_type')?.touched
+                    editProductForm.get('prod_type')?.invalid &&
+                    editProductForm.get('prod_type')?.touched
                 }"
               >
                 <option selected>Pick a type</option>
@@ -191,8 +191,8 @@
               <div *ngFor="let error of errorMessages.prod_type">
                 <span
                   *ngIf="
-                    newProductForm.get('prod_type')?.hasError(error.type) &&
-                    newProductForm.get('prod_type')?.touched
+                    editProductForm.get('prod_type')?.hasError(error.type) &&
+                    editProductForm.get('prod_type')?.touched
                   "
                   class="text-sm text-rose-600"
                 >
@@ -203,15 +203,16 @@
           </div>
 
           <div class="flex flex-row justify-center gap-5 py-5">
+            <!--               [disabled]="editProductForm.invalid" -->
             <button
               type="submit"
               class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-              [disabled]="newProductForm.invalid"
             >
               Submit
             </button>
             <button
               class="text-white bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+              type="button"
               (click)="close()"
             >
               Close

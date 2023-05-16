@@ -8,22 +8,19 @@ import { NewProductModalComponent } from '../forms/new-product-modal/new-product
   styleUrls: ['./admin-dashboard.component.css'],
 })
 export class AdminDashboardComponent {
-  showNewProductModal: boolean = false;
+  // showNewProductModal: boolean = false;
   // constructor(
   //   private modalServ: ModalService,
   //   private newProductModal: NewProductModalComponent
   // ) {}
-
   // ngOnInit(): void {
   //   this.modalServ.add(NewProductModalComponent);
   // }
-
-  openModal() {
-    this.showNewProductModal = true;
-  }
-
-  closeModal() {
-    console.log('cerrando');
-    this.showNewProductModal = false;
-  }
+  // openModal() {
+  //   this.showNewProductModal = true;
+  // }
+  // closeModal() {
+  //   console.log('cerrando');
+  //   this.showNewProductModal = false;
+  // }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 
 public interface StockEntryService {
 
-    public List<StockEntryResponse> getStockEntries();
+    public List<StockEntryResponse> getStockEntries(int page, int limit);
 
     public CountTable countEntries();
 

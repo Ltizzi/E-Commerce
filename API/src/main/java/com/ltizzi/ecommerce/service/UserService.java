@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface UserService {
 
-    public List<UserResponse> getUsers();
+    public List<UserResponse> getUsers(int page, int limit);
 
     public CountTable countUsers();
 

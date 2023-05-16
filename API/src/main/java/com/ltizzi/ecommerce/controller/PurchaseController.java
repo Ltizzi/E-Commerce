@@ -25,8 +25,9 @@ public class PurchaseController {
 
     @GetMapping("/all")
     @ResponseBody
-    public ResponseEntity<List<PurchaseResponse>> getPurchases() {
-        return new ResponseEntity<>(purchServ.getPurchases(), HttpStatus.OK);
+    public ResponseEntity<List<PurchaseResponse>> getPurchases(@RequestParam(defaultValue = "0") int page,
+                                                               @RequestParam(defaultValue = "" + Integer.MAX_VALUE) int limit) {
+        return new ResponseEntity<>(purchServ.getPurchases(page, limit), HttpStatus.OK);
     }
 
     @GetMapping("/count")

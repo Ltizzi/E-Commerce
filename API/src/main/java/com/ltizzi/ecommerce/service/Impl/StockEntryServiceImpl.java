@@ -15,6 +15,8 @@ import com.ltizzi.ecommerce.repository.StockEntryRepository;
 import com.ltizzi.ecommerce.repository.StockRepository;
 import com.ltizzi.ecommerce.service.StockEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -41,8 +43,11 @@ public class StockEntryServiceImpl implements StockEntryService {
     private ProductMapper productMapper;
 
     @Override
-    public List<StockEntryResponse> getStockEntries() {
-        return entryMapper.toArrayStockEntryResponse(entryRepo.findAll());
+    public List<StockEntryResponse> getStockEntries(int page, int limit) {
+        PageRequest pageReq = PageRequest.of(page, limit);
+        Page<StockEntryEntity> entryPage = entryRepo.findAll(pageReq);
+        List<StockEntryEntity> entryList = entryPage.getContent();
+        return entryMapper.toArrayStockEntryResponse(entryList);
     }
 
     @Override

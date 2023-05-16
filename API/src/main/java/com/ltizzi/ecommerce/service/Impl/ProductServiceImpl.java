@@ -13,6 +13,8 @@ import com.ltizzi.ecommerce.repository.StockRepository;
 import com.ltizzi.ecommerce.service.ProductService;
 import com.ltizzi.ecommerce.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -39,8 +41,11 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<ProductResponse> getProducts() {
-        return prodMapper.toArrayProductResponse((ArrayList<ProductEntity>) prodRepo.findAll());
+    public List<ProductResponse> getProducts(int page, int limit) {
+        PageRequest pageReq = PageRequest.of(page, limit);
+        Page<ProductEntity> productPage = prodRepo.findAll(pageReq);
+        List<ProductEntity> productsList = productPage.getContent();
+        return prodMapper.toArrayProductResponse(productsList);
     }
 
     @Override

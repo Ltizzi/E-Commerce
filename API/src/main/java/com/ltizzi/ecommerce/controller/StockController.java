@@ -24,8 +24,9 @@ public class StockController {
 
     @GetMapping("/all")
     @ResponseBody
-    public ResponseEntity<List<StockResponse>> getStocks() {
-        return new ResponseEntity<>(stockServ.getStocks(), HttpStatus.OK);
+    public ResponseEntity<List<StockResponse>> getStocks(@RequestParam(defaultValue = "0") int page,
+                                                         @RequestParam(defaultValue = "" + Integer.MAX_VALUE) int limit) {
+        return new ResponseEntity<>(stockServ.getStocks(page, limit), HttpStatus.OK);
     }
 
     @GetMapping("/count")

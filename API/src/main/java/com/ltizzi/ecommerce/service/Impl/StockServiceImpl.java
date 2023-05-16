@@ -11,6 +11,8 @@ import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.repository.StockRepository;
 import com.ltizzi.ecommerce.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,8 +39,11 @@ public class StockServiceImpl implements StockService {
     private StockEntryMapper entryMapper;
 
     @Override
-    public List<StockResponse> getStocks() {
-        return stockMapper.toArrayStockResponse(stockRepo.findAll());
+    public List<StockResponse> getStocks(int page, int limit) {
+        PageRequest pageReq = PageRequest.of(page, limit);
+        Page<StockEntity> stockPage = stockRepo.findAll(pageReq);
+        List<StockEntity> stockList = stockPage.getContent();
+        return stockMapper.toArrayStockResponse(stockList);
     }
 
     @Override

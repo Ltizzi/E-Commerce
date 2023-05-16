@@ -3,6 +3,7 @@ package com.ltizzi.ecommerce.service;
 import com.ltizzi.ecommerce.exception.InvalidUserException;
 import com.ltizzi.ecommerce.model.user.UserRequest;
 import com.ltizzi.ecommerce.model.user.UserResponse;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.List;
 public interface UserService {
 
     public List<UserResponse> getUsers();
+
+    public CountTable countUsers();
 
     public UserResponse getUserById(Long id) throws HttpClientErrorException.NotFound;
 

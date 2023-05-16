@@ -4,6 +4,7 @@ import com.ltizzi.ecommerce.exception.InvalidStockEntryException;
 import com.ltizzi.ecommerce.exception.NotFoundException;
 import com.ltizzi.ecommerce.model.stockEntry.StockEntryRequest;
 import com.ltizzi.ecommerce.model.stockEntry.StockEntryResponse;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.service.StockEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,12 @@ public class StockEntryController {
     @ResponseBody
     public ResponseEntity<List<StockEntryResponse>> getEntries() {
         return new ResponseEntity<>(entryServ.getStockEntries(), HttpStatus.OK);
+    }
+
+    @GetMapping("/count")
+    @ResponseBody
+    public ResponseEntity<CountTable> countEntries() {
+        return new ResponseEntity<>(entryServ.countEntries(), HttpStatus.OK);
     }
 
     @GetMapping("/byId")

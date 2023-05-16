@@ -9,6 +9,7 @@ import com.ltizzi.ecommerce.model.purchase.PurchaseResponse;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderEntity;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderMapper;
 import com.ltizzi.ecommerce.model.stock.StockEntity;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.repository.PurchaseRepository;
 import com.ltizzi.ecommerce.repository.StockRepository;
 import com.ltizzi.ecommerce.repository.UserRepository;
@@ -46,6 +47,12 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public List<PurchaseResponse> getPurchases() {
         return purchMapper.toArrayPurchaseResponse(purchRepo.findAll());
+    }
+
+    @Override
+    public CountTable countPurchases() {
+        long totalPurchases = purchRepo.countBy();
+        return new CountTable((int) totalPurchases);
     }
 
     @Override

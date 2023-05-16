@@ -3,6 +3,7 @@ package com.ltizzi.ecommerce.controller;
 import com.ltizzi.ecommerce.exception.InvalidUserException;
 import com.ltizzi.ecommerce.model.user.UserRequest;
 import com.ltizzi.ecommerce.model.user.UserResponse;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,12 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<List<UserResponse>> getUsers() {
         return new ResponseEntity<>(userServ.getUsers(), HttpStatus.OK);
+    }
+
+    @GetMapping("/count")
+    @ResponseBody
+    public ResponseEntity<CountTable> countUsers() {
+        return new ResponseEntity<>(userServ.countUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/byId")

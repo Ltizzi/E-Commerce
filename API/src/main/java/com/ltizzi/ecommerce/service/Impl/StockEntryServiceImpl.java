@@ -10,6 +10,7 @@ import com.ltizzi.ecommerce.model.stockEntry.StockEntryEntity;
 import com.ltizzi.ecommerce.model.stockEntry.StockEntryMapper;
 import com.ltizzi.ecommerce.model.stockEntry.StockEntryRequest;
 import com.ltizzi.ecommerce.model.stockEntry.StockEntryResponse;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.repository.StockEntryRepository;
 import com.ltizzi.ecommerce.repository.StockRepository;
 import com.ltizzi.ecommerce.service.StockEntryService;
@@ -42,6 +43,12 @@ public class StockEntryServiceImpl implements StockEntryService {
     @Override
     public List<StockEntryResponse> getStockEntries() {
         return entryMapper.toArrayStockEntryResponse(entryRepo.findAll());
+    }
+
+    @Override
+    public CountTable countEntries() {
+        long totalEntries = entryRepo.countBy();
+        return new CountTable((int) totalEntries);
     }
 
     @Override

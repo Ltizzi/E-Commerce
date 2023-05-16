@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface PurchaseService {
 
-    public List<PurchaseResponse> getPurchases();
+    public List<PurchaseResponse> getPurchases(int page, int limit);
 
     public CountTable countPurchases();
 

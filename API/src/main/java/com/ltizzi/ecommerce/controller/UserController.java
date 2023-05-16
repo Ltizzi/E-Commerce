@@ -24,8 +24,9 @@ public class UserController {
 
     @GetMapping("/all")
     @ResponseBody
-    public ResponseEntity<List<UserResponse>> getUsers() {
-        return new ResponseEntity<>(userServ.getUsers(), HttpStatus.OK);
+    public ResponseEntity<List<UserResponse>> getUsers(@RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "" + Integer.MAX_VALUE) int limit) {
+        return new ResponseEntity<>(userServ.getUsers(page, limit), HttpStatus.OK);
     }
 
     @GetMapping("/count")

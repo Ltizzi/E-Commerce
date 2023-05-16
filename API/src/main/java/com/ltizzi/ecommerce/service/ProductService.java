@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    public List<ProductResponse> getProducts();
+    public List<ProductResponse> getProducts(int page, int limit);
 
     public CountTable countProducts();
 

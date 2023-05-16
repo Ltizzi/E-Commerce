@@ -5,6 +5,7 @@ import com.ltizzi.ecommerce.model.productType.ProductTypeEntity;
 import com.ltizzi.ecommerce.model.productType.ProductTypeMapper;
 import com.ltizzi.ecommerce.model.productType.ProductTypeRequest;
 import com.ltizzi.ecommerce.model.productType.ProductTypeResponse;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.repository.ProductTypeRepository;
 import com.ltizzi.ecommerce.service.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,12 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     @Override
     public List<ProductTypeResponse> getProductTypes() {
         return typeMapper.toArrayProductTypeResponse(typeRepo.findAll());
+    }
+
+    @Override
+    public CountTable countTypes() {
+        long totalTypes = typeRepo.countBy();
+        return new CountTable((int) totalTypes);
     }
 
     @Override

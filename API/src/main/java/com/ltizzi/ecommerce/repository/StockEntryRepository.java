@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StockEntryRepository extends JpaRepository<StockEntryEntity, Long> {
+
+    Long countBy();
 }

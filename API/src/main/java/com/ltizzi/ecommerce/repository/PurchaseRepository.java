@@ -15,4 +15,6 @@ import java.util.List;
 public interface PurchaseRepository extends JpaRepository<PurchaseEntity, Long> {
 
     List<PurchaseEntity> findByUser(UserEntity user);
+
+    Long countBy();
 }

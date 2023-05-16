@@ -3,6 +3,7 @@ package com.ltizzi.ecommerce.controller;
 import com.ltizzi.ecommerce.exception.InvalidProductException;
 import com.ltizzi.ecommerce.model.product.ProductRequest;
 import com.ltizzi.ecommerce.model.product.ProductResponse;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,12 @@ public class ProductController {
     @ResponseBody
     public ResponseEntity<List<ProductResponse>> getProducts() {
         return new ResponseEntity<>(prodServ.getProducts(), HttpStatus.OK);
+    }
+
+    @GetMapping("/count")
+    @ResponseBody
+    public ResponseEntity<CountTable> countProducts() {
+        return new ResponseEntity<>(prodServ.countProducts(), HttpStatus.OK);
     }
 
     @GetMapping("/byId")

@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductTypeRepository extends JpaRepository<ProductTypeEntity, Long> {
+
+    Long countBy();
 }

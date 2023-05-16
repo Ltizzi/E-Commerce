@@ -7,6 +7,7 @@ import com.ltizzi.ecommerce.model.product.ProductResponse;
 import com.ltizzi.ecommerce.model.productType.ProductTypeMapper;
 import com.ltizzi.ecommerce.model.stock.StockEntity;
 import com.ltizzi.ecommerce.model.stockEntry.StockEntryEntity;
+import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.repository.ProductRepository;
 import com.ltizzi.ecommerce.repository.StockRepository;
 import com.ltizzi.ecommerce.service.ProductService;
@@ -40,6 +41,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponse> getProducts() {
         return prodMapper.toArrayProductResponse((ArrayList<ProductEntity>) prodRepo.findAll());
+    }
+
+    @Override
+    public CountTable countProducts() {
+        long totalProducts = prodRepo.countBy();
+        return new CountTable((int) totalProducts);
     }
 
     @Override

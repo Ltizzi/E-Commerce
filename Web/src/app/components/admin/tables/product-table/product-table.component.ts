@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/common/models/product';
 import { Router } from '@angular/router';
+import { PaginationService } from 'src/app/services/ui/pagination.service';
 
 @Component({
   selector: 'app-product-table',
@@ -19,15 +20,73 @@ export class ProductTableComponent {
   productToEdit!: Object;
   productToDelete!: Object;
 
-  constructor(private prodServ: ProductService, private router: Router) {}
+  ITEMS_PER_PAGE = 5;
+  pages!: Array<number>;
+  totalProducts!: number;
+  currentPage!: number;
+
+  constructor(
+    private prodServ: ProductService,
+    private router: Router,
+    private pagination: PaginationService
+  ) {}
 
   ngOnInit(): void {
+    this.prodServ.getTotal().subscribe((data: any) => {
+      this.totalProducts = data.total;
+      this.pages = this.pagination.build(
+        this.ITEMS_PER_PAGE,
+        this.totalProducts
+      );
+    });
+
+    this.fetchProducts(1, this.ITEMS_PER_PAGE);
+  }
+
+  //DATA FETCH
+
+  fetchProducts(page: number, limit: number) {
+    let correctPage = page - 1;
+    this.prodServ
+      .getAllWithPagination(correctPage, limit)
+      .subscribe((data: any) => {
+        this.products = data;
+      });
+  }
+
+  reloadProducts() {
     this.prodServ.getAll().subscribe((data: any) => (this.products = data));
   }
+
+  //PAGINATION
+
+  goNext() {
+    console.log('asda');
+    this.currentPage = this.pagination.goNext();
+    this.fetchProducts(this.currentPage, this.ITEMS_PER_PAGE);
+  }
+
+  goPrevious() {
+    console.log('asda');
+    this.currentPage = this.pagination.goPrevious();
+    this.fetchProducts(this.currentPage, this.ITEMS_PER_PAGE);
+  }
+
+  goPage(page: number) {
+    this.currentPage = this.pagination.goPage(page);
+    this.fetchProducts(this.currentPage, this.ITEMS_PER_PAGE);
+  }
+
+  //ACTIONS + MODALS
 
   goToProduct(id: number | undefined, event: Event) {
     event.preventDefault();
     this.router.navigate(['/product'], { queryParams: { id: id } });
+  }
+
+  deleteProduct(product: Product) {
+    this.productToDelete = product;
+    this.showDeleteDialog = !this.showDeleteDialog;
   }
 
   showEditModal(product: Product) {
@@ -37,11 +96,6 @@ export class ProductTableComponent {
     this.productToEdit = product;
   }
 
-  deleteProduct(product: Product) {
-    this.productToDelete = product;
-    this.showDeleteDialog = !this.showDeleteDialog;
-  }
-
   closeDeleteDialog() {
     this.showDeleteDialog = !this.showDeleteDialog;
     this.prodServ.getAll().subscribe((data: any) => (this.products = data));
@@ -49,10 +103,6 @@ export class ProductTableComponent {
 
   closeModal() {
     this.isEditModalDisplayed = !this.isEditModalDisplayed;
-    this.prodServ.getAll().subscribe((data: any) => (this.products = data));
-  }
-
-  reloadProducts() {
     this.prodServ.getAll().subscribe((data: any) => (this.products = data));
   }
 }

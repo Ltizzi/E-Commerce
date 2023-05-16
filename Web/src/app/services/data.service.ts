@@ -16,6 +16,14 @@ export class DataService {
     return this.http.get(this.url + '/all');
   }
 
+  getAllWithPagination(page: number, limit: number) {
+    return this.http.get(this.url + '/all?page=' + page + '&limit=' + limit);
+  }
+
+  getTotal() {
+    return this.http.get(this.url + '/count');
+  }
+
   getById(id: number) {
     return this.http.get(this.url + '/byId?' + this.urlParam + id).pipe(
       map((response) => response),

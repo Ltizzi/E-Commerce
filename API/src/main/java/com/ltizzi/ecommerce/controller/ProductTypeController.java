@@ -24,8 +24,9 @@ public class ProductTypeController {
 
     @GetMapping("/all")
     @ResponseBody
-    public ResponseEntity<List<ProductTypeResponse>> getTypes() {
-        return new ResponseEntity<>(typeServ.getProductTypes(), HttpStatus.OK);
+    public ResponseEntity<List<ProductTypeResponse>> getTypes(@RequestParam(defaultValue = "0") int page,
+                                                              @RequestParam(defaultValue = "" + Integer.MAX_VALUE) int limit) {
+        return new ResponseEntity<>(typeServ.getProductTypes(page, limit), HttpStatus.OK);
     }
 
     @GetMapping("/count")

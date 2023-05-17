@@ -21,6 +21,10 @@ export class AdminDashboardComponent {
   totalStock!: number;
   totalEntries!: number;
 
+  state: any = {
+    actualTab: 'users',
+  };
+
   constructor(
     private prodServ: ProductService,
     private typeServ: ProductTypeService,
@@ -49,5 +53,9 @@ export class AdminDashboardComponent {
     this.purchServ
       .getTotal()
       .subscribe((data: any) => (this.totalPurchases = data.total));
+  }
+
+  changeTab(tab: string) {
+    this.state.actualTab = tab;
   }
 }

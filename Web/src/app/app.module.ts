@@ -31,6 +31,21 @@ import { ProductsPanelComponent } from './components/admin/layout/products-panel
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditProductModalComponent } from './components/admin/forms/edit-product-modal/edit-product-modal.component';
 import { DeleteProductModalComponent } from './components/admin/ui/delete-product-modal/delete-product-modal.component';
+import { PurchaseComponent } from './components/layout/purchase/purchase.component';
+import { TypeTableComponent } from './components/admin/tables/type-table/type-table.component';
+import { StockTableComponent } from './components/admin/tables/stock-table/stock-table.component';
+import { EntryTableComponent } from './components/admin/tables/entry-table/entry-table.component';
+import { PurchaseTableComponent } from './components/admin/tables/purchase-table/purchase-table.component';
+import { UserTableComponent } from './components/admin/tables/user-table/user-table.component';
+
+import { StockEditorModalComponent } from './components/admin/forms/stock-editor-modal/stock-editor-modal.component';
+import { EntryEditorModalComponent } from './components/admin/forms/entry-editor-modal/entry-editor-modal.component';
+import { TypePanelComponent } from './components/admin/layout/type-panel/type-panel.component';
+import { StockPanelComponent } from './components/admin/layout/stock-panel/stock-panel.component';
+import { EntryPanelComponent } from './components/admin/layout/entry-panel/entry-panel.component';
+import { DeleteTypeModalComponent } from './components/admin/ui/delete-type-modal/delete-type-modal.component';
+import { DeleteStockModalComponent } from './components/admin/ui/delete-stock-modal/delete-stock-modal.component';
+import { DeleteEntryModalComponent } from './components/admin/ui/delete-entry-modal/delete-entry-modal.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +65,20 @@ import { DeleteProductModalComponent } from './components/admin/ui/delete-produc
     ProductsPanelComponent,
     EditProductModalComponent,
     DeleteProductModalComponent,
+    PurchaseComponent,
+    TypeTableComponent,
+    StockTableComponent,
+    EntryTableComponent,
+    PurchaseTableComponent,
+    UserTableComponent,
+    StockEditorModalComponent,
+    EntryEditorModalComponent,
+    TypePanelComponent,
+    StockPanelComponent,
+    EntryPanelComponent,
+    DeleteTypeModalComponent,
+    DeleteStockModalComponent,
+    DeleteEntryModalComponent,
   ],
   imports: [
     BrowserModule,

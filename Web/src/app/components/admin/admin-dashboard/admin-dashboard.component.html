@@ -1,39 +1,81 @@
 <div class="flex flex-col">
   <section class="text-gray-600 body-font">
     <div class="container px-1 py-24 mx-auto">
-      <div class="flex flex-wrap -m-4 text-center gap-32">
-        <div class="p-4 sm:w-1/4 w-1/2 2xl:w-32">
-          <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">
+      <div class="flex flex-wrap -m-4 text-center gap-32 text-gray-900">
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32"
+          (click)="changeTab('users')"
+          [ngClass]="{
+            'text-white bg-indigo rounded-2xl shadow-lg shadow-gray-600':
+              state.actualTab == 'users'
+          }"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl">
             {{ totalUsers }}
           </h2>
           <p class="leading-relaxed">Users</p>
         </div>
-        <div class="p-4 sm:w-1/4 w-1/2 2xl:w-32">
-          <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32"
+          (click)="changeTab('products')"
+          [ngClass]="{
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600':
+              state.actualTab == 'products'
+          }"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl">
             {{ totalProducts }}
           </h2>
           <p class="leading-relaxed">Products</p>
         </div>
-        <div class="p-4 sm:w-1/4 w-1/2 2xl:w-32">
-          <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32"
+          (click)="changeTab('types')"
+          [ngClass]="{
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600':
+              state.actualTab == 'types'
+          }"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl">
             {{ totalTypes }}
           </h2>
-          <p class="leading-relaxed">Product Types</p>
+          <p class="leading-relaxed">Types</p>
         </div>
-        <div class="p-4 sm:w-1/4 w-1/2 2xl:w-32">
-          <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32"
+          (click)="changeTab('purchases')"
+          [ngClass]="{
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600':
+              state.actualTab == 'purchases'
+          }"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl">
             {{ totalPurchases }}
           </h2>
           <p class="leading-relaxed">Purchases</p>
         </div>
-        <div class="p-4 sm:w-1/4 w-1/2 2xl:w-32">
-          <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32"
+          (click)="changeTab('stock')"
+          [ngClass]="{
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600':
+              state.actualTab == 'stock'
+          }"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl">
             {{ totalStock }}
           </h2>
           <p class="leading-relaxed">Stock</p>
         </div>
-        <div class="p-4 sm:w-1/4 w-1/2 2xl:w-32">
-          <h2 class="title-font font-medium sm:text-4xl text-3xl text-gray-900">
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32"
+          (click)="changeTab('entries')"
+          [ngClass]="{
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600':
+              state.actualTab == 'entries'
+          }"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl">
             {{ totalEntries }}
           </h2>
           <p class="leading-relaxed">Entries</p>
@@ -41,15 +83,14 @@
       </div>
     </div>
   </section>
-  <app-products-panel></app-products-panel>
-  <!-- <button
-    (click)="openModal()"
-    class="w-32 bg-emerald-600 text-white rounded-xl shadow-lg shadow-gray-700 py-1 transform transition-all hover:scale-110 mx-auto"
-  >
-    New Product
-  </button>
-  <app-new-product-modal
-    [data]="showNewProductModal"
-    (closeModal)="closeModal()"
-  ></app-new-product-modal> -->
+  <app-user-table *ngIf="state.actualTab == 'users'"></app-user-table>
+  <app-products-panel
+    *ngIf="state.actualTab == 'products'"
+  ></app-products-panel>
+  <app-type-panel *ngIf="state.actualTab == 'types'"></app-type-panel>
+  <app-purchase-table
+    *ngIf="state.actualTab == 'purchases'"
+  ></app-purchase-table>
+  <app-stock-table *ngIf="state.actualTab == 'stock'"></app-stock-table>
+  <app-entry-panel *ngIf="state.actualTab == 'entries'"></app-entry-panel>
 </div>

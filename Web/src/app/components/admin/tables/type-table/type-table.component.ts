@@ -1,5 +1,11 @@
 import { faPen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { Component } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { ProductType } from 'src/common/models/type';
 import { ProductTypeService } from 'src/app/services/product-type.service';
 import { PaginationService } from 'src/app/services/ui/pagination.service';
@@ -10,13 +16,15 @@ import { PaginationService } from 'src/app/services/ui/pagination.service';
   styleUrls: ['./type-table.component.css'],
 })
 export class TypeTableComponent {
+  @Input() reload!: boolean;
+  @Output() typeToEdit = new EventEmitter<ProductType>();
+  @Output() typeToDelete = new EventEmitter<ProductType>();
+
   types: Array<ProductType> = [];
   faPen = faPen;
   faTrashCan = faTrashCan;
 
   isDeleteDialogOpen: boolean = false;
-  typeToEdit!: Object;
-  typeToDelete!: Object;
 
   ITEMS_PER_PAGE = 5;
   pages!: Array<number>;
@@ -35,6 +43,21 @@ export class TypeTableComponent {
     });
     this.fetchTypes(1, this.ITEMS_PER_PAGE);
     this.currentPage = this.pagination.getCurrentPage();
+  }
+
+  //refresh on new type
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['reload'] && changes['reload'].currentValue) {
+      this.fetchTotal();
+      this.reloadTypes();
+    }
+  }
+
+  fetchTotal() {
+    this.typeServ.getTotal().subscribe((data: any) => {
+      this.totalTypes = data.total;
+      this.pages = this.pagination.build(this.ITEMS_PER_PAGE, this.totalTypes);
+    });
   }
 
   fetchTypes(page: number, limit: number) {
@@ -69,16 +92,10 @@ export class TypeTableComponent {
   }
 
   editType(type: ProductType) {
-    this.typeToDelete = type;
+    this.typeToEdit.emit(type);
   }
 
   deleteType(type: ProductType) {
-    this.typeToDelete = type;
-    this.isDeleteDialogOpen = !this.isDeleteDialogOpen;
-  }
-
-  closeDeleteDialog() {
-    this.isDeleteDialogOpen = !this.isDeleteDialogOpen;
-    this.reloadTypes();
+    this.typeToDelete.emit(type);
   }
 }

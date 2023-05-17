@@ -15,13 +15,7 @@ export class PaginationService {
   currentPage!: number;
   totalPages!: number;
 
-  constructor() {
-    // @Inject('totalItems') total: number // @Inject('itemsPerPage') itemsPerPage: number,
-    // this.ITEMS_PER_PAGE = itemsPerPage;
-    // this.totalItems = total;
-    // this.setTotalPages(itemsPerPage, total);
-    // this.buildPages();
-  }
+  constructor() {}
 
   getCurrentPage() {
     return this.currentPage;

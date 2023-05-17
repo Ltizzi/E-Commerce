@@ -51,7 +51,7 @@ public class StockMapper {
             assert stock != null;
             stock.setStock_id(stockReq.getStock_id());
         }
-        
+
         stock.setCantidad(stockReq.getCantidad());
         stock.setEntries(entryMapper.toArrayStockEntryEntity(stockReq.getEntries()));
         ProductEntity product = prodRepo.findById(stockReq.getProduct().getId()).orElseThrow();

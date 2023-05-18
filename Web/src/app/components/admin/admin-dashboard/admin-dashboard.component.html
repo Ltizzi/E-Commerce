@@ -3,10 +3,10 @@
     <div class="container px-1 py-24 mx-auto">
       <div class="flex flex-wrap -m-4 text-center gap-32 text-gray-900">
         <div
-          class="p-4 sm:w-1/4 w-1/2 2xl:w-32"
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
           (click)="changeTab('users')"
           [ngClass]="{
-            'text-white bg-indigo rounded-2xl shadow-lg shadow-gray-600':
+            'text-white bg-indigo rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
               state.actualTab == 'users'
           }"
         >
@@ -16,10 +16,10 @@
           <p class="leading-relaxed">Users</p>
         </div>
         <div
-          class="p-4 sm:w-1/4 w-1/2 2xl:w-32"
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
           (click)="changeTab('products')"
           [ngClass]="{
-            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600':
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
               state.actualTab == 'products'
           }"
         >
@@ -29,10 +29,10 @@
           <p class="leading-relaxed">Products</p>
         </div>
         <div
-          class="p-4 sm:w-1/4 w-1/2 2xl:w-32"
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
           (click)="changeTab('types')"
           [ngClass]="{
-            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600':
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
               state.actualTab == 'types'
           }"
         >
@@ -42,10 +42,10 @@
           <p class="leading-relaxed">Types</p>
         </div>
         <div
-          class="p-4 sm:w-1/4 w-1/2 2xl:w-32"
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
           (click)="changeTab('purchases')"
           [ngClass]="{
-            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600':
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
               state.actualTab == 'purchases'
           }"
         >
@@ -55,10 +55,10 @@
           <p class="leading-relaxed">Purchases</p>
         </div>
         <div
-          class="p-4 sm:w-1/4 w-1/2 2xl:w-32"
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
           (click)="changeTab('stock')"
           [ngClass]="{
-            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600':
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
               state.actualTab == 'stock'
           }"
         >
@@ -68,10 +68,10 @@
           <p class="leading-relaxed">Stock</p>
         </div>
         <div
-          class="p-4 sm:w-1/4 w-1/2 2xl:w-32"
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
           (click)="changeTab('entries')"
           [ngClass]="{
-            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600':
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
               state.actualTab == 'entries'
           }"
         >

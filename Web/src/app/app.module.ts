@@ -37,8 +37,6 @@ import { StockTableComponent } from './components/admin/tables/stock-table/stock
 import { EntryTableComponent } from './components/admin/tables/entry-table/entry-table.component';
 import { PurchaseTableComponent } from './components/admin/tables/purchase-table/purchase-table.component';
 import { UserTableComponent } from './components/admin/tables/user-table/user-table.component';
-
-import { StockEditorModalComponent } from './components/admin/forms/stock-editor-modal/stock-editor-modal.component';
 import { EntryEditorModalComponent } from './components/admin/forms/entry-editor-modal/entry-editor-modal.component';
 import { TypePanelComponent } from './components/admin/layout/type-panel/type-panel.component';
 import { StockPanelComponent } from './components/admin/layout/stock-panel/stock-panel.component';
@@ -71,7 +69,6 @@ import { DeleteEntryModalComponent } from './components/admin/ui/delete-entry-mo
     EntryTableComponent,
     PurchaseTableComponent,
     UserTableComponent,
-    StockEditorModalComponent,
     EntryEditorModalComponent,
     TypePanelComponent,
     StockPanelComponent,

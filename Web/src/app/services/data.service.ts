@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, throwError } from 'rxjs';
+import { Product } from 'src/common/models/product';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,13 @@ export class DataService {
 
   getTotal() {
     return this.http.get(this.url + '/count');
+  }
+
+  checkStock(product: Product) {
+    return this.http.post(this.url + '/checkStock', product).pipe(
+      map((response) => response),
+      catchError(this.handleError)
+    );
   }
 
   getById(id: number) {

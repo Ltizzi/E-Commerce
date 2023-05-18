@@ -14,10 +14,11 @@ export class EntryTableComponent {
   faPen = faPen;
   faTrashCan = faTrashCan;
 
-  isEditDialogOpen: boolean = false;
+  isEditorDialogOpen: boolean = false;
   isDeleteDialogOPen: boolean = false;
-  entryToEdit!: Object;
+  entryToEdit!: Entry;
   entryToDelete!: Object;
+  newOrEdit: boolean = false;
 
   ITEMS_PER_PAGE = 5;
   pages!: Array<number>;
@@ -82,7 +83,7 @@ export class EntryTableComponent {
   }
 
   editEntry(entry: Entry) {
-    this.isEditDialogOpen = !this.isEditDialogOpen;
+    this.isEditorDialogOpen = !this.isEditorDialogOpen;
     this.entryToEdit = entry;
   }
 
@@ -92,7 +93,7 @@ export class EntryTableComponent {
   }
 
   closeModal() {
-    this.isEditDialogOpen = !this.isEditDialogOpen;
+    this.isEditorDialogOpen = !this.isEditorDialogOpen;
     this.reloadEntries();
   }
 }

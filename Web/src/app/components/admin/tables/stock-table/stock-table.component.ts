@@ -1,4 +1,4 @@
-import { faPen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Component } from '@angular/core';
 import { Stock } from 'src/common/models/stock';
 import { StockService } from 'src/app/services/stock.service';
@@ -13,10 +13,13 @@ export class StockTableComponent {
   stocks: Array<Stock> = [];
   faPen = faPen;
   faTrashCan = faTrashCan;
+  faPlus = faPlus;
 
-  isEditDialogOpen: boolean = false;
+  isEditorDialogOpen: boolean = false;
+  stockToEdit!: Stock;
+  newOrEdit!: boolean;
+
   isDeleteDialogOpen: boolean = false;
-  stockToEdit!: Object;
   stockToDelete!: Object;
 
   ITEMS_PER_PAGE = 5;
@@ -74,23 +77,34 @@ export class StockTableComponent {
 
   goToStock(id: number | undefined, event: Event) {}
 
-  deleteStock(stock: Stock) {
-    this.stockToDelete = stock;
-    this.isDeleteDialogOpen = !this.isDeleteDialogOpen;
-  }
+  // deleteStock(stock: Stock) {
+  //   this.stockToDelete = stock;
+  //   this.isDeleteDialogOpen = !this.isDeleteDialogOpen;
+  // }
 
-  showEditModal(stock: Stock) {
-    this.isEditDialogOpen = !this.isEditDialogOpen;
+  // showEditModal(stock: Stock) {
+  //   this.isEditDialogOpen = !this.isEditDialogOpen;
+  //   this.stockToEdit = stock;
+  // }
+
+  // closeDeleteDialog() {
+  //   this.isDeleteDialogOpen = !this.isDeleteDialogOpen;
+  //   this.reloadStocks();
+  // }
+
+  // closeEditDialog() {
+  //   this.isEditDialogOpen = !this.isEditDialogOpen;
+  //   this.reloadStocks();
+  // }
+
+  showNewEntryModal(stock: Stock, newOrEdit: boolean) {
+    this.isEditorDialogOpen = !this.isEditorDialogOpen;
     this.stockToEdit = stock;
+    this.newOrEdit = newOrEdit;
   }
 
-  closeDeleteDialog() {
-    this.isDeleteDialogOpen = !this.isDeleteDialogOpen;
-    this.reloadStocks();
-  }
-
-  closeEditDialog() {
-    this.isEditDialogOpen = !this.isEditDialogOpen;
+  closeEntryEditor() {
+    this.isEditorDialogOpen = !this.isEditorDialogOpen;
     this.reloadStocks();
   }
 }

@@ -15,9 +15,9 @@ export class EntryTableComponent {
   faTrashCan = faTrashCan;
 
   isEditorDialogOpen: boolean = false;
-  isDeleteDialogOPen: boolean = false;
+  isDeleteDialogOpen: boolean = false;
   entryToEdit!: Entry;
-  entryToDelete!: Object;
+  entryToDelete!: Entry;
   newOrEdit: boolean = false;
 
   ITEMS_PER_PAGE = 5;
@@ -78,7 +78,7 @@ export class EntryTableComponent {
   //ACTIONS
 
   deleteEntry(entry: Entry) {
-    this.isDeleteDialogOPen = !this.isDeleteDialogOPen;
+    this.isDeleteDialogOpen = !this.isDeleteDialogOpen;
     this.entryToDelete = entry;
   }
 
@@ -88,7 +88,7 @@ export class EntryTableComponent {
   }
 
   closeDeleteDialog() {
-    this.isDeleteDialogOPen = !this.isDeleteDialogOPen;
+    this.isDeleteDialogOpen = !this.isDeleteDialogOpen;
     this.reloadEntries();
   }
 

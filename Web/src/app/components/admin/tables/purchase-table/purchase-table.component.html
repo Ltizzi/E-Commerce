@@ -7,7 +7,7 @@
         <th scope="col" class="px-6 py-3">Purchase Id</th>
         <th scope="col" class="px-6 py-3">Orders</th>
         <th scope="col" class="px-6 py-3">User Id</th>
-        <th scope="col" class="px-6 py-3">Action</th>
+        <!-- <th scope="col" class="px-6 py-3">Action</th> -->
       </tr>
     </thead>
     <tbody>
@@ -36,20 +36,20 @@
           </div>
         </th>
         <td class="px-6 py-4">{{ purch.user_id }}</td>
-        <td class="px-6 py-4 text-right">
+        <!-- <td class="px-6 py-4 text-right">
           <div class="flex flex-row gap-2">
-            <!-- <fa-icon
+            <fa-icon
               [icon]="faPen"
               class="bg-violet-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer"
               (click)="showEditModal(product)"
-            ></fa-icon> -->
+            ></fa-icon>
             <fa-icon
               [icon]="faTrashCan"
               class="bg-rose-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer hover:bg-rose-700"
               (click)="deletePurchase(purch)"
             ></fa-icon>
           </div>
-        </td>
+        </td> -->
       </tr>
     </tbody>
   </table>

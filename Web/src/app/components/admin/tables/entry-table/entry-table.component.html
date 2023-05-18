@@ -108,4 +108,12 @@
     [show]="isEditorDialogOpen"
     *ngIf="isEditorDialogOpen"
   ></app-entry-editor-modal>
+  <app-delete-entry-modal
+    *ngIf="isDeleteDialogOpen"
+    [show]="isDeleteDialogOpen"
+    [entry]="entryToDelete"
+    (closeModal)="(closeDeleteDialog)"
+    (reloadEntries)="(reloadEntries)"
+  >
+  </app-delete-entry-modal>
 </div>

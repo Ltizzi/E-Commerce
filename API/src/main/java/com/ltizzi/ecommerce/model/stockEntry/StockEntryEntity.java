@@ -17,8 +17,8 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-@Table(name = "stock-entries")
-@SQLDelete(sql = "UPDATE stock-entries SET soft_delete = true where entry_id =?")
+@Table(name = "stock_entries")
+@SQLDelete(sql = "UPDATE stock_entries SET soft_delete = true where entry_id=?")
 @Where(clause = "soft_delete = false")
 public class StockEntryEntity {
 

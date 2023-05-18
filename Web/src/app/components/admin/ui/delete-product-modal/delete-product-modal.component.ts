@@ -29,6 +29,7 @@ export class DeleteProductModalComponent {
     this.prodServ.delete(this.product.id).subscribe((data) => {
       this.successOperation = true;
       setTimeout(() => {
+        this.successOperation = false;
         this.show = false;
       }, 3000);
     });

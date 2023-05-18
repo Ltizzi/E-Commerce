@@ -41,8 +41,6 @@ import { EntryEditorModalComponent } from './components/admin/forms/entry-editor
 import { TypePanelComponent } from './components/admin/layout/type-panel/type-panel.component';
 import { StockPanelComponent } from './components/admin/layout/stock-panel/stock-panel.component';
 import { EntryPanelComponent } from './components/admin/layout/entry-panel/entry-panel.component';
-import { DeleteTypeModalComponent } from './components/admin/ui/delete-type-modal/delete-type-modal.component';
-import { DeleteStockModalComponent } from './components/admin/ui/delete-stock-modal/delete-stock-modal.component';
 import { DeleteEntryModalComponent } from './components/admin/ui/delete-entry-modal/delete-entry-modal.component';
 
 @NgModule({
@@ -73,8 +71,6 @@ import { DeleteEntryModalComponent } from './components/admin/ui/delete-entry-mo
     TypePanelComponent,
     StockPanelComponent,
     EntryPanelComponent,
-    DeleteTypeModalComponent,
-    DeleteStockModalComponent,
     DeleteEntryModalComponent,
   ],
   imports: [

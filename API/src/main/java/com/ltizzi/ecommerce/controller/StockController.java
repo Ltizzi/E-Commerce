@@ -1,6 +1,8 @@
 package com.ltizzi.ecommerce.controller;
 
 import com.ltizzi.ecommerce.exception.InvalidStockException;
+import com.ltizzi.ecommerce.exception.NotFoundException;
+import com.ltizzi.ecommerce.model.product.ProductRequest;
 import com.ltizzi.ecommerce.model.stock.StockRequest;
 import com.ltizzi.ecommerce.model.stock.StockResponse;
 import com.ltizzi.ecommerce.model.utils.CountTable;
@@ -33,6 +35,12 @@ public class StockController {
     @ResponseBody
     public ResponseEntity<CountTable> countStocks() {
         return new ResponseEntity<>(stockServ.countStocks(), HttpStatus.OK);
+    }
+
+    @PostMapping("/checkStock")
+    @ResponseBody
+    public ResponseEntity<Boolean> isStockForProduct(@RequestBody ProductRequest product) throws NotFoundException {
+        return new ResponseEntity<>(stockServ.isStockForProduct(product), HttpStatus.OK);
     }
 
     @GetMapping("/byId")

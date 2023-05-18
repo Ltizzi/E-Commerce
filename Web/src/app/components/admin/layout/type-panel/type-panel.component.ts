@@ -68,8 +68,21 @@ export class TypePanelComponent {
     }
   }
 
+  typeEditor: boolean = false;
+
   editType(type: ProductType) {
-    this.showNewTypeForm = !this.showNewTypeForm;
+    if (this.showNewTypeForm && !this.typeEditor) {
+      this.showNewTypeForm = !this.showNewTypeForm;
+      this.typeEditor = !this.typeEditor;
+    } else if (
+      !this.showNewTypeForm &&
+      this.typeEditor &&
+      type.id == this.typeToEdit.id
+    ) {
+      this.showNewTypeForm = !this.showNewTypeForm;
+      this.typeEditor = !this.typeEditor;
+    }
+
     this.typeToEdit = type;
     this.editTypeForm = new FormGroup({
       name: new FormControl(this.typeToEdit.name, [

@@ -33,6 +33,11 @@
         <td class="px-6 py-4 text-right">
           <div class="flex flex-row gap-2">
             <fa-icon
+              [icon]="faPlus"
+              class="bg-emerald-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer hover:bg-emerald-700"
+              (click)="showNewEntryModal(stock, true)"
+            ></fa-icon>
+            <!-- <fa-icon
               [icon]="faPen"
               class="bg-violet-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer"
               (click)="showEditModal(stock)"
@@ -41,7 +46,7 @@
               [icon]="faTrashCan"
               class="bg-rose-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer"
               (click)="deleteStock(stock)"
-            ></fa-icon>
+            ></fa-icon> -->
           </div>
         </td>
       </tr>
@@ -104,4 +109,11 @@
       </li>
     </ul>
   </nav>
+
+  <app-entry-editor-modal
+    [newOrEdit]="newOrEdit"
+    [stock]="stockToEdit"
+    [show]="isEditorDialogOpen"
+    *ngIf="isEditorDialogOpen"
+  ></app-entry-editor-modal>
 </div>

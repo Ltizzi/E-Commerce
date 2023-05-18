@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
+import { StockService } from 'src/app/services/stock.service';
 import { Product } from 'src/common/models/product';
 
 @Component({
@@ -12,10 +13,12 @@ export class ProductPageComponent {
   product!: Product;
   id!: number;
   isLoaded: Boolean = false;
+  isStock!: boolean;
 
   constructor(
     private prodServ: ProductService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private stockServ: StockService
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +42,13 @@ export class ProductPageComponent {
   getById(id: number) {
     this.prodServ.getById(id).subscribe((data: any) => {
       this.product = data;
+      this.checkStock();
     });
+  }
+
+  checkStock() {
+    this.stockServ
+      .checkStock(this.product)
+      .subscribe((data: any) => (this.isStock = data));
   }
 }

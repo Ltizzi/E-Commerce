@@ -31,12 +31,12 @@
           <div class="flex flex-row gap-2">
             <fa-icon
               [icon]="faPen"
-              class="bg-violet-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer"
+              class="bg-violet-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer hover:bg-violet-700"
               (click)="editEntry(entry)"
             ></fa-icon>
             <fa-icon
               [icon]="faTrashCan"
-              class="bg-rose-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer"
+              class="bg-rose-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer hover:bg-rose-700"
               (click)="deleteEntry(entry)"
             ></fa-icon>
           </div>
@@ -101,4 +101,11 @@
       </li>
     </ul>
   </nav>
+
+  <app-entry-editor-modal
+    [newOrEdit]="false"
+    [entryToEdit]="entryToEdit"
+    [show]="isEditorDialogOpen"
+    *ngIf="isEditorDialogOpen"
+  ></app-entry-editor-modal>
 </div>

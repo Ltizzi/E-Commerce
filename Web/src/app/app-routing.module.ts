@@ -5,6 +5,7 @@ import { ProductListComponent } from './components/product/product-list/product-
 import { ProductPageComponent } from './components/product/product-page/product-page.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { PurchaseComponent } from './components/layout/purchase/purchase.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'product', component: ProductPageComponent },
   { path: 'admin', component: AdminDashboardComponent },
   { path: 'purchase', component: PurchaseComponent },
+  { path: 'order', component: OrdersComponent },
 ];
 
 @NgModule({

@@ -7,7 +7,7 @@
         <th scope="col" class="px-6 py-3">Purchase Id</th>
         <th scope="col" class="px-6 py-3">Orders</th>
         <th scope="col" class="px-6 py-3">User Id</th>
-        <!-- <th scope="col" class="px-6 py-3">Action</th> -->
+        <th scope="col" class="px-6 py-3">Income</th>
       </tr>
     </thead>
     <tbody>
@@ -26,16 +26,19 @@
             *ngFor="let order of purch.orders"
           >
             <p>Order: {{ order.shop_order_id }}</p>
-            <p>
-              Product: {{ order.cart.product.name }} -
-              <span>{{ order.cart.product.brand }}</span>
-            </p>
-            <p>Type: {{ order.cart.product.prod_type.name }}</p>
-            <p>Quantity: {{ order.cart.cantidad }}</p>
-            <p>Total: ${{ order.total }}</p>
+            <div class="flex flex-row gap-3">
+              <p>
+                Product: {{ order.product.name }} -
+                <span>{{ order.product.brand }}</span>
+              </p>
+              <p>Type: {{ order.product.prod_type.name }}</p>
+              <p>Quantity: {{ order.cantidad }}</p>
+              <p class="mb-5">Total: ${{ order.total }}</p>
+            </div>
           </div>
         </th>
         <td class="px-6 py-4">{{ purch.user_id }}</td>
+        <td class="px-6 py-4">${{ purch.total_income }}</td>
         <!-- <td class="px-6 py-4 text-right">
           <div class="flex flex-row gap-2">
             <fa-icon

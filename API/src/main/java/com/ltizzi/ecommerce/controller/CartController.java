@@ -35,6 +35,12 @@ public class CartController {
         return new ResponseEntity<>(cartServ.getCartById(cart_id), HttpStatus.OK);
     }
 
+    @GetMapping("/byUserId")
+    @ResponseBody
+    public ResponseEntity<List<CartResponse>> getCartsByUserId(@RequestParam Long user_id) throws NotFoundException {
+        return new ResponseEntity<>(cartServ.findCartsByUserId(user_id), HttpStatus.OK);
+    }
+
     @PostMapping("/new")
     @ResponseBody
     public ResponseEntity<CartResponse> saveCart(@RequestBody CartRequest cartRequest) throws InvalidCartException, NotFoundException {

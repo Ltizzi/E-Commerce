@@ -42,6 +42,8 @@ import { TypePanelComponent } from './components/admin/layout/type-panel/type-pa
 import { StockPanelComponent } from './components/admin/layout/stock-panel/stock-panel.component';
 import { EntryPanelComponent } from './components/admin/layout/entry-panel/entry-panel.component';
 import { DeleteEntryModalComponent } from './components/admin/ui/delete-entry-modal/delete-entry-modal.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { SuccessComponent } from './components/success/success.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,8 @@ import { DeleteEntryModalComponent } from './components/admin/ui/delete-entry-mo
     StockPanelComponent,
     EntryPanelComponent,
     DeleteEntryModalComponent,
+    OrdersComponent,
+    SuccessComponent,
   ],
   imports: [
     BrowserModule,

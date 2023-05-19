@@ -7,6 +7,7 @@ import com.ltizzi.ecommerce.model.cart.CartEntity;
 import com.ltizzi.ecommerce.model.cart.CartMapper;
 import com.ltizzi.ecommerce.model.cart.CartRequest;
 import com.ltizzi.ecommerce.model.cart.CartResponse;
+import com.ltizzi.ecommerce.model.product.ProductMapper;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderEntity;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderMapper;
 import com.ltizzi.ecommerce.model.shoporder.ShopOrderRequest;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -44,6 +46,9 @@ public class ShopOrderServiceImpl implements ShopOrderService {
     @Autowired
     private CartMapper cartMapper;
 
+    @Autowired
+    private ProductMapper prodMapper;
+
 
     @Override
     public List<ShopOrderResponse> getShopOrders() throws HttpClientErrorException.NotFound {
@@ -63,14 +68,16 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 
     @Override
     public ShopOrderResponse saveShopOrder(CartRequest cartReq) throws NotFoundException, InvalidShopOrderException {
-        System.out.println(cartReq.toString());
+        //  System.out.println(cartReq.toString());
         CartEntity cart = cartRepo.findById(cartReq.getId()).get();
         ShopOrderEntity order = new ShopOrderEntity();
-        order.setCart(cart);
-        order.setTotal(cart.getTotal());
+        order.setProduct(cart.getProduct());
+        order.setCantidad(cart.getCantidad());
+        order.setTotal(cart.getProduct().getPrice().multiply(BigDecimal.valueOf(cart.getCantidad())));
         order.setUser(cart.getUser());
         order.setOrder_state("PENDING");
         order = orderRepo.save(order);
+        cartRepo.deleteById(cart.getCart_id());
         return orderMapper.toShopOrderResponse(order);
     }
 
@@ -83,8 +90,9 @@ public class ShopOrderServiceImpl implements ShopOrderService {
     public ShopOrderResponse updateShopOrder(Long id, ShopOrderRequest orderReq) throws HttpClientErrorException.NotFound, InvalidShopOrderException {
         ShopOrderEntity order = orderRepo.findById(id).orElseThrow();
         order.setOrder_state(orderReq.getOrder_state());
-        order.setTotal(orderReq.getTotal());
-        order.setCart(cartMapper.toCartEntity(orderReq.getCart()));
+        order.setTotal(orderReq.getProduct().getPrice().multiply(BigDecimal.valueOf(orderReq.getCantidad())));
+        order.setCantidad(orderReq.getCantidad());
+        order.setProduct(prodMapper.toProductEntity(orderReq.getProduct()));
         order.setUser(userRepo.findById(orderReq.getUser_id()).orElseThrow());
         orderRepo.save(order);
         return orderMapper.toShopOrderResponse(order);

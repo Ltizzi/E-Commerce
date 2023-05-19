@@ -52,6 +52,7 @@ public class CartServiceImpl implements CartService {
         return cartMapper.toCartResponse(Objects.requireNonNull(cartRepo.findById(id).orElseThrow()));
     }
 
+
     @Override
     public List<CartResponse> findCartsByUserId(Long user_id) {
         UserEntity user = userRepo.findById(user_id).orElseThrow();

@@ -7,7 +7,7 @@
         <span
           class="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0 dark:border-gray-400"
         >
-          2
+          1
         </span>
         <span>
           <h3 class="font-medium leading-tight">Cart</h3>
@@ -51,21 +51,16 @@
       </li>
     </ol>
   </div>
-  <div class="flex flex-row justify-around">
-    <div
-      class="flex justify-center items-start mt-20 ml-20 w-2/12"
-      *ngIf="!isMobile"
-    >
-      <ol
-        class="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400"
-      >
+  <div class="flex w-full h-full flex-row justify-around">
+    <div class="flex justify-end items-start mt-20 w-4/12" *ngIf="!isMobile">
+      <ol class="relative items-start text-gray-500 border-l border-gray-200">
         <li class="mb-10 ml-6">
           <span
-            class="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900"
+            class="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white"
           >
             <svg
               aria-hidden="true"
-              class="w-5 h-5 text-green-500 dark:text-green-400"
+              class="w-5 h-5 text-green-500"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -82,11 +77,11 @@
         </li>
         <li class="mb-10 ml-6">
           <span
-            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700"
+            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white"
           >
             <svg
               aria-hidden="true"
-              class="w-5 h-5 text-gray-500 dark:text-gray-400"
+              class="w-5 h-5 text-gray-500"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -103,11 +98,11 @@
         </li>
         <li class="mb-10 ml-6">
           <span
-            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700"
+            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white"
           >
             <svg
               aria-hidden="true"
-              class="w-5 h-5 text-gray-500 dark:text-gray-400"
+              class="w-5 h-5 text-gray-500"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -125,13 +120,13 @@
         </li>
         <li class="ml-6">
           <span
-            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700"
+            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white"
           >
             <svg
               aria-hidden="true"
-              class="w-5 h-5 text-gray-500 dark:text-gray-400"
-              fill="currentColor"
+              class="w-5 h-5 text-gray-500"
               viewBox="0 0 20 20"
+              fill="currentColor"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
@@ -147,8 +142,19 @@
         </li>
       </ol>
     </div>
-    <div class="w-10/12">
-      <app-cart></app-cart>
+    <div class="w-full justify-start flex">
+      <app-cart
+        (displayOrders)="showOrders()"
+        *ngIf="isCartOpen"
+        class="w-full -ml-20"
+      ></app-cart>
+      <app-orders
+        *ngIf="isOrderOpen"
+        (showCart)="showOrders()"
+        (successPurchase)="purchaseComplete($event)"
+        (showSuccess)="purchaseComplete($event)"
+      ></app-orders>
+      <app-success *ngIf="isSuccessOpen" [orders]="orders"></app-success>
     </div>
   </div>
 </div>

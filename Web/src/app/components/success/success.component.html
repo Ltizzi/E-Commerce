@@ -1,0 +1,36 @@
+<div
+  class="w-full h-full text-center items-center text-gray-700"
+  *ngIf="orders.length > 0"
+>
+  <h1 class="text-6xl text-emerald-500 font-bol my-10">Successful purchase!</h1>
+
+  <div class="relative overflow-x-auto">
+    <table class="w-8/12 text-sm text-left text-gray-500 mx-auto">
+      <thead class="text-xs text-gray-900 uppercase">
+        <tr>
+          <th scope="col" class="px-6 py-3">Image</th>
+          <th scope="col" class="px-6 py-3">Name</th>
+          <th scope="col" class="px-6 py-3">Quantity</th>
+          <th scope="col" class="px-6 py-3">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bg-white" *ngFor="let order of orders">
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            <img
+              src="{{ order.product.imageUrl[0] }}"
+              alt=""
+              class="h-12 w-14"
+            />
+          </th>
+          <td class="px-6 py-4">{{ order.product.name }}</td>
+          <td class="px-6 py-4">x{{ order.cantidad }}</td>
+          <td class="px-6 py-4">${{ order.total }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

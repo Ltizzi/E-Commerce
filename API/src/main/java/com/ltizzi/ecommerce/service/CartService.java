@@ -23,13 +23,14 @@ public interface CartService {
 
     public CartResponse getCartById(Long id) throws HttpClientErrorException.NotFound;
 
+
     public CartResponse saveCart(CartRequest cart) throws InvalidCartException, NotFoundException;
 
     public void deleteCart(Long id) throws HttpClientErrorException.NotFound;
 
     public CartResponse updateCart(Long id, CartRequest cart) throws InvalidCartException;
 
-    public List<CartResponse> findCartsByUserId(Long user_id) throws HttpClientErrorException.NotFound;
+    public List<CartResponse> findCartsByUserId(Long user_id) throws NotFoundException;
 
 
 }

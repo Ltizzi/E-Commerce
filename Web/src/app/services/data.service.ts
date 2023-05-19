@@ -46,6 +46,13 @@ export class DataService {
     );
   }
 
+  getByUserId(id: number) {
+    return this.http.get(this.url + '/byUserId?user_id=' + id).pipe(
+      map((response) => response),
+      catchError(this.handleError)
+    );
+  }
+
   create(resource: any) {
     return this.http.post(this.url + '/new', resource).pipe(
       map((response) => response),

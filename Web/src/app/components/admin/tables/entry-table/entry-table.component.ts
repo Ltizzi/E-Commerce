@@ -31,7 +31,7 @@ export class EntryTableComponent {
   ) {}
 
   ngOnInit(): void {
-    this.entryServ.getAll().subscribe((data: any) => {
+    this.entryServ.getTotal().subscribe((data: any) => {
       this.totalEntries = data.total;
       this.pages = this.pagination.build(
         this.ITEMS_PER_PAGE,

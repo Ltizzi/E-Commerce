@@ -1,9 +1,4 @@
-import { Inject, Injectable, Optional } from '@angular/core';
-import { UserService } from '../user.service';
-import { ProductService } from '../product.service';
-import { PurchaseService } from '../purchase.service';
-import { EntryService } from '../entry.service';
-import { StockService } from '../stock.service';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +33,6 @@ export class PaginationService {
   }
 
   build(itemsPerPage: number, total: number): any {
-    console.log(itemsPerPage, total);
     this.setItemsPerPage(itemsPerPage);
     this.setTotalItems(total);
     this.buildTotalPages();

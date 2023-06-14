@@ -1,0 +1,98 @@
+<div
+  class="relative overflow-x-auto shadow-md rounded-lg mt-10 w-10/12 mx-auto"
+>
+  <table class="w-full text-sm text-left text-gray-500">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3">Type Id</th>
+        <th scope="col" class="px-6 py-3">Name</th>
+        <th scope="col" class="px-6 py-3">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        class="bg-white border-b hover:bg-indigo-100"
+        *ngFor="let type of types"
+      >
+        <td class="px-6 py-4">{{ type.id }}</td>
+        <th
+          scope="row"
+          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap cursor-pointer"
+        >
+          {{ type.name }}
+        </th>
+        <td class="px-6 py-4 text-right">
+          <div class="flex flex-row gap-2">
+            <fa-icon
+              [icon]="faPen"
+              class="bg-violet-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer hover:bg-violet-700"
+              (click)="editType(type)"
+            ></fa-icon>
+            <fa-icon
+              [icon]="faTrashCan"
+              class="bg-rose-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer hover:bg-rose-700"
+              (click)="deleteType(type)"
+            ></fa-icon>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <nav aria-label="Page navigation example" class="flex justify-center">
+    <ul class="inline-flex items-center -space-x-px">
+      <li>
+        <p
+          class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:text-gray-50 hover:bg-indigo-600 hover:cursor-pointer"
+          (click)="goPrevious()"
+        >
+          <span class="sr-only">Previous</span>
+          <svg
+            aria-hidden="true"
+            class="w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </p>
+      </li>
+      <li *ngFor="let page of pages">
+        <p
+          class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:text-gray-50 hover:bg-indigo-600 hover:cursor-pointer"
+          (click)="goPage(page)"
+          [ngClass]="{ 'text-white bg-indigo': page === currentPage }"
+        >
+          {{ page }}
+        </p>
+      </li>
+
+      <li>
+        <p
+          class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:text-gray-50 hover:bg-indigo-600 hover:cursor-pointer"
+          (click)="goNext()"
+        >
+          <span class="sr-only">Next</span>
+          <svg
+            aria-hidden="true"
+            class="w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </p>
+      </li>
+    </ul>
+  </nav>
+</div>

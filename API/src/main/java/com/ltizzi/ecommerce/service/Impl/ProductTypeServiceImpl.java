@@ -1,6 +1,6 @@
 package com.ltizzi.ecommerce.service.Impl;
 
-import com.ltizzi.ecommerce.model.product.ProductRequest;
+
 import com.ltizzi.ecommerce.model.productType.ProductTypeEntity;
 import com.ltizzi.ecommerce.model.productType.ProductTypeMapper;
 import com.ltizzi.ecommerce.model.productType.ProductTypeRequest;
@@ -9,6 +9,8 @@ import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.repository.ProductTypeRepository;
 import com.ltizzi.ecommerce.service.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,8 +31,11 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
 
     @Override
-    public List<ProductTypeResponse> getProductTypes() {
-        return typeMapper.toArrayProductTypeResponse(typeRepo.findAll());
+    public List<ProductTypeResponse> getProductTypes(int page, int limit) {
+        PageRequest pageReq = PageRequest.of(page, limit);
+        Page<ProductTypeEntity> typePage = typeRepo.findAll(pageReq);
+        List<ProductTypeEntity> typeList = typePage.getContent();
+        return typeMapper.toArrayProductTypeResponse(typeList);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.ltizzi.ecommerce.service.Impl;
 
 import com.ltizzi.ecommerce.exception.InvalidStockException;
+import com.ltizzi.ecommerce.exception.NotFoundException;
 import com.ltizzi.ecommerce.model.product.ProductMapper;
+import com.ltizzi.ecommerce.model.product.ProductRequest;
 import com.ltizzi.ecommerce.model.stock.StockEntity;
 import com.ltizzi.ecommerce.model.stock.StockMapper;
 import com.ltizzi.ecommerce.model.stock.StockRequest;
@@ -50,6 +52,12 @@ public class StockServiceImpl implements StockService {
     public CountTable countStocks() {
         long totalStocks = stockRepo.countBy();
         return new CountTable((int) totalStocks);
+    }
+
+    @Override
+    public Boolean isStockForProduct(ProductRequest product) throws NotFoundException {
+        StockEntity stock = stockRepo.findByProduct(productMapper.toProductEntity(product));
+        return stock.getCantidad() > 0;
     }
 
     @Override

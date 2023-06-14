@@ -78,10 +78,10 @@ public class PurchaseServiceImpl implements PurchaseService {
 
         //actualización de los stocks | calculo del total
         for (ShopOrderEntity item : items) {
-            ProductEntity product = item.getCart().getProduct();
+            ProductEntity product = item.getProduct();
             StockEntity stock = stockRepo.findByProduct(product);
             total_income = total_income.add(item.getTotal());
-            stock.setCantidad(stock.getCantidad() - item.getCart().getCantidad());
+            stock.setCantidad(stock.getCantidad() - item.getCantidad());
             stocks.add(stock);
         }
         for (StockEntity stock : stocks) {
@@ -100,9 +100,9 @@ public class PurchaseServiceImpl implements PurchaseService {
         List<ShopOrderEntity> items = purchase.getOrders();
         List<StockEntity> stocks = new ArrayList<>();
         for (ShopOrderEntity item : items) {
-            ProductEntity product = item.getCart().getProduct();
+            ProductEntity product = item.getProduct();
             StockEntity stock = stockRepo.findByProduct(product);
-            stock.setCantidad(stock.getCantidad() - item.getCart().getCantidad());
+            stock.setCantidad(stock.getCantidad() - item.getCantidad());
             stocks.add(stock);
         }
         for (StockEntity stock : stocks) {
@@ -120,11 +120,11 @@ public class PurchaseServiceImpl implements PurchaseService {
 
         for (ShopOrderEntity item : items) {
             ShopOrderEntity oldItem = oldItems.stream().filter(oItem -> oItem.getShop_order_id() == item.getShop_order_id()).findFirst().orElseThrow();
-            ProductEntity product = item.getCart().getProduct();
+            ProductEntity product = item.getProduct();
             StockEntity stock = stockRepo.findByProduct(product);
             total_income = total_income.add(item.getTotal());
-            stock.setCantidad(stock.getCantidad() - oldItem.getCart().getCantidad());
-            stock.setCantidad(stock.getCantidad() + item.getCart().getCantidad());
+            stock.setCantidad(stock.getCantidad() - oldItem.getCantidad());
+            stock.setCantidad(stock.getCantidad() + item.getCantidad());
             stocks.add(stock);
         }
 

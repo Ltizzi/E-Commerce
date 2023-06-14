@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @Entity
 @Table(name = "carts")
-@SQLDelete(sql = " UPDATE carts SET soft_delete = true where cart_id= =? ")
+@SQLDelete(sql = " UPDATE carts SET soft_delete = true where cart_id=? ")
 @Where(clause = "soft_delete = false")
 public class CartEntity {
 

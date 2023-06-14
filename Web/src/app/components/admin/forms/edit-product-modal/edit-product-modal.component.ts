@@ -148,7 +148,7 @@ export class EditProductModalComponent {
         .update(this.product.id, updatedProduct)
         .subscribe((data: any) => {
           console.log(data);
-          this.reloadProducts.emit();
+          this.reloadProducts.emit(true);
           this.successOperation = true;
         });
 

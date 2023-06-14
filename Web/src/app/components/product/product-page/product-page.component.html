@@ -148,6 +148,13 @@
             </a>
           </span>
         </div>
+
+        <div class="mb-4 font-bold flex flex-row gap-2">
+          <p class="font-semibold">Availability:</p>
+          <p class="text-emerald-500" *ngIf="isStock">Stock!</p>
+          <p class="text-rose-600" *ngIf="!isStock">No stock</p>
+        </div>
+
         <p class="leading-relaxed">
           {{ product.about }}
         </p>

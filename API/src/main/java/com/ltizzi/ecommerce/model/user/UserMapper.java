@@ -34,6 +34,7 @@ public class UserMapper {
         userRes.setName(user.getName());
         userRes.setLastname(user.getLastname());
         userRes.setEmail(user.getEmail());
+        userRes.setRoles(user.getRoles());
         List<CartResponse> carts = cartMapper.toArrayCartResponse(user.getCarts());
         userRes.setCarts(carts);
         userRes.setAvatar(user.getAvatar());
@@ -56,7 +57,7 @@ public class UserMapper {
         user.setLastname(userReq.getLastname());
         user.setUsername(userReq.getUsername());
         user.setPurchases(purchaseMapper.toArrayPurchaseEntity(userReq.getPurchases()));
-
+        user.setRoles(userReq.getRoles());
         return user;
     }
 

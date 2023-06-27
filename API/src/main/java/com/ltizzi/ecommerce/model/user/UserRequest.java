@@ -3,6 +3,7 @@ package com.ltizzi.ecommerce.model.user;
 import com.ltizzi.ecommerce.model.cart.CartRequest;
 import com.ltizzi.ecommerce.model.cart.CartResponse;
 import com.ltizzi.ecommerce.model.purchase.PurchaseRequest;
+import com.ltizzi.ecommerce.utils.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,4 +28,5 @@ public class UserRequest {
     private Date birthday;
     private List<CartRequest> carts = new ArrayList<>();
     private List<PurchaseRequest> purchases = new ArrayList<>();
+    private List<Role> roles = new ArrayList<>();
 }

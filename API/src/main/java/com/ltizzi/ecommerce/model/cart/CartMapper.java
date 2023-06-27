@@ -65,6 +65,20 @@ public class CartMapper {
         return cart;
     }
 
+    public CartEntity toCartEntity(CartResponse cartRes) {
+        CartEntity cart = new CartEntity();
+        if (cartRes.getId() != null) {
+            cart = cartRepo.findById(cartRes.getId()).orElseThrow();
+        }
+        cart.setUser(userRepo.findById(cartRes.getUser_id()).orElse(null));
+        cart.setCantidad(cartRes.getCantidad());
+        cart.setTotal(cartRes.getTotal());
+        Long id = cartRes.getProduct().getId();
+        Optional<ProductEntity> product = prodRepo.findById(id);
+        cart.setProduct(product.get());
+        return cart;
+    }
+
     public List<CartResponse> toArrayCartResponse(List<CartEntity> carts) {
         List<CartResponse> cartsRes = new ArrayList<>();
         carts.forEach(cart -> {
@@ -76,6 +90,14 @@ public class CartMapper {
     public List<CartEntity> toArrayCartEntity(List<CartRequest> cartsReq) {
         List<CartEntity> carts = new ArrayList<>();
         cartsReq.forEach(cart -> {
+            carts.add(toCartEntity(cart));
+        });
+        return carts;
+    }
+
+    public List<CartEntity> toArrayCartEntityFromResponse(List<CartResponse> cartsRes) {
+        List<CartEntity> carts = new ArrayList<>();
+        cartsRes.forEach(cart -> {
             carts.add(toCartEntity(cart));
         });
         return carts;

@@ -1,6 +1,7 @@
 package com.ltizzi.ecommerce.service;
 
 import com.ltizzi.ecommerce.exception.InvalidUserException;
+import com.ltizzi.ecommerce.model.user.UserEntity;
 import com.ltizzi.ecommerce.model.user.UserRequest;
 import com.ltizzi.ecommerce.model.user.UserResponse;
 import com.ltizzi.ecommerce.model.utils.CountTable;
@@ -24,7 +25,7 @@ public interface UserService {
 
     public UserResponse saveUser(UserRequest user) throws InvalidUserException;
 
-    public UserResponse addRoleToUser(UserRequest user, Role role) throws InvalidUserException;
+    public UserResponse addRoleToUser(UserEntity user, Role role) throws InvalidUserException;
 
     public void deleteUserById(Long id) throws HttpClientErrorException.NotFound;
 

@@ -62,6 +62,19 @@ public class ShopOrderMapper {
         return newOrder;
     }
 
+    public ShopOrderEntity toShopOrderEntity(ShopOrderResponse orderRes) throws HttpClientErrorException.NotFound {
+        ShopOrderEntity newOrder = new ShopOrderEntity();
+        if (orderRes.getShop_order_id() != null) {
+            newOrder = orderRepo.findById(orderRes.getShop_order_id()).get();
+        }
+        newOrder.setUser(userRepo.findById(orderRes.getUser_id()).get());
+        newOrder.setOrder_state(orderRes.getOrder_state());
+        newOrder.setProduct(prodMapper.toProductEntity(orderRes.getProduct()));
+        newOrder.setCantidad(orderRes.getCantidad());
+        newOrder.setTotal(orderRes.getTotal());
+        return newOrder;
+    }
+
     public List<ShopOrderResponse> toArrayShopOrderResponse(List<ShopOrderEntity> orders) {
         List<ShopOrderResponse> ordersRes = new ArrayList<>();
         orders.forEach(order -> {
@@ -74,6 +87,14 @@ public class ShopOrderMapper {
         List<ShopOrderEntity> newOrders = new ArrayList<>();
         ordersReq.forEach(orderReq -> {
             newOrders.add(toShopOrderEntity(orderReq));
+        });
+        return newOrders;
+    }
+
+    public List<ShopOrderEntity> toArrayShopOrderEntityFromResponse(List<ShopOrderResponse> ordersRes) {
+        List<ShopOrderEntity> newOrders = new ArrayList<>();
+        ordersRes.forEach(orderRes -> {
+            newOrders.add(toShopOrderEntity(orderRes));
         });
         return newOrders;
     }

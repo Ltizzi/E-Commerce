@@ -54,6 +54,22 @@ public class ProductMapper {
         return product;
     }
 
+    public ProductEntity toProductEntity(ProductResponse prodRes) {
+        ProductEntity product = new ProductEntity();
+        if (prodRes.getId() != null) {
+            product = prodRepo.findById(product.getProduct_id()).orElse(null);
+            assert product != null;
+            product.setProduct_id(prodRes.getId());
+        }
+        product.setName(prodRes.getName());
+        product.setBrand(prodRes.getBrand());
+        product.setPrice(prodRes.getPrice());
+        product.setAbout(prodRes.getAbout());
+        product.setImageUrl(prodRes.getImageUrl());
+        product.setProduct_type(prodTypeMapper.toProductTypeEntity(prodRes.getProd_type()));
+        return product;
+    }
+
     public List<ProductResponse> toArrayProductResponse(List<ProductEntity> products) {
         List<ProductResponse> prodsRes = new ArrayList<>();
         products.forEach(prod -> {

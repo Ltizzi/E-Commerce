@@ -35,6 +35,17 @@ public class ProductTypeMapper {
         return type;
     }
 
+    public ProductTypeEntity toProductTypeEntity(ProductTypeResponse typeRes) {
+        ProductTypeEntity type = new ProductTypeEntity();
+        if (typeRes.getId() != null) {
+            type = typeRepo.findById(typeRes.getId()).get();
+            assert type != null;
+            type.setProd_type_id(typeRes.getId());
+        }
+        type.setName(typeRes.getName());
+        return type;
+    }
+
     public List<ProductTypeResponse> toArrayProductTypeResponse(List<ProductTypeEntity> tipos) {
         List<ProductTypeResponse> tiposRes = new ArrayList<>();
         tipos.forEach(tipo -> {

@@ -90,8 +90,8 @@ public class UserEntity {
     @OneToMany(fetch = FetchType.LAZY)
     private List<CartEntity> carts = new ArrayList<>();
 
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    //cascade = CascadeType.ALL, orphanRemoval = true,
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<PurchaseEntity> purchases = new ArrayList<>();
 
 

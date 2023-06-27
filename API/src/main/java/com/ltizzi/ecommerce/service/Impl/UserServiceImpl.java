@@ -53,11 +53,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse saveUser(UserRequest user) throws InvalidUserException {
-        UserEntity newUser = userRepo.save(userMapper.toUserEntity(user));
+//        UserEntity newUser = userRepo.save(userMapper.toUserEntity(user));
         List<Role> roles = new ArrayList<>();
         roles.add(Role.USER);
-        newUser.setRoles(roles);
-        return userMapper.toUserResponse(newUser);
+        user.setRoles(roles);
+        return userMapper.toUserResponse(userRepo.save(userMapper.toUserEntity(user)));
     }
 
     @Override
@@ -73,13 +73,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse addRoleToUser(UserRequest user, Role role) throws InvalidUserException {
+    public UserResponse addRoleToUser(UserEntity user, Role role) throws InvalidUserException {
         List<Role> roles = user.getRoles();
-        if (roles.contains(role)) {
-            List<Role> newRoles = new ArrayList<>();
-            newRoles.add(role);
-            user.setRoles(newRoles);
-            UserEntity updatedUser = userRepo.save(userMapper.toUserEntity(user));
+        if (!roles.contains(role)) {
+            roles.add(role);
+            user.setRoles(roles);
+            UserEntity updatedUser = userRepo.save(user);
             return userMapper.toUserResponse(updatedUser);
         } else throw new InvalidUserException("Can't add role to user");
     }

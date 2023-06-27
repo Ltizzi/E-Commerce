@@ -3,6 +3,7 @@ package com.ltizzi.ecommerce.model.user;
 import com.ltizzi.ecommerce.model.cart.CartEntity;
 import com.ltizzi.ecommerce.model.product.ProductEntity;
 import com.ltizzi.ecommerce.model.purchase.PurchaseEntity;
+import com.ltizzi.ecommerce.utils.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -66,6 +67,9 @@ public class UserEntity {
 //    @NotEmpty(message = "googleId can't be empty")
     @Column(name = "googleId")
     private Long googleId;
+
+    @Column(name = "role")
+    private List<Role> roles = new ArrayList<>();
 
     @Column(name = "avatar", nullable = true)
     private String avatar;

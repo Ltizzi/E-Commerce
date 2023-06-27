@@ -8,6 +8,7 @@ import com.ltizzi.ecommerce.model.user.UserResponse;
 import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.repository.UserRepository;
 import com.ltizzi.ecommerce.service.UserService;
+import com.ltizzi.ecommerce.utils.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.awt.print.Pageable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,6 +54,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse saveUser(UserRequest user) throws InvalidUserException {
         UserEntity newUser = userRepo.save(userMapper.toUserEntity(user));
+        List<Role> roles = new ArrayList<>();
+        roles.add(Role.USER);
+        newUser.setRoles(roles);
         return userMapper.toUserResponse(newUser);
     }
 
@@ -65,5 +70,17 @@ public class UserServiceImpl implements UserService {
         user.setUser_id(id);
         UserEntity updatedUser = userRepo.save(userMapper.toUserEntity(user));
         return userMapper.toUserResponse(updatedUser);
+    }
+
+    @Override
+    public UserResponse addRoleToUser(UserRequest user, Role role) throws InvalidUserException {
+        List<Role> roles = user.getRoles();
+        if (roles.contains(role)) {
+            List<Role> newRoles = new ArrayList<>();
+            newRoles.add(role);
+            user.setRoles(newRoles);
+            UserEntity updatedUser = userRepo.save(userMapper.toUserEntity(user));
+            return userMapper.toUserResponse(updatedUser);
+        } else throw new InvalidUserException("Can't add role to user");
     }
 }

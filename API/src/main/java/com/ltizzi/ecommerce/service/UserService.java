@@ -9,6 +9,7 @@ import com.ltizzi.ecommerce.utils.Role;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Leonardo Terlizzi
@@ -23,7 +24,11 @@ public interface UserService {
 
     public UserResponse getUserById(Long id) throws HttpClientErrorException.NotFound;
 
+    public UserEntity getUserByEmail(String email) throws HttpClientErrorException.NotFound;
+
     public UserResponse saveUser(UserRequest user) throws InvalidUserException;
+
+    public UserResponse createNewUser(Map<String, Object> userInfo) throws InvalidUserException;
 
     public UserResponse addRoleToUser(UserEntity user, Role role) throws InvalidUserException;
 

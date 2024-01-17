@@ -40,7 +40,7 @@ public class UserEntity {
     @NotNull(message = "Username can't be null")
     @NotBlank(message = "username can't be blank")
     @NotEmpty(message = "Username can't be empty")
-    @Column(name = "username", nullable = false, length = 12)
+    @Column(name = "username", nullable = false, length = 35)
     private String username;
 
     @NotNull(message = "Name can't be null")

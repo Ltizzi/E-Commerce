@@ -1,10 +1,11 @@
 package com.ltizzi.ecommerce.security.utils;
 
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -15,6 +16,7 @@ import java.util.Map;
  * @author Leonardo Terlizzi
  */
 
+@Component
 public class OauthUtils {
 
     private final String OAUTH_CLIENT = System.getenv("OAUTH_CLIENT_ID");
@@ -32,6 +34,7 @@ public class OauthUtils {
         ResponseEntity<Map> response = restTemplate().postForEntity(tokenEndpoint, params, Map.class);
         return response.getBody();
     }
+
 
     public Map<String, Object> getUserInfoFromGoogle(Map<String, Object> tokens) {
         String userInfoEndpoint = "https://www.googleapis.com/oauth2/v3/userinfo";

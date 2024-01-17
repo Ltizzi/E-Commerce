@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
         newUser.setRoles(roles);
         String email = (String) userInfo.get("email");
         int indexOfArroba = email.indexOf("@");
-        newUser.setGoogleId((Long) userInfo.get("sub"));
+        // newUser.setGoogleId(Long.parseLong((String) userInfo.get("sub")));
         newUser.setEmail(email);
         newUser.setName((String) userInfo.get("given_name"));
         newUser.setLastname((String) userInfo.get("family_name"));

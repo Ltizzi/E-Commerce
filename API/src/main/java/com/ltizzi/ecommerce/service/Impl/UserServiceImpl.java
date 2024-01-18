@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -56,6 +57,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getUserByEmail(String email) throws HttpClientErrorException.NotFound {
         return userRepo.findByEmail(email);
+    }
+
+    @Override
+    public UserResponse getUserByUsername(String username) throws UsernameNotFoundException {
+        return userMapper.toUserResponse(userRepo.findByUsername(username));
     }
 
     @Override

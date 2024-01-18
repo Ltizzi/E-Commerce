@@ -6,6 +6,7 @@ import com.ltizzi.ecommerce.model.user.UserRequest;
 import com.ltizzi.ecommerce.model.user.UserResponse;
 import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.utils.Role;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public interface UserService {
     public UserResponse getUserById(Long id) throws HttpClientErrorException.NotFound;
 
     public UserEntity getUserByEmail(String email) throws HttpClientErrorException.NotFound;
+
+    public UserResponse getUserByUsername(String username) throws UsernameNotFoundException;
 
     public UserResponse saveUser(UserRequest user) throws InvalidUserException;
 

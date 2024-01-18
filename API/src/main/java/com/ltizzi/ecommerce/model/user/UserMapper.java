@@ -34,6 +34,7 @@ public class UserMapper {
         userRes.setName(user.getName());
         userRes.setLastname(user.getLastname());
         userRes.setEmail(user.getEmail());
+        userRes.setRoles(user.getRoles());
         List<CartResponse> carts = cartMapper.toArrayCartResponse(user.getCarts());
         userRes.setCarts(carts);
         userRes.setAvatar(user.getAvatar());
@@ -56,7 +57,24 @@ public class UserMapper {
         user.setLastname(userReq.getLastname());
         user.setUsername(userReq.getUsername());
         user.setPurchases(purchaseMapper.toArrayPurchaseEntity(userReq.getPurchases()));
+        user.setRoles(userReq.getRoles());
+        return user;
+    }
 
+    public UserEntity toUserEntity(UserResponse userRes) throws HttpClientErrorException.NotFound {
+        UserEntity user = new UserEntity();
+        if (userRes.getUser_id() != null) {
+            user = userRepo.findById(userRes.getUser_id()).orElseThrow();
+        }
+        user.setAvatar(userRes.getAvatar());
+        user.setBirthday(userRes.getBirthday());
+        user.setCarts(cartMapper.toArrayCartEntityFromResponse(userRes.getCarts()));
+        user.setEmail(userRes.getEmail());
+        user.setName(userRes.getName());
+        user.setLastname(userRes.getLastname());
+        user.setUsername(userRes.getUsername());
+        user.setPurchases(purchaseMapper.toArrayPurchaseEntityFromResponse(userRes.getPurchases()));
+        user.setRoles(userRes.getRoles());
         return user;
     }
 

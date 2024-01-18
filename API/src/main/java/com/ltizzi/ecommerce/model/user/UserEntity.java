@@ -3,6 +3,7 @@ package com.ltizzi.ecommerce.model.user;
 import com.ltizzi.ecommerce.model.cart.CartEntity;
 import com.ltizzi.ecommerce.model.product.ProductEntity;
 import com.ltizzi.ecommerce.model.purchase.PurchaseEntity;
+import com.ltizzi.ecommerce.utils.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -39,7 +40,7 @@ public class UserEntity {
     @NotNull(message = "Username can't be null")
     @NotBlank(message = "username can't be blank")
     @NotEmpty(message = "Username can't be empty")
-    @Column(name = "username", nullable = false, length = 12)
+    @Column(name = "username", nullable = false, length = 35)
     private String username;
 
     @NotNull(message = "Name can't be null")
@@ -67,6 +68,9 @@ public class UserEntity {
     @Column(name = "googleId")
     private Long googleId;
 
+    @Column(name = "role")
+    private List<Role> roles = new ArrayList<>();
+
     @Column(name = "avatar", nullable = true)
     private String avatar;
 
@@ -86,8 +90,8 @@ public class UserEntity {
     @OneToMany(fetch = FetchType.LAZY)
     private List<CartEntity> carts = new ArrayList<>();
 
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    //cascade = CascadeType.ALL, orphanRemoval = true,
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<PurchaseEntity> purchases = new ArrayList<>();
 
 

@@ -54,6 +54,17 @@ public class PurchaseMapper {
         return purchase;
     }
 
+    public PurchaseEntity toPurchaseEntity(PurchaseResponse purRes) {
+        PurchaseEntity purchase = new PurchaseEntity();
+        if (purRes.getPurchase_id() != null) {
+            purchase = purchRepo.findById(purRes.getPurchase_id()).get();
+        }
+        purchase.setUser(userRepo.findById(purRes.getUser_id()).orElseThrow());
+        List<ShopOrderEntity> orders = orderMapper.toArrayShopOrderEntityFromResponse(purRes.getOrders());
+        purchase.setOrders(orders);
+        return purchase;
+    }
+
     public List<PurchaseResponse> toArrayPurchaseResponse(List<PurchaseEntity> purchases) {
         List<PurchaseResponse> purchasesRes = new ArrayList<>();
         purchases.forEach(purchase -> {
@@ -66,6 +77,14 @@ public class PurchaseMapper {
         List<PurchaseEntity> purchases = new ArrayList<>();
         purchasesReq.forEach(purchReq -> {
             purchases.add(toPurchaseEntity(purchReq));
+        });
+        return purchases;
+    }
+
+    public List<PurchaseEntity> toArrayPurchaseEntityFromResponse(List<PurchaseResponse> purchasesRes) {
+        List<PurchaseEntity> purchases = new ArrayList<>();
+        purchasesRes.forEach(purchRes -> {
+            purchases.add(toPurchaseEntity(purchRes));
         });
         return purchases;
     }

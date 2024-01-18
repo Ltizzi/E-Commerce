@@ -14,5 +14,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>, PagingA
 
     UserEntity findByUsername(String username);
 
+    UserEntity findByEmail(String email);
+
     Long countBy();
 }

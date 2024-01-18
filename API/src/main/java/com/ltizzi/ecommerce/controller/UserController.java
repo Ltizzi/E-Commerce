@@ -1,10 +1,14 @@
 package com.ltizzi.ecommerce.controller;
 
 import com.ltizzi.ecommerce.exception.InvalidUserException;
+import com.ltizzi.ecommerce.exception.UnauthorizedException;
+import com.ltizzi.ecommerce.model.user.UserEntity;
+import com.ltizzi.ecommerce.model.user.UserMapper;
 import com.ltizzi.ecommerce.model.user.UserRequest;
 import com.ltizzi.ecommerce.model.user.UserResponse;
 import com.ltizzi.ecommerce.model.utils.CountTable;
 import com.ltizzi.ecommerce.service.UserService;
+import com.ltizzi.ecommerce.utils.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +25,10 @@ public class UserController {
 
     @Autowired
     private UserService userServ;
+
+    @Autowired
+    private UserMapper userMapper;
+
 
     @GetMapping("/all")
     @ResponseBody
@@ -57,5 +65,12 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<UserResponse> updateUser(@RequestParam Long user_id, @RequestBody UserRequest userReq) throws InvalidUserException {
         return new ResponseEntity<>(userServ.updateUser(user_id, userReq), HttpStatus.OK);
+    }
+
+    @PatchMapping("/makeAdmin")
+    @ResponseBody
+    public ResponseEntity<UserResponse> makeUserAdmin(@RequestParam Long user_id) throws UnauthorizedException, InvalidUserException {
+        UserEntity user = userMapper.toUserEntity(userServ.getUserById(user_id));
+        return new ResponseEntity<>(userServ.addRoleToUser(user, Role.ADMIN), HttpStatus.OK);
     }
 }

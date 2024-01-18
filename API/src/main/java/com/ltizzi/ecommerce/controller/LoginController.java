@@ -3,29 +3,31 @@ package com.ltizzi.ecommerce.controller;
 
 import com.ltizzi.ecommerce.exception.InvalidUserException;
 import com.ltizzi.ecommerce.model.user.UserEntity;
+import com.ltizzi.ecommerce.model.user.UserMapper;
 import com.ltizzi.ecommerce.model.user.UserResponse;
 import com.ltizzi.ecommerce.security.utils.OauthUtils;
 import com.ltizzi.ecommerce.service.UserService;
-import jakarta.servlet.http.HttpServletResponse;
+import com.ltizzi.ecommerce.utils.Role;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.function.EntityResponse;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * @author Leonardo Terlizzi
@@ -48,6 +50,9 @@ public class LoginController {
     @Autowired
     private OauthUtils oauthUtils;
 
+    @Autowired
+    private UserMapper userMapper;
+
 
     @GetMapping("/login")
     public String login() {
@@ -58,7 +63,7 @@ public class LoginController {
     //Profile: {sub=102508174089616165099, name=Leonardo Terlizzi, given_name=Leonardo, family_name=Terlizzi, picture=https://lh3.googleusercontent.com/a/ACg8ocLBtDUA2HD54F2Vis7yCK5AxkIXMPHKOWjbDqN4wAB_zYqn=s96-c, email=terlizzileonardo@gmail.com, email_verified=true, locale=es}
 
     @GetMapping("/success")
-    public RedirectView authSuccessHandler(@RequestParam("code") String code) throws InvalidUserException, NullPointerException {
+    public Object authSuccessHandler(@RequestParam("code") String code) throws InvalidUserException, NullPointerException {
         ResponseEntity response = null;
 
         Map<String, Object> tokens = oauthUtils.verifyTokenWithGoogle(code);
@@ -71,23 +76,40 @@ public class LoginController {
         if (null == user) {
             UserResponse createdUser = userServ.createNewUser(userInfo);
             response = ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+            user = userServ.getUserByEmail(email);
         }
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+                .collect(Collectors.toList());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), null, authorities);
+
 
         //return response;
         String redirectUrl = "http://localhost:4200";
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(redirectUrl);
+        redirectView.addStaticAttribute("user_id", user.getUser_id());
 
         return redirectView;
+
 
     }
 
     @GetMapping("/user")
     public ResponseEntity<UserResponse> getUserDetailsAfterLogin(Authentication authentication) {
-        UserResponse user = userServ.getUserByUsername(authentication.getName());
-        if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        } else return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        LOG.info("obteniendo información de..." + authentication.getName());
+
+        if (authentication != null) {
+            String username = authentication.getName();
+
+            UserResponse user = userServ.getUserByUsername(username);
+            if (user != null) {
+
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            }
+
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/failure")

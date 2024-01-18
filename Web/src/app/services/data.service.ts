@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, throwError } from 'rxjs';
 import { Product } from 'src/common/models/product';
 
@@ -12,6 +12,11 @@ export class DataService {
     @Inject(String) private urlParam: string,
     private http: HttpClient
   ) {}
+
+  headers = new HttpHeaders().set(
+    'Access-Control-Allow-Origin',
+    'http://localhost:4200'
+  );
 
   getAll() {
     return this.http.get(this.url + '/all');

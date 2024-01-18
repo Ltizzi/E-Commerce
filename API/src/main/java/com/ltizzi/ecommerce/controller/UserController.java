@@ -12,9 +12,12 @@ import com.ltizzi.ecommerce.utils.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author Leonardo Terlizzi
@@ -22,6 +25,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    private final Logger LOG = Logger.getLogger(LoginController.class.getName());
 
     @Autowired
     private UserService userServ;
@@ -46,7 +51,15 @@ public class UserController {
     @GetMapping("/byId")
     @ResponseBody
     public ResponseEntity<UserResponse> getUserById(@RequestParam Long user_id) {
+//        LOG.info("Verificando identidad del cliente");
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String username = authentication.getName();
+//        LOG.info("nombre de usuario: " + username);
+//        UserEntity user = userMapper.toUserEntity(userServ.getUserByUsername(username));
+//        if (user != null && user.getUser_id().equals(user_id)) {
         return new ResponseEntity<>(userServ.getUserById(user_id), HttpStatus.OK);
+//        }
+//        return new ResponseEntity<>(new UserResponse(), HttpStatus.FORBIDDEN);
     }
 
     @PostMapping("/new")

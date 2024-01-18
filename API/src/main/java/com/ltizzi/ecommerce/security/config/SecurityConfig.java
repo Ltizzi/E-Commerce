@@ -25,7 +25,7 @@ import java.util.Collections;
  * @author Leonardo Terlizzi
  */
 @Configuration
-//@EnableWebSecurity
+@EnableWebSecurity
 public class SecurityConfig {
 
 
@@ -33,8 +33,9 @@ public class SecurityConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
         requestHandler.setCsrfRequestAttributeName("_csrf");
-
-        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        http.securityContext((context) -> context.requireExplicitSave(false))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
@@ -43,7 +44,7 @@ public class SecurityConfig {
                         config.setAllowedMethods(Collections.singletonList("*"));
                         config.setAllowCredentials(true);
                         config.setAllowedHeaders(Collections.singletonList("*"));
-                        config.setExposedHeaders(Arrays.asList("Authorization"));
+                        //  config.setExposedHeaders(Arrays.asList("Authorization"));
                         config.setMaxAge(3600L);
                         return config;
                     }
@@ -52,11 +53,15 @@ public class SecurityConfig {
                         .ignoringRequestMatchers("*")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
-                .addFilterAfter(new JWTGenerationFilter(), BasicAuthenticationFilter.class)
+                // .addFilterAfter(new JWTGenerationFilter(), BasicAuthenticationFilter.class)
                 //      .addFilterBefore(new JWTValidatorFilter(), BasicAuthenticationFilter.class)
-                .authorizeHttpRequests(authorize ->
+                .authorizeHttpRequests(request ->
                         //authenticated() para oauth
-                        authorize.anyRequest().permitAll()).oauth2Login(); //Customizer.withDefaults()
+                        request
+//                                .requestMatchers("/auth/user").authenticated()
+//
+//                                .requestMatchers("/product/*").permitAll()
+                                .anyRequest().permitAll()).oauth2Login(); //Customizer.withDefaults()
 
 //        http.cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable())
 //                .authorizeHttpRequests(authorize ->

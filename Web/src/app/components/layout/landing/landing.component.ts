@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-landing',
@@ -8,16 +8,11 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./landing.component.css'],
 })
 export class LandingComponent {
-  constructor(private route: ActivatedRoute, private userServ: UserService) {}
+  constructor(private route: ActivatedRoute, private authServ: AuthService) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      const userId = params['user_id'];
-      if (userId) {
-        this.userServ.getById(userId).subscribe((data) => {
-          console.log(data);
-        });
-      }
+    this.authServ.getUser().subscribe((data) => {
+      console.log(data);
     });
   }
 }

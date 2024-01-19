@@ -44,6 +44,13 @@ export class DataService {
     );
   }
 
+  getUser() {
+    return this.http.get(this.url + '/user', { withCredentials: true }).pipe(
+      map((response) => response),
+      catchError(this.handleError)
+    );
+  }
+
   getByUser(user: string) {
     return this.http.get(this.url + '/byUser?username=' + user).pipe(
       map((response) => response),

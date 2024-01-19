@@ -1,10 +1,14 @@
 package com.ltizzi.ecommerce.security.utils;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -22,6 +26,8 @@ public class OauthUtils {
     private final String OAUTH_CLIENT = System.getenv("OAUTH_CLIENT_ID");
     private final String OAUTH_SECRET = System.getenv("OAUTH_SECRET");
 
+    @Autowired
+    private OAuth2AuthorizedClientService authorizedClientService;
 
     public Map<String, Object> verifyTokenWithGoogle(String code) {
         String tokenEndpoint = "https://www.googleapis.com/oauth2/v4/token";
@@ -43,6 +49,26 @@ public class OauthUtils {
         HttpEntity<?> entity = new HttpEntity<>(headers);
         ResponseEntity<Map> userInfoResponse = restTemplate().exchange(userInfoEndpoint, HttpMethod.GET, entity, Map.class);
         return userInfoResponse.getBody();
+    }
+
+    public OAuth2AuthorizedClient getClient(OAuth2AuthenticationToken authenticationToken) {
+        OAuth2AuthorizedClient client = authorizedClientService.loadAuthorizedClient(authenticationToken.getAuthorizedClientRegistrationId(),
+                authenticationToken.getName());
+        return client;
+    }
+
+    public String getUserInfoEndpointUri(OAuth2AuthorizedClient client) {
+        return client.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUri();
+    }
+
+    public Map<String, Object> oauthHandler(String userInfoEndpointUri, OAuth2AuthorizedClient client) {
+        RestTemplate restTemplate = restTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + client.getAccessToken().getTokenValue());
+        HttpEntity entity = new HttpEntity("", headers);
+        ResponseEntity<Map> response = restTemplate.exchange(userInfoEndpointUri, HttpMethod.GET, entity, Map.class);
+        return response.getBody();
+
     }
 
 

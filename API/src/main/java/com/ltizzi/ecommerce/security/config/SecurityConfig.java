@@ -1,13 +1,16 @@
 package com.ltizzi.ecommerce.security.config;
 
 import com.ltizzi.ecommerce.security.filter.CsrfCookieFilter;
-import com.ltizzi.ecommerce.security.filter.JWTGenerationFilter;
-import com.ltizzi.ecommerce.security.filter.JWTValidatorFilter;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +21,6 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -61,12 +63,8 @@ public class SecurityConfig {
 //                                .requestMatchers("/auth/user").authenticated()
 //
 //                                .requestMatchers("/product/*").permitAll()
-                                .anyRequest().permitAll()).oauth2Login(); //Customizer.withDefaults()
-
-//        http.cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(authorize ->
-//                        //authenticated() para oauth
-//                        authorize.anyRequest().permitAll()).oauth2Login(); //Customizer.withDefaults()
+                                .anyRequest().permitAll())
+                .oauth2Login().defaultSuccessUrl("/auth/success", true); //Customizer.withDefaults()
 
         return http.build();
     }

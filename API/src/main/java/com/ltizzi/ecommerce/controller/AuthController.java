@@ -35,10 +35,10 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/auth")
-public class LoginController {
+public class AuthController {
 
 
-    private final Logger LOG = Logger.getLogger(LoginController.class.getName());
+    private final Logger LOG = Logger.getLogger(AuthController.class.getName());
 
 
     @Autowired
@@ -76,11 +76,11 @@ public class LoginController {
                 LOG.info("User " + createdUser.getEmail() + " salvado correctamente en la DB");
                 user = userMapper.toUserEntity(createdUser);
             }
-            List<GrantedAuthority> authorities = user.getRoles().stream()
-                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
-                    .collect(Collectors.toList());
-            Authentication auth = new UsernamePasswordAuthenticationToken(user.getEmail(), null, authorities);
-            SecurityContextHolder.getContext().setAuthentication(auth);
+//            List<GrantedAuthority> authorities = user.getRoles().stream()
+//                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+//                    .collect(Collectors.toList());
+//            Authentication auth = new UsernamePasswordAuthenticationToken(user.getEmail(), null, authorities);
+//            SecurityContextHolder.getContext().setAuthentication(auth);
         }
         String redirectUrl = "http://localhost:4200";
         RedirectView redirectView = new RedirectView();
@@ -90,12 +90,13 @@ public class LoginController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<UserResponse> getUserDetailsAfterLogin(Authentication token) { //OAuth2AuthenticationToken token
+    public ResponseEntity<UserResponse> getUserDetailsAfterLogin(OAuth2AuthenticationToken token) { // Authentication token
         if (token != null) {
-//            OAuth2AuthorizedClient client = oauthUtils.getClient(token);
-//            String userInfoEndpointUri = oauthUtils.getUserInfoEndpointUri(client);
-//            Map<String, Object> response = oauthUtils.oauthHandler(userInfoEndpointUri, client);
-            String email = token.getPrincipal().toString();
+            OAuth2AuthorizedClient client = oauthUtils.getClient(token);
+            String userInfoEndpointUri = oauthUtils.getUserInfoEndpointUri(client);
+            Map<String, Object> response = oauthUtils.oauthHandler(userInfoEndpointUri, client);
+            //  String email = token.getPrincipal().toString();
+            String email = (String) response.get("email");
             LOG.info("Fetching data from " + email);
             LOG.info("Authorities " + token.getAuthorities());
             UserResponse user = userMapper.toUserResponse(userServ.getUserByEmail(email));

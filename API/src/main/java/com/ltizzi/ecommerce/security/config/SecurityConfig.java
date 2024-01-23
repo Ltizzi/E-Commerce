@@ -1,5 +1,6 @@
 package com.ltizzi.ecommerce.security.config;
 
+import com.ltizzi.ecommerce.model.user.UserEntity;
 import com.ltizzi.ecommerce.repository.UserRepository;
 import com.ltizzi.ecommerce.security.filter.CsrfCookieFilter;
 import com.ltizzi.ecommerce.utils.Role;
@@ -23,6 +24,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -87,12 +94,12 @@ public class SecurityConfig {
                                         .requestMatchers(HttpMethod.GET, "/user/count").hasRole(Role.ADMIN.name())
                                         .requestMatchers(HttpMethod.DELETE, "/user/delete").authenticated()
                                         //cart
-                                        .requestMatchers(HttpMethod.GET, "/cart/byUserId").authenticated()
-                                        .requestMatchers(HttpMethod.GET, "/cart/byId").authenticated()
+                                        .requestMatchers(HttpMethod.GET, "/cart/byUserId").hasRole(Role.USER.name())
+                                        .requestMatchers(HttpMethod.GET, "/cart/byId").hasRole(Role.USER.name())
                                         .requestMatchers(HttpMethod.GET, "/cart/all").hasRole(Role.ADMIN.name())
-                                        .requestMatchers(HttpMethod.POST, "/cart/new").authenticated()
-                                        .requestMatchers(HttpMethod.DELETE, "/cart/delete").authenticated()
-                                        .requestMatchers(HttpMethod.PATCH, "/cart/update").authenticated()
+                                        .requestMatchers(HttpMethod.POST, "/cart/new").hasRole(Role.USER.name())
+                                        .requestMatchers(HttpMethod.DELETE, "/cart/delete").hasRole(Role.USER.name())
+                                        .requestMatchers(HttpMethod.PATCH, "/cart/update").hasRole(Role.USER.name())
                                         //product
                                         .requestMatchers(HttpMethod.GET, "/product/all").permitAll()
                                         .requestMatchers(HttpMethod.GET, "/product/count").hasRole(Role.ADMIN.name())
@@ -110,22 +117,22 @@ public class SecurityConfig {
                                         //purchase
                                         .requestMatchers(HttpMethod.GET, "/purchase/all").hasRole(Role.ADMIN.name())
                                         .requestMatchers(HttpMethod.GET, "/purchase/count").hasRole(Role.ADMIN.name())
-                                        .requestMatchers(HttpMethod.GET, "/purchase/byId").authenticated()
-                                        .requestMatchers(HttpMethod.GET, "/purchase/byUser").authenticated()
-                                        .requestMatchers(HttpMethod.POST, "/purchase/new").authenticated()
+                                        .requestMatchers(HttpMethod.GET, "/purchase/byId").hasRole(Role.USER.name())
+                                        .requestMatchers(HttpMethod.GET, "/purchase/byUser").hasRole(Role.USER.name())
+                                        .requestMatchers(HttpMethod.POST, "/purchase/new").hasRole(Role.USER.name())
                                         .requestMatchers(HttpMethod.DELETE, "/purchase/delete").hasRole(Role.ADMIN.name())
                                         .requestMatchers(HttpMethod.PATCH, "/purchase/update").hasRole(Role.ADMIN.name())
                                         //shop orders
                                         .requestMatchers(HttpMethod.GET, "/order/all").hasRole(Role.ADMIN.name())
-                                        .requestMatchers(HttpMethod.GET, "/order/byId").authenticated()
-                                        .requestMatchers(HttpMethod.GET, "/order/byUser").authenticated()
-                                        .requestMatchers(HttpMethod.POST, "/order/new").authenticated()
-                                        .requestMatchers(HttpMethod.DELETE, "/order/delete").authenticated()
-                                        .requestMatchers(HttpMethod.PATCH, "/order/update").authenticated()
+                                        .requestMatchers(HttpMethod.GET, "/order/byId").hasRole(Role.USER.name())
+                                        .requestMatchers(HttpMethod.GET, "/order/byUser").hasRole(Role.USER.name())
+                                        .requestMatchers(HttpMethod.POST, "/order/new").hasRole(Role.USER.name())
+                                        .requestMatchers(HttpMethod.DELETE, "/order/delete").hasRole(Role.USER.name())
+                                        .requestMatchers(HttpMethod.PATCH, "/order/update").hasRole(Role.USER.name())
                                         //stock
                                         .requestMatchers(HttpMethod.GET, "/stock/all").hasRole(Role.ADMIN.name())
                                         .requestMatchers(HttpMethod.GET, "/stock/count").hasRole(Role.ADMIN.name())
-                                        .requestMatchers(HttpMethod.GET, "/stock/checkStock").permitAll()
+                                        .requestMatchers(HttpMethod.POST, "/stock/checkStock").permitAll()
                                         .requestMatchers(HttpMethod.GET, "/stock/byId").hasRole(Role.ADMIN.name())
                                         .requestMatchers(HttpMethod.POST, "/stock/new").hasRole(Role.ADMIN.name())
                                         .requestMatchers(HttpMethod.PATCH, "/stock/update").hasRole(Role.ADMIN.name())
@@ -134,27 +141,34 @@ public class SecurityConfig {
 
                         //.anyRequest().permitAll()
                 )
-                .oauth2Login().defaultSuccessUrl("/auth/success", true); //Customizer.withDefaults()
+                .oauth2Login().defaultSuccessUrl("/auth/success", true)
+                .userInfoEndpoint(userInfo -> userInfo.oidcUserService(this.oidcUserService()))
+        ; //Customizer.withDefaults()
 
         return http.build();
     }
 
-//    @Bean
-//    public GrantedAuthoritiesMapper userAuthoritiesMapper() {
-//        return (authorities) -> {
-//            Set<GrantedAuthority> mappedAuthorities = null;
-//            Authentication authen = SecurityContextHolder.getContext().getAuthentication();
-//            OAuth2AuthenticationToken authenticationToken = (OAuth2AuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-//            Map<String, Object> userAttributes = authenticationToken.getPrincipal().getAttributes();
-//            String email = (String) userAttributes.get("email");
-//            List<Role> userRoles = userRepo.findByEmail(email).getRoles();
-////            for (Role role : userRoles) {
-////                mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.toString()));
-////            }
-//            mappedAuthorities = userRoles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.name())).collect(Collectors.toSet());
-//            return mappedAuthorities;
-//        };
-//    }
+
+    private OAuth2UserService<OidcUserRequest, OidcUser> oidcUserService() {
+        final OidcUserService delegate = new OidcUserService();
+
+        return (userRequest) -> {
+            // Delegate to the default implementation for loading a user
+            OidcUser oidcUser = delegate.loadUser(userRequest);
+
+            OAuth2AccessToken accessToken = userRequest.getAccessToken();
+            Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
+
+
+            UserEntity user = userRepo.findByEmail(oidcUser.getEmail());
+            mappedAuthorities.addAll(user.getRoles().stream().map(role ->
+                    new SimpleGrantedAuthority("ROLE_" + role.name())).collect(Collectors.toList()));
+            mappedAuthorities.addAll(oidcUser.getAuthorities());
+            oidcUser = new DefaultOidcUser(mappedAuthorities, oidcUser.getIdToken(), oidcUser.getUserInfo());
+
+            return oidcUser;
+        };
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

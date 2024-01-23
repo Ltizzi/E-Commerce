@@ -64,24 +64,25 @@ public class AuthController {
 
     @GetMapping("/success")
     public Object authSuccessHandler(Model model, OAuth2AuthenticationToken authentication) throws InvalidUserException, NullPointerException {
-        OAuth2AuthorizedClient client = oauthUtils.getClient(authentication);
+        //  OAuth2AuthorizedClient client = oauthUtils.getClient(authentication);
         LOG.info("logueado con " + authentication.toString());
-        String userInfoEndpointUri = oauthUtils.getUserInfoEndpointUri(client);
-        if (!StringUtils.isEmpty(userInfoEndpointUri)) {
-            Map<String, Object> response = oauthUtils.oauthHandler(userInfoEndpointUri, client);
-            LOG.info("mas info " + response.toString());
-            UserEntity user = userServ.getUserByEmail((String) response.get("email"));
-            if (null == user) {
-                UserResponse createdUser = userServ.createNewUser(response);
-                LOG.info("User " + createdUser.getEmail() + " salvado correctamente en la DB");
-                user = userMapper.toUserEntity(createdUser);
-            }
+        //String userInfoEndpointUri = oauthUtils.getUserInfoEndpointUri(client);
+        //if (!StringUtils.isEmpty(userInfoEndpointUri)) {
+        //    Map<String, Object> response = oauthUtils.oauthHandler(userInfoEndpointUri, client);
+        //    LOG.info("mas info " + response.toString());
+        //   UserEntity user = userServ.getUserByEmail((String) response.get("email"));
+        UserEntity user = userServ.getUserByEmail(authentication.getPrincipal().getAttribute("email"));
+        if (null == user) {
+            UserResponse createdUser = userServ.createNewUser(authentication.getPrincipal().getAttributes());  //response
+            LOG.info("User " + createdUser.getEmail() + " salvado correctamente en la DB");
+            user = userMapper.toUserEntity(createdUser);
+        }
 //            List<GrantedAuthority> authorities = user.getRoles().stream()
 //                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
 //                    .collect(Collectors.toList());
 //            Authentication auth = new UsernamePasswordAuthenticationToken(user.getEmail(), null, authorities);
 //            SecurityContextHolder.getContext().setAuthentication(auth);
-        }
+        //  }  // IF
         String redirectUrl = "http://localhost:4200";
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(redirectUrl);
@@ -92,11 +93,11 @@ public class AuthController {
     @GetMapping("/user")
     public ResponseEntity<UserResponse> getUserDetailsAfterLogin(OAuth2AuthenticationToken token) { // Authentication token
         if (token != null) {
-            OAuth2AuthorizedClient client = oauthUtils.getClient(token);
-            String userInfoEndpointUri = oauthUtils.getUserInfoEndpointUri(client);
-            Map<String, Object> response = oauthUtils.oauthHandler(userInfoEndpointUri, client);
-            //  String email = token.getPrincipal().toString();
-            String email = (String) response.get("email");
+//            OAuth2AuthorizedClient client = oauthUtils.getClient(token);
+//            String userInfoEndpointUri = oauthUtils.getUserInfoEndpointUri(client);
+//            Map<String, Object> response = oauthUtils.oauthHandler(userInfoEndpointUri, client);
+            String email = token.getPrincipal().getAttribute("email");
+            //String email = (String) response.get("email");
             LOG.info("Fetching data from " + email);
             LOG.info("Authorities " + token.getAuthorities());
             UserResponse user = userMapper.toUserResponse(userServ.getUserByEmail(email));

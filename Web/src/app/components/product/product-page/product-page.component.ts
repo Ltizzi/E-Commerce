@@ -26,17 +26,16 @@ export class ProductPageComponent {
       this.id = +params['id'];
     });
     console.log(this.id);
-    if (!localStorage.getItem('product')) {
-      let prod = JSON.parse(localStorage.getItem('product') as string);
-      if (prod.id == this.id) {
-        this.product = prod;
-        this.isLoaded = true;
-      }
-    } else {
-      this.getById(this.id);
-      localStorage.setItem('product', JSON.stringify(this.product));
-      this.isLoaded = true;
-    }
+    // if (localStorage.getItem('product')) {
+    //   let prod = JSON.parse(localStorage.getItem('product') as string);
+    //   if (prod.id == this.id) {
+    //     this.product = prod;
+    //     this.isLoaded = true;
+    //   }
+    // } else {
+    this.getById(this.id);
+    localStorage.setItem('product', JSON.stringify(this.product));
+    this.isLoaded = true;
   }
 
   getById(id: number) {

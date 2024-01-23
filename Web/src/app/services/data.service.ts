@@ -19,29 +19,35 @@ export class DataService {
   );
 
   getAll() {
-    return this.http.get(this.url + '/all');
+    return this.http.get(this.url + '/all', { withCredentials: true });
   }
 
   getAllWithPagination(page: number, limit: number) {
-    return this.http.get(this.url + '/all?page=' + page + '&limit=' + limit);
+    return this.http.get(this.url + '/all?page=' + page + '&limit=' + limit, {
+      withCredentials: true,
+    });
   }
 
   getTotal() {
-    return this.http.get(this.url + '/count');
+    return this.http.get(this.url + '/count', { withCredentials: true });
   }
 
   checkStock(product: Product) {
-    return this.http.post(this.url + '/checkStock', product).pipe(
-      map((response) => response),
-      catchError(this.handleError)
-    );
+    return this.http
+      .post(this.url + '/checkStock', product, { withCredentials: true })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
   }
 
   getById(id: number) {
-    return this.http.get(this.url + '/byId?' + this.urlParam + id).pipe(
-      map((response) => response),
-      catchError(this.handleError)
-    );
+    return this.http
+      .get(this.url + '/byId?' + this.urlParam + id, { withCredentials: true })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
   }
 
   getUser() {
@@ -52,29 +58,37 @@ export class DataService {
   }
 
   getByUser(user: string) {
-    return this.http.get(this.url + '/byUser?username=' + user).pipe(
-      map((response) => response),
-      catchError(this.handleError)
-    );
+    return this.http
+      .get(this.url + '/byUser?username=' + user, { withCredentials: true })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
   }
 
   getByUserId(id: number) {
-    return this.http.get(this.url + '/byUserId?user_id=' + id).pipe(
-      map((response) => response),
-      catchError(this.handleError)
-    );
+    return this.http
+      .get(this.url + '/byUserId?user_id=' + id, { withCredentials: true })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
   }
 
   create(resource: any) {
-    return this.http.post(this.url + '/new', resource).pipe(
-      map((response) => response),
-      catchError(this.handleError)
-    );
+    return this.http
+      .post(this.url + '/new', resource, { withCredentials: true })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
   }
 
   update(id: number, resource: any) {
     return this.http
-      .patch(this.url + '/update?' + this.urlParam + id, resource)
+      .patch(this.url + '/update?' + this.urlParam + id, resource, {
+        withCredentials: true,
+      })
       .pipe(
         map((response) => response),
         catchError(this.handleError)
@@ -82,10 +96,14 @@ export class DataService {
   }
 
   delete(id: number) {
-    return this.http.delete(this.url + '/delete?' + this.urlParam + id).pipe(
-      map((response) => response),
-      catchError(this.handleError)
-    );
+    return this.http
+      .delete(this.url + '/delete?' + this.urlParam + id, {
+        withCredentials: true,
+      })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: Response) {

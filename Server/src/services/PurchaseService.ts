@@ -116,7 +116,6 @@ export class PurchaseService {
       stock.cantidad += item.cantidad;
       stocks.push(stock);
     });
-
     stocks.forEach(async (stock) => await this.stockRepo.save(stock));
     purchase.total_income = total_income;
     return await this.purchaseRepo.save(purchase);

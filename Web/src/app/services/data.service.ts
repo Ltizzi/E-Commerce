@@ -33,12 +33,10 @@ export class DataService {
   }
 
   checkStock(product: Product) {
-    return this.http
-      .post(this.url + '/checkStock', product, { withCredentials: true })
-      .pipe(
-        map((response) => response),
-        catchError(this.handleError)
-      );
+    return this.http.post(this.url + '/checkStock', product).pipe(
+      map((response) => response),
+      catchError(this.handleError)
+    );
   }
 
   getById(id: number) {

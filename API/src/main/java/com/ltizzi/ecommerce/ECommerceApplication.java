@@ -22,24 +22,26 @@ import java.util.List;
 @SpringBootApplication
 //@ComponentScan("com/ltizzi/ecommerce/security/config/CustomOAuth2UserService.java")
 public class ECommerceApplication {
-
-    @Autowired
-    private UserRepository userRepo;
+//
+//
+//    @Autowired
+//    private UserRepository userRepo;
 
     public static void main(String[] args) {
         SpringApplication.run(ECommerceApplication.class, args);
     }
 
-    @PostConstruct
-    public void init() {
-        UserEntity user = userRepo.findByEmail("monoculofantastico@gmail.com");
-        List<Role> roles = user.getRoles();
-        if (!roles.contains(Role.ADMIN)) {
-            roles.add(Role.ADMIN);
-            user.setRoles(roles);
-            userRepo.save(user);
-        }
-
-    }
+//    @PostConstruct
+//    public void init() {
+//        String DEV_ADMIN_EMAIL = System.getenv("DEV_ADMIN_EMAIL");
+//        UserEntity user = userRepo.findByEmail(DEV_ADMIN_EMAIL);
+//        List<Role> roles = user.getRoles();
+//        if (!roles.contains(Role.ADMIN)) {
+//            roles.add(Role.ADMIN);
+//            user.setRoles(roles);
+//            userRepo.save(user);
+//        }
+//
+//    }
 
 }

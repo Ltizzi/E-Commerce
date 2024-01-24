@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/common/models/user';
 
 @Component({
   selector: 'app-landing',
@@ -13,6 +14,7 @@ export class LandingComponent {
   ngOnInit(): void {
     this.authServ.getUser().subscribe((data) => {
       console.log(data);
+      localStorage.setItem('user', JSON.stringify(data));
     });
   }
 }

@@ -11,4 +11,5 @@ export interface User {
   birthday: Date;
   carts: Array<Cart>;
   purchases: Array<Purchase>;
+  roles: Array<String>;
 }

@@ -1,0 +1,62 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# TypeScript
+*.tsbuildinfo
+*.js
+*.js.map
+*.d.ts
+
+# Visual Studio Code
+.vscode/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Dependency directories
+/jspm_packages/
+/packagelock.json
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# dotenv environment variables file
+.env
+
+# TypeScript cache
+tsconfig.tsbuildinfo
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# .env.local override (only use in development; production config should come from the server)
+.env.local
+
+# .env.development override (only use in development; production config should come from the server)
+.env.development
+
+# .env.test override (only use in test; production config should come from the server)
+.env.test
+
+# .env.production override (only use in production)
+.env.production
+
+
+ormconfig.json

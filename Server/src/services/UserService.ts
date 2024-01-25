@@ -14,7 +14,7 @@ export class UserService {
       .getMany();
   }
 
-  async getUsersByPagination(
+  async getUsersWithPagination(
     page: number,
     pageSize: number
   ): Promise<Array<UserEntity>> {

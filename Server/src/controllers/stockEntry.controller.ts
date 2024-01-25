@@ -35,7 +35,7 @@ export class StockEntryController {
 
   async httpGetEntryById(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.query.id as unknown as number;
+      const id = req.query.entry_id as unknown as number;
       const entry = (await this.entryServ.getEntryById(id)) as StockEntry;
       return res.status(200).json(entry);
     } catch (err: any) {
@@ -67,7 +67,7 @@ export class StockEntryController {
 
   async httpSoftDeleteEntry(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.query.id as unknown as number;
+      const id = req.query.entry_id as unknown as number;
       const response = (await this.entryServ.softDeleteEntryById(
         id
       )) as DeleteObjectResponse;

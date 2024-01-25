@@ -34,7 +34,7 @@ export class StockController {
 
   async httpGetStockById(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.query.id as unknown as number;
+      const id = req.query.stock_id as unknown as number;
       const stock = (await this.stockServ.getStockById(id)) as Stock;
       return res.status(200).json(stock);
     } catch (err: any) {
@@ -47,7 +47,7 @@ export class StockController {
     res: Response
   ): Promise<Response> {
     try {
-      const id = req.query.id as unknown as number;
+      const id = req.query.product_id as unknown as number;
       const isThereStock = (await this.stockServ.isThereStockForProduct(
         id
       )) as boolean;
@@ -72,7 +72,7 @@ export class StockController {
     res: Response
   ): Promise<Response> {
     try {
-      const id = req.query.id as unknown as number;
+      const id = req.query.stock_id as unknown as number;
       const response = (await this.stockServ.softDeleteStockById(
         id
       )) as DeleteObjectResponse;

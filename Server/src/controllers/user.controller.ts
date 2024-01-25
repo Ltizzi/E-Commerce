@@ -44,7 +44,7 @@ export class UserController {
 
   async httpGetUserById(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.query.id as unknown as number;
+      const id = req.query.user_id as unknown as number;
       const user = (await this.userServ.getUserById(id)) as User;
       return res.status(200).json(user);
     } catch (err: any) {
@@ -84,7 +84,7 @@ export class UserController {
 
   async httpSoftDeleteUser(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.query.id as unknown as number;
+      const id = req.query.user_id as unknown as number;
       const response = (await this.userServ.softDeleteUserById(
         id
       )) as DeleteObjectResponse;
@@ -107,7 +107,7 @@ export class UserController {
 
   async httpMakeUserAdmin(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.query.id as unknown as number;
+      const id = req.query.use_id as unknown as number;
       const user = await this.userServ.addRoleToUser(id, RoleEnum.ADMIN);
       return res.status(200).json(user);
     } catch (err: any) {

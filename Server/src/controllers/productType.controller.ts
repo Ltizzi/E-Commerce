@@ -43,7 +43,7 @@ export class ProductTypeController {
 
   async httpGetTypeById(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.query.id as unknown as number;
+      const id = req.query.type_id as unknown as number;
       const type = await this.prodTypeServ.getTypeById(id);
       return res.status(200).json(type);
     } catch (err: any) {
@@ -76,7 +76,7 @@ export class ProductTypeController {
     res: Response
   ): Promise<Response> {
     try {
-      const id = req.query.id as unknown as number;
+      const id = req.query.type_id as unknown as number;
       const response = (await this.prodTypeServ.softDeleteTypeById(
         id
       )) as DeleteObjectResponse;

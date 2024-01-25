@@ -34,7 +34,7 @@ export class ProductController {
 
   async httpGetProductById(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.query.id as unknown as number;
+      const id = req.query.product_id as unknown as number;
       const product = (await this.productServ.getProductById(id)) as Product;
       return res.status(200).json(product);
     } catch (err: any) {
@@ -71,7 +71,7 @@ export class ProductController {
     res: Response
   ): Promise<Response> {
     try {
-      const id = req.query.id as unknown as number;
+      const id = req.query.product_id as unknown as number;
       const response = (await this.productServ.softDeleteProductById(
         id
       )) as DeleteObjectResponse;

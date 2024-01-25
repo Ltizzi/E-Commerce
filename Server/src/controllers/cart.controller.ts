@@ -20,7 +20,7 @@ export class CartController {
 
   async httpGetCartById(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.query.id as unknown as number;
+      const id = req.query.cart_id as unknown as number;
       const cart = (await this.cartServ.getCartById(id)) as Cart;
       return res.status(200).json(cart);
     } catch (err: any) {
@@ -40,7 +40,7 @@ export class CartController {
 
   async httpSoftDeleteCartById(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.query.id as unknown as number;
+      const id = req.query.cart_id as unknown as number;
       const response = (await this.cartServ.softDeleteCartById(
         id
       )) as DeleteObjectResponse;

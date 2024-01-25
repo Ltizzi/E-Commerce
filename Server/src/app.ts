@@ -3,6 +3,8 @@ const express = require("express");
 const session = require("express-session");
 const morgan = require("morgan");
 const helmet = require("helmet");
+const apiRouter = require("./routes/api.router");
+
 import "reflect-metadata";
 import connectPgSimple from "connect-pg-simple";
 import { AppDataSource } from "./data-source";
@@ -36,3 +38,5 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+app.use("/", apiRouter);

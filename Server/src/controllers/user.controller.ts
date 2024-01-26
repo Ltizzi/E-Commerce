@@ -38,7 +38,7 @@ export class UserController {
   async httpCountUsers(req: Request, res: Response): Promise<Response> {
     try {
       const totalUsers: number = await userServ.countUsers();
-      return res.status(200).json({ totalUsers: totalUsers });
+      return res.status(200).json({ total: totalUsers });
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }

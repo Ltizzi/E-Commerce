@@ -30,7 +30,7 @@ export class UserService {
   }
 
   async countUsers(): Promise<number> {
-    return await this.userRepo.count();
+    return await this.userRepo.countBy({ soft_delete: false });
   }
 
   async getUserById(id: number): Promise<UserEntity | null> {
@@ -65,6 +65,9 @@ export class UserService {
   }
 
   async updateUser(user: User): Promise<UserEntity | null> {
+    const oldUser = (await this.getUserById(user.user_id)) as User;
+    user.createdAt = oldUser.createdAt;
+    user.soft_delete = oldUser.soft_delete;
     return await this.userRepo.save(user);
   }
 

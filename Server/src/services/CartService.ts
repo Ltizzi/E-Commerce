@@ -45,6 +45,9 @@ export class CartService {
   }
 
   async updateCart(cart: Cart): Promise<CartEntity | null> {
+    const oldCart = (await this.getCartById(cart.cart_id)) as Cart;
+    cart.createdAt = oldCart.createdAt;
+    cart.soft_delete = oldCart.soft_delete;
     return await this.saveCart(cart);
   }
 }

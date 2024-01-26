@@ -62,6 +62,9 @@ export class ProductTypeService {
   async updateProductType(
     type: ProductType
   ): Promise<ProductTypeEntity | null> {
+    const oldType = (await this.getTypeById(type.prod_type_id)) as ProductType;
+    type.createdAt = oldType.createdAt;
+    type.soft_delete = oldType.soft_delete;
     return await this.typeRepo.save(type);
   }
 }

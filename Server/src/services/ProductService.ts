@@ -76,6 +76,11 @@ export class ProductService {
   }
 
   async updateProduct(product: Product): Promise<ProductEntity | null> {
+    const oldProduct = (await this.getProductById(
+      product.product_id
+    )) as Product;
+    product.createdAt = oldProduct.createdAt;
+    product.soft_delete = oldProduct.soft_delete;
     return await this.productRepo.save(product);
   }
 }

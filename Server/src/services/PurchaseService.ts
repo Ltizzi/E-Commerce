@@ -90,9 +90,9 @@ export class PurchaseService {
   }
 
   async updatePurchase(purchase: Purchase): Promise<PurchaseEntity | null> {
-    const oldPurchase = await this.purchaseRepo.findOneBy({
+    const oldPurchase = (await this.purchaseRepo.findOneBy({
       purchase_id: purchase.purchase_id,
-    });
+    })) as Purchase;
     const oldItems = oldPurchase?.orders as Array<ShopOrder>;
     const items = purchase.orders as Array<ShopOrder>;
     let stocks: Array<Stock> = [];
@@ -118,6 +118,8 @@ export class PurchaseService {
     });
     stocks.forEach(async (stock) => await this.stockRepo.save(stock));
     purchase.total_income = total_income;
+    purchase.createdAt = oldPurchase.createdAt;
+    purchase.soft_delete = oldPurchase.soft_delete;
     return await this.purchaseRepo.save(purchase);
   }
 }

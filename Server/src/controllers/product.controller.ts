@@ -3,20 +3,17 @@ import { ProductService } from "../services/ProductService";
 import { PaginationParams } from "../models/utils/PaginationParams";
 import { Product } from "../models/Product";
 import { DeleteObjectResponse } from "../models/utils/DeleteObjectResponse";
+import { ProductMapper } from "../dto/mappers/product.maper";
+import { ProductRequest } from "../dto/requests/product.request";
 
 const productServ = new ProductService();
+const mapper = new ProductMapper();
 
 export class ProductController {
-  // private productServ: ProductService;
-
-  // constructor() {
-  //   productServ = new ProductService();
-  // }
-
   async httpGetAllProducts(req: Request, res: Response): Promise<Response> {
     try {
       const products = (await productServ.getProducts()) as Array<Product>;
-      return res.status(200).json(products);
+      return res.status(200).json(mapper.toArrayProductResponse(products));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -32,7 +29,7 @@ export class ProductController {
         page,
         pageSize
       )) as Array<Product>;
-      return res.status(200).json(products);
+      return res.status(200).json(mapper.toArrayProductResponse(products));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -42,7 +39,7 @@ export class ProductController {
     try {
       const id = req.query.product_id as unknown as number;
       const product = (await productServ.getProductById(id)) as Product;
-      return res.status(200).json(product);
+      return res.status(200).json(mapper.toProductResponse(product));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -62,9 +59,11 @@ export class ProductController {
 
   async httpCreateNewProduct(req: Request, res: Response): Promise<Response> {
     try {
-      const product = req.body as unknown as Product;
-      const newProduct = (await productServ.saveProduct(product)) as Product;
-      return res.status(200).json(newProduct);
+      const product = req.body as unknown as ProductRequest;
+      const newProduct = (await productServ.saveProduct(
+        await mapper.toProductEntity(product)
+      )) as Product;
+      return res.status(200).json(mapper.toProductResponse(newProduct));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -88,9 +87,11 @@ export class ProductController {
 
   async httpUpdateProduct(req: Request, res: Response): Promise<Response> {
     try {
-      const product = req.body as unknown as Product;
-      const updatedProduct = await productServ.updateProduct(product);
-      return res.status(200).json(updatedProduct);
+      const product = req.body as unknown as ProductRequest;
+      const updatedProduct = (await productServ.updateProduct(
+        await mapper.toProductEntity(product)
+      )) as Product;
+      return res.status(200).json(mapper.toProductResponse(updatedProduct));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }

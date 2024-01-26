@@ -1,3 +1,5 @@
+import { UserMapper } from "../dto/mappers/user.mapper";
+import { UserRequest } from "../dto/requests/user.request";
 import { RoleEnum } from "../models/RoleEnum";
 import { User } from "../models/User";
 import { DeleteObjectResponse } from "../models/utils/DeleteObjectResponse";
@@ -6,6 +8,7 @@ import { UserService } from "../services/UserService";
 import { Request, Response } from "express";
 
 const userServ = new UserService();
+const mapper = new UserMapper();
 
 export class UserController {
   // private userServ: UserService = new UserService();
@@ -13,7 +16,7 @@ export class UserController {
   async httpGetAllUsers(req: Request, res: Response): Promise<Response> {
     try {
       const users = await userServ.getUsers();
-      return res.status(200).json(users);
+      return res.status(200).json(mapper.toArrayUserResponse(users));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -29,7 +32,7 @@ export class UserController {
         page,
         pageSize
       );
-      return res.status(200).json(users);
+      return res.status(200).json(mapper.toArrayUserResponse(users));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -48,7 +51,7 @@ export class UserController {
     try {
       const id = req.query.user_id as unknown as number;
       const user = (await userServ.getUserById(id)) as User;
-      return res.status(200).json(user);
+      return res.status(200).json(mapper.toUserResponse(user));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -58,7 +61,7 @@ export class UserController {
     try {
       const email = req.query.email as unknown as string;
       const user = (await userServ.getUserByEmail(email)) as User;
-      return res.status(200).json(user);
+      return res.status(200).json(mapper.toUserResponse(user));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -68,7 +71,7 @@ export class UserController {
     try {
       const username = req.query.username as unknown as string;
       const user = (await userServ.getUserByUsername(username)) as User;
-      return res.status(200).json(user);
+      return res.status(200).json(mapper.toUserResponse(user));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -76,9 +79,11 @@ export class UserController {
 
   async httpCreateNewUser(req: Request, res: Response): Promise<Response> {
     try {
-      const user = req.body as unknown as User;
-      const createdUser = await userServ.saveUser(user);
-      return res.status(200).json(createdUser);
+      const user = req.body as unknown as UserRequest;
+      const createdUser = (await userServ.saveUser(
+        await mapper.toUserEntity(user)
+      )) as User;
+      return res.status(200).json(mapper.toUserResponse(createdUser));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -99,9 +104,11 @@ export class UserController {
 
   async httpUpdateUser(req: Request, res: Response): Promise<Response> {
     try {
-      const user = req.body as unknown as User;
-      const updateUser = await userServ.updateUser(user);
-      return res.status(200).json(updateUser);
+      const user = req.body as unknown as UserRequest;
+      const updateUser = (await userServ.updateUser(
+        await mapper.toUserEntity(user)
+      )) as User;
+      return res.status(200).json(mapper.toUserResponse(updateUser));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -109,9 +116,9 @@ export class UserController {
 
   async httpMakeUserAdmin(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.query.use_id as unknown as number;
-      const user = await userServ.addRoleToUser(id, RoleEnum.ADMIN);
-      return res.status(200).json(user);
+      const id = req.query.user_id as unknown as number;
+      const user = (await userServ.addRoleToUser(id, RoleEnum.ADMIN)) as User;
+      return res.status(200).json(mapper.toUserResponse(user));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }

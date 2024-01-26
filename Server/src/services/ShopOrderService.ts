@@ -77,6 +77,11 @@ export class ShopOrderService {
   }
 
   async updateOrder(order: ShopOrder): Promise<ShopOrderEntity | null> {
+    const oldOrder = (await this.getOrderById(
+      order.shop_order_id
+    )) as ShopOrder;
+    order.createdAt = oldOrder.createdAt;
+    order.soft_delete = oldOrder.soft_delete;
     return await this.orderRepo.save(order);
   }
 }

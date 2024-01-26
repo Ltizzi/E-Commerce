@@ -81,6 +81,8 @@ export class StockEntryService {
         entries.push(entry);
         stock.entries = entries;
         await this.stockRepo.save(stock);
+        entry.createdAt = oldEntry.createdAt;
+        entry.soft_delete = oldEntry.soft_delete;
         return await this.entryRepo.save(entry);
       } else return null;
     } else return null;

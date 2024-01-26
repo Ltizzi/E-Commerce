@@ -61,6 +61,9 @@ export class StockService {
   }
 
   async updateStock(stock: Stock): Promise<StockEntity | null> {
+    const oldStock = (await this.getStockById(stock.stock_id)) as Stock;
+    stock.createdAt = oldStock.createdAt;
+    stock.soft_delete = oldStock.soft_delete;
     return await this.stockRepo.save(stock);
   }
 }

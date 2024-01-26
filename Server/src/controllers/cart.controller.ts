@@ -2,8 +2,12 @@ import { Request, Response } from "express";
 import { CartService } from "../services/CartService";
 import { Cart } from "../models/Cart";
 import { DeleteObjectResponse } from "../models/utils/DeleteObjectResponse";
+import { CartMapper } from "../dto/mappers/cart.mapper";
+import { CartRequest } from "../dto/requests/cart.request";
 
 const cartServ = new CartService();
+
+const cartMapper = new CartMapper();
 
 export class CartController {
   // private cartServ: CartService;
@@ -16,7 +20,7 @@ export class CartController {
     try {
       const user_id = req.query.user_id as unknown as number;
       const carts = (await cartServ.getCartsByUserId(user_id)) as Array<Cart>;
-      return res.status(200).json(carts);
+      return res.status(200).json(cartMapper.toArrayCartResponse(carts));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -26,7 +30,7 @@ export class CartController {
     try {
       const id = req.query.cart_id as unknown as number;
       const cart = (await cartServ.getCartById(id)) as Cart;
-      return res.status(200).json(cart);
+      return res.status(200).json(cartMapper.toCartResponse(cart));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -34,9 +38,11 @@ export class CartController {
 
   async httpCreateNewCart(req: Request, res: Response): Promise<Response> {
     try {
-      const cart = req.body as unknown as Cart;
-      const newCart = (await cartServ.saveCart(cart)) as Cart;
-      return res.status(200).json(newCart);
+      const cart = req.body as unknown as CartRequest;
+      const newCart = (await cartServ.saveCart(
+        await cartMapper.toCartEntity(cart)
+      )) as Cart;
+      return res.status(200).json(cartMapper.toCartResponse(newCart));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -57,9 +63,11 @@ export class CartController {
 
   async httpUpdateCart(req: Request, res: Response): Promise<Response> {
     try {
-      const cart = req.body as unknown as Cart;
-      const updatedCart = (await cartServ.updateCart(cart)) as Cart;
-      return res.status(200).json(updatedCart);
+      const cart = req.body as unknown as CartRequest;
+      const updatedCart = (await cartServ.updateCart(
+        await cartMapper.toCartEntity(cart)
+      )) as Cart;
+      return res.status(200).json(cartMapper.toCartResponse(updatedCart));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }

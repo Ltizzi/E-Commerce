@@ -3,8 +3,11 @@ import { StockService } from "../services/StockService";
 import { Stock } from "../models/Stock";
 import { PaginationParams } from "../models/utils/PaginationParams";
 import { DeleteObjectResponse } from "../models/utils/DeleteObjectResponse";
+import { StockMapper } from "../dto/mappers/stock.mapper";
+import { StockRequest } from "../dto/requests/stock.request";
 
 const stockServ = new StockService();
+const mapper = new StockMapper();
 
 export class StockController {
   //private stockServ = new StockService();
@@ -12,7 +15,7 @@ export class StockController {
   async httpGetAllStocks(req: Request, res: Response): Promise<Response> {
     try {
       const stocks = (await stockServ.getStocks()) as Array<Stock>;
-      return res.status(200).json(stocks);
+      return res.status(200).json(mapper.toArrayStockResponse(stocks));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -28,7 +31,7 @@ export class StockController {
         page,
         pageSize
       )) as Array<Stock>;
-      return res.status(200).json(stocks);
+      return res.status(200).json(mapper.toArrayStockResponse(stocks));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -38,7 +41,7 @@ export class StockController {
     try {
       const id = req.query.stock_id as unknown as number;
       const stock = (await stockServ.getStockById(id)) as Stock;
-      return res.status(200).json(stock);
+      return res.status(200).json(mapper.toStockResponse(stock));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -61,9 +64,11 @@ export class StockController {
 
   async httpCreateNewStock(req: Request, res: Response): Promise<Response> {
     try {
-      const stock = req.body as unknown as Stock;
-      const newStock = (await stockServ.saveStock(stock)) as Stock;
-      return res.status(200).json(newStock);
+      const stock = req.body as unknown as StockRequest;
+      const newStock = (await stockServ.saveStock(
+        await mapper.toStockEntity(stock)
+      )) as Stock;
+      return res.status(200).json(mapper.toStockResponse(newStock));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -87,9 +92,11 @@ export class StockController {
 
   async httpUpdateStock(req: Request, res: Response): Promise<Response> {
     try {
-      const stock = req.body as unknown as Stock;
-      const updatedStock = (await stockServ.updateStock(stock)) as Stock;
-      return res.status(200).json(updatedStock);
+      const stock = req.body as unknown as StockRequest;
+      const updatedStock = (await stockServ.updateStock(
+        await mapper.toStockEntity(stock)
+      )) as Stock;
+      return res.status(200).json(mapper.toStockResponse(updatedStock));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }

@@ -3,8 +3,11 @@ import { StockEntryService } from "../services/StockEntryService";
 import { StockEntry } from "../models/StockEntry";
 import { PaginationParams } from "../models/utils/PaginationParams";
 import { DeleteObjectResponse } from "../models/utils/DeleteObjectResponse";
+import { StockEntryMapper } from "../dto/mappers/stockEntry.mapper";
+import { StockEntryRequest } from "../dto/requests/stockEntry.request";
 
 const entryServ = new StockEntryService();
+const mapper = new StockEntryMapper();
 
 export class StockEntryController {
   //private entryServ = new StockEntryService();
@@ -12,7 +15,7 @@ export class StockEntryController {
   async httpGetAllEntries(req: Request, res: Response): Promise<Response> {
     try {
       const entries = (await entryServ.getAllEntries()) as Array<StockEntry>;
-      return res.status(200).json(entries);
+      return res.status(200).json(mapper.toArrayEntryResponse(entries));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -28,7 +31,7 @@ export class StockEntryController {
         page,
         pageSize
       )) as Array<StockEntry>;
-      return res.status(200).json(entries);
+      return res.status(200).json(mapper.toArrayEntryResponse(entries));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -38,7 +41,7 @@ export class StockEntryController {
     try {
       const id = req.query.entry_id as unknown as number;
       const entry = (await entryServ.getEntryById(id)) as StockEntry;
-      return res.status(200).json(entry);
+      return res.status(200).json(mapper.toStockEntryResponse(entry));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -58,9 +61,11 @@ export class StockEntryController {
 
   async httpCreateNewEntry(req: Request, res: Response): Promise<Response> {
     try {
-      const entry = req.body as unknown as StockEntry;
-      const newEntry = (await entryServ.saveEntry(entry)) as StockEntry;
-      return res.status(200).json(newEntry);
+      const entry = req.body as unknown as StockEntryRequest;
+      const newEntry = (await entryServ.saveEntry(
+        await mapper.toStockEntryEntity(entry)
+      )) as StockEntry;
+      return res.status(200).json(mapper.toStockEntryResponse(newEntry));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -81,9 +86,11 @@ export class StockEntryController {
 
   async httpUpdateEntry(req: Request, res: Response): Promise<Response> {
     try {
-      const entry = req.body as unknown as StockEntry;
-      const updatedEntry = (await entryServ.updateEntry(entry)) as StockEntry;
-      return res.status(200).json(updatedEntry);
+      const entry = req.body as unknown as StockEntryRequest;
+      const updatedEntry = (await entryServ.updateEntry(
+        await mapper.toStockEntryEntity(entry)
+      )) as StockEntry;
+      return res.status(200).json(mapper.toStockEntryResponse(updatedEntry));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }

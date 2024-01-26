@@ -109,7 +109,7 @@ export class UserController {
 
   async httpMakeUserAdmin(req: Request, res: Response): Promise<Response> {
     try {
-      const id = req.query.use_id as unknown as number;
+      const id = req.query.user_id as unknown as number;
       const user = await userServ.addRoleToUser(id, RoleEnum.ADMIN);
       return res.status(200).json(user);
     } catch (err: any) {

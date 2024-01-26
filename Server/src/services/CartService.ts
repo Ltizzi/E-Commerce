@@ -10,6 +10,8 @@ export class CartService {
   private userRepo = AppDataSource.getRepository(UserEntity);
   private prodRepo = AppDataSource.getRepository(ProductEntity);
 
+  constructor() {}
+
   async getCartsByUserId(user_id: number): Promise<Array<CartEntity>> {
     const user = await this.userRepo.findOneBy({ user_id: user_id });
     return await this.cartRepo.findBy({

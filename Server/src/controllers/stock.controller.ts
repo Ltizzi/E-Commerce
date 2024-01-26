@@ -4,12 +4,14 @@ import { Stock } from "../models/Stock";
 import { PaginationParams } from "../models/utils/PaginationParams";
 import { DeleteObjectResponse } from "../models/utils/DeleteObjectResponse";
 
+const stockServ = new StockService();
+
 export class StockController {
-  private stockServ = new StockService();
+  //private stockServ = new StockService();
 
   async httpGetAllStocks(req: Request, res: Response): Promise<Response> {
     try {
-      const stocks = (await this.stockServ.getStocks()) as Array<Stock>;
+      const stocks = (await stockServ.getStocks()) as Array<Stock>;
       return res.status(200).json(stocks);
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
@@ -22,7 +24,7 @@ export class StockController {
   ): Promise<Response> {
     try {
       const { page, pageSize } = req.query as unknown as PaginationParams;
-      const stocks = (await this.stockServ.getStockWithPagination(
+      const stocks = (await stockServ.getStockWithPagination(
         page,
         pageSize
       )) as Array<Stock>;
@@ -35,7 +37,7 @@ export class StockController {
   async httpGetStockById(req: Request, res: Response): Promise<Response> {
     try {
       const id = req.query.stock_id as unknown as number;
-      const stock = (await this.stockServ.getStockById(id)) as Stock;
+      const stock = (await stockServ.getStockById(id)) as Stock;
       return res.status(200).json(stock);
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
@@ -48,7 +50,7 @@ export class StockController {
   ): Promise<Response> {
     try {
       const id = req.query.product_id as unknown as number;
-      const isThereStock = (await this.stockServ.isThereStockForProduct(
+      const isThereStock = (await stockServ.isThereStockForProduct(
         id
       )) as boolean;
       return res.status(200).json({ stock: isThereStock });
@@ -60,7 +62,7 @@ export class StockController {
   async httpCreateNewStock(req: Request, res: Response): Promise<Response> {
     try {
       const stock = req.body as unknown as Stock;
-      const newStock = (await this.stockServ.saveStock(stock)) as Stock;
+      const newStock = (await stockServ.saveStock(stock)) as Stock;
       return res.status(200).json(newStock);
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
@@ -73,7 +75,7 @@ export class StockController {
   ): Promise<Response> {
     try {
       const id = req.query.stock_id as unknown as number;
-      const response = (await this.stockServ.softDeleteStockById(
+      const response = (await stockServ.softDeleteStockById(
         id
       )) as DeleteObjectResponse;
       if (response.status == "OK") return res.status(200).json(response);
@@ -86,7 +88,7 @@ export class StockController {
   async httpUpdateStock(req: Request, res: Response): Promise<Response> {
     try {
       const stock = req.body as unknown as Stock;
-      const updatedStock = (await this.stockServ.updateStock(stock)) as Stock;
+      const updatedStock = (await stockServ.updateStock(stock)) as Stock;
       return res.status(200).json(updatedStock);
     } catch (err: any) {
       return res.status(404).json({ error: err.message });

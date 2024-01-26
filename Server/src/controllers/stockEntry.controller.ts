@@ -4,13 +4,14 @@ import { StockEntry } from "../models/StockEntry";
 import { PaginationParams } from "../models/utils/PaginationParams";
 import { DeleteObjectResponse } from "../models/utils/DeleteObjectResponse";
 
+const entryServ = new StockEntryService();
+
 export class StockEntryController {
-  private entryServ = new StockEntryService();
+  //private entryServ = new StockEntryService();
 
   async httpGetAllEntries(req: Request, res: Response): Promise<Response> {
     try {
-      const entries =
-        (await this.entryServ.getAllEntries()) as Array<StockEntry>;
+      const entries = (await entryServ.getAllEntries()) as Array<StockEntry>;
       return res.status(200).json(entries);
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
@@ -23,7 +24,7 @@ export class StockEntryController {
   ): Promise<Response> {
     try {
       const { page, pageSize } = req.query as unknown as PaginationParams;
-      const entries = (await this.entryServ.getEntriesWithPagination(
+      const entries = (await entryServ.getEntriesWithPagination(
         page,
         pageSize
       )) as Array<StockEntry>;
@@ -36,7 +37,7 @@ export class StockEntryController {
   async httpGetEntryById(req: Request, res: Response): Promise<Response> {
     try {
       const id = req.query.entry_id as unknown as number;
-      const entry = (await this.entryServ.getEntryById(id)) as StockEntry;
+      const entry = (await entryServ.getEntryById(id)) as StockEntry;
       return res.status(200).json(entry);
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
@@ -48,7 +49,7 @@ export class StockEntryController {
     res: Response
   ): Promise<Response> {
     try {
-      const totalNumber = (await this.entryServ.countEntries()) as number;
+      const totalNumber = (await entryServ.countEntries()) as number;
       return res.status(200).json({ total: totalNumber });
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
@@ -58,7 +59,7 @@ export class StockEntryController {
   async httpCreateNewEntry(req: Request, res: Response): Promise<Response> {
     try {
       const entry = req.body as unknown as StockEntry;
-      const newEntry = (await this.entryServ.saveEntry(entry)) as StockEntry;
+      const newEntry = (await entryServ.saveEntry(entry)) as StockEntry;
       return res.status(200).json(newEntry);
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
@@ -68,7 +69,7 @@ export class StockEntryController {
   async httpSoftDeleteEntry(req: Request, res: Response): Promise<Response> {
     try {
       const id = req.query.entry_id as unknown as number;
-      const response = (await this.entryServ.softDeleteEntryById(
+      const response = (await entryServ.softDeleteEntryById(
         id
       )) as DeleteObjectResponse;
       if (response.status == "OK") return res.status(200).json(response);
@@ -81,9 +82,7 @@ export class StockEntryController {
   async httpUpdateEntry(req: Request, res: Response): Promise<Response> {
     try {
       const entry = req.body as unknown as StockEntry;
-      const updatedEntry = (await this.entryServ.updateEntry(
-        entry
-      )) as StockEntry;
+      const updatedEntry = (await entryServ.updateEntry(entry)) as StockEntry;
       return res.status(200).json(updatedEntry);
     } catch (err: any) {
       return res.status(404).json({ error: err.message });

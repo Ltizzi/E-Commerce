@@ -3,8 +3,11 @@ import { PurchaseService } from "../services/PurchaseService";
 import { PaginationParams } from "../models/utils/PaginationParams";
 import { Purchase } from "../models/Purchase";
 import { DeleteObjectResponse } from "../models/utils/DeleteObjectResponse";
+import { PurchaseMapper } from "../dto/mappers/purchase.mapper";
+import { PurchaseRequest } from "../dto/requests/purchase.request";
 
 const purchaseServ = new PurchaseService();
+const mapper = new PurchaseMapper();
 
 export class PurchaseController {
   // private purchaseServ = new PurchaseService();
@@ -19,7 +22,7 @@ export class PurchaseController {
         page,
         pageSize
       )) as Array<Purchase>;
-      return res.status(200).json(purchases);
+      return res.status(200).json(mapper.toArrayPurchaseResponse(purchases));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -31,7 +34,7 @@ export class PurchaseController {
       const purchases = (await purchaseServ.getPurchasesByUserId(
         user_id
       )) as Array<Purchase>;
-      return res.status(200).json(purchases);
+      return res.status(200).json(mapper.toArrayPurchaseResponse(purchases));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -41,7 +44,7 @@ export class PurchaseController {
     try {
       const id = req.query.purchase_id as unknown as number;
       const purchase = (await purchaseServ.getPurchaseById(id)) as Purchase;
-      return res.status(200).json(purchase);
+      return res.status(200).json(mapper.toPurchaseResponse(purchase));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -58,11 +61,11 @@ export class PurchaseController {
 
   async httpCreateNewPurchase(req: Request, res: Response): Promise<Response> {
     try {
-      const purchase = req.body as unknown as Purchase;
+      const purchase = req.body as unknown as PurchaseRequest;
       const newPurchase = (await purchaseServ.savePurchase(
-        purchase
+        await mapper.toPurchaseEntity(purchase)
       )) as Purchase;
-      return res.status(200).json(newPurchase);
+      return res.status(200).json(mapper.toPurchaseResponse(newPurchase));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }
@@ -86,11 +89,11 @@ export class PurchaseController {
 
   async httpUpdatePurchase(req: Request, res: Response): Promise<Response> {
     try {
-      const purchase = req.body as unknown as Purchase;
+      const purchase = req.body as unknown as PurchaseRequest;
       const updatedPurchase = (await purchaseServ.updatePurchase(
-        purchase
+        await mapper.toPurchaseEntity(purchase)
       )) as Purchase;
-      return res.status(200).json(updatedPurchase);
+      return res.status(200).json(mapper.toPurchaseResponse(updatedPurchase));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }

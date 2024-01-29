@@ -1,6 +1,7 @@
 import { AppDataSource } from "../data-source";
 import { StockEntity } from "../entities/StockEntity";
 import { StockEntryEntity } from "../entities/StockEntryEntity";
+import { Stock } from "../models/Stock";
 import { StockEntry } from "../models/StockEntry";
 
 export class StockEntryService {
@@ -9,11 +10,15 @@ export class StockEntryService {
   private stockRepo = AppDataSource.getRepository(StockEntity);
 
   async getAllEntries(): Promise<Array<StockEntryEntity>> {
-    return await this.entryRepo
-      .createQueryBuilder("entry")
-      .where({ soft_delete: false })
-      .orderBy("entry.entry.id", "ASC")
-      .getMany();
+    // return await this.entryRepo
+    //   .createQueryBuilder("entry")
+    //   .where({ soft_delete: false })
+    //   .orderBy("entry.entry.id", "ASC")
+    //   .getMany();
+    return await this.entryRepo.find({
+      where: { soft_delete: false },
+      order: { entry_id: "ASC" },
+    });
   }
 
   async getEntriesWithPagination(
@@ -21,13 +26,19 @@ export class StockEntryService {
     pageSize: number
   ): Promise<Array<StockEntryEntity>> {
     const skip = (page - 1) * pageSize;
-    return await this.entryRepo
-      .createQueryBuilder("entry")
-      .where({ soft_delete: false })
-      .orderBy("entry.entry_id", "ASC")
-      .skip(skip)
-      .take(pageSize)
-      .getMany();
+    // return await this.entryRepo
+    //   .createQueryBuilder("entry")
+    //   .where({ soft_delete: false })
+    //   .orderBy("entry.entry_id", "ASC")
+    //   .skip(skip)
+    //   .take(pageSize)
+    //   .getMany();
+    return await this.entryRepo.find({
+      where: { soft_delete: false },
+      order: { entry_id: "ASC" },
+      skip: skip,
+      take: pageSize,
+    });
   }
 
   async countEntries(): Promise<number> {
@@ -39,9 +50,7 @@ export class StockEntryService {
   }
 
   async saveEntry(entry: StockEntry): Promise<StockEntryEntity | null> {
-    const stock: StockEntity | null = await this.getStockById(
-      entry.stock.stock_id
-    );
+    const stock = (await this.getStockById(entry.stock.stock_id)) as Stock;
     if (stock) {
       stock.cantidad = stock?.cantidad + entry.cantidad;
       const entries: Array<StockEntry> = stock.entries;
@@ -55,9 +64,9 @@ export class StockEntryService {
   async softDeleteEntryById(id: number): Promise<Object> {
     const entryToRemove: StockEntryEntity | null = await this.getEntryById(id);
     if (entryToRemove) {
-      const stock: StockEntity | null = await this.getStockById(
+      const stock = (await this.getStockById(
         entryToRemove?.stock.stock_id
-      );
+      )) as Stock;
       if (stock) {
         stock.cantidad = stock.cantidad - entryToRemove.cantidad;
         await this.stockRepo.save(stock);
@@ -88,7 +97,10 @@ export class StockEntryService {
     } else return null;
   }
 
-  async getStockById(id: number): Promise<StockEntity | null> {
-    return await this.stockRepo.findOneBy({ stock_id: id, soft_delete: false });
+  async getStockById(id: number): Promise<Stock> {
+    return (await this.stockRepo.findOneBy({
+      stock_id: id,
+      soft_delete: false,
+    })) as Stock;
   }
 }

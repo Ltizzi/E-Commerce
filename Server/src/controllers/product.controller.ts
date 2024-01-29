@@ -3,7 +3,7 @@ import { ProductService } from "../services/ProductService";
 import { PaginationParams } from "../models/utils/PaginationParams";
 import { Product } from "../models/Product";
 import { DeleteObjectResponse } from "../models/utils/DeleteObjectResponse";
-import { ProductMapper } from "../dto/mappers/product.maper";
+import { ProductMapper } from "../dto/mappers/product.mapper";
 import { ProductRequest } from "../dto/requests/product.request";
 
 const productServ = new ProductService();

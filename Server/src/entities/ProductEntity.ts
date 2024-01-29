@@ -59,7 +59,7 @@ export class ProductEntity implements Product {
   @Column({ default: false })
   soft_delete!: boolean;
 
-  @ManyToOne(() => ProductTypeEntity, { nullable: true })
+  @ManyToOne(() => ProductTypeEntity, { eager: true, nullable: false })
   @JoinColumn({ name: "prod_type_id" })
-  product_type!: ProductType;
+  type!: ProductType;
 }

@@ -4,7 +4,7 @@ import { CartService } from "../../services/CartService";
 import { UserService } from "../../services/UserService";
 import { CartRequest } from "../requests/cart.request";
 import { CartResponse } from "../responses/cart.response";
-import { ProductMapper } from "./product.maper";
+import { ProductMapper } from "./product.mapper";
 
 const prodMapper = new ProductMapper();
 const userServ = new UserService();

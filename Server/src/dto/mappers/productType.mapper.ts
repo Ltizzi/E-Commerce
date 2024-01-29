@@ -7,11 +7,10 @@ const typeServ = new ProductTypeService();
 
 export class ProductTypeMapper {
   toProductTypeResponse(type: ProductType): ProductTypeResponse {
-    const typeRes: ProductTypeResponse = {
-      prod_type_id: type.prod_type_id,
-      name: type.name,
-    };
-    return typeRes;
+    const res = {} as ProductTypeResponse;
+    if (type.prod_type_id) res.prod_type_id = type.prod_type_id;
+    res.name = type.name;
+    return res;
   }
 
   async toProductTypeEntity(

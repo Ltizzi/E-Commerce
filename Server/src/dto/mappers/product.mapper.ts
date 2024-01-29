@@ -1,12 +1,15 @@
 import { Product } from "../../models/Product";
-import { ProductType } from "../../models/ProductType";
 import { ProductService } from "../../services/ProductService";
+import { ProductTypeService } from "../../services/ProductTypeService";
 import { ProductRequest } from "../requests/product.request";
+import { ProductTypeRequest } from "../requests/productType.request";
 import { ProductResponse } from "../responses/product.response";
+import { ProductTypeResponse } from "../responses/productType.response";
 import { ProductTypeMapper } from "./productType.mapper";
 
 const typeMapper = new ProductTypeMapper();
 const prodServ = new ProductService();
+const typeServ = new ProductTypeService();
 
 export class ProductMapper {
   toProductResponse(prod: Product): ProductResponse {
@@ -17,7 +20,7 @@ export class ProductMapper {
     prodRes.about = prod.about;
     prodRes.imageUrl = prod.imageUrl;
     prodRes.price = prod.price;
-    prodRes.prod_type = typeMapper.toProductTypeResponse(prod.product_type);
+    prodRes.type = typeMapper.toProductTypeResponse(prod.type);
     return prodRes;
   }
 
@@ -33,7 +36,7 @@ export class ProductMapper {
     product.about = fromProd.about;
     product.imageUrl = fromProd.imageUrl;
     product.price = fromProd.price;
-    product.product_type = await typeMapper.toProductTypeEntity(fromProd);
+    product.type = await typeMapper.toProductTypeEntity(fromProd.type);
     return product;
   }
 

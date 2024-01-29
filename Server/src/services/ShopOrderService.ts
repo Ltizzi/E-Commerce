@@ -14,11 +14,15 @@ export class ShopOrderService {
   private cartService = new CartService();
 
   async getAllOrders(): Promise<Array<ShopOrderEntity>> {
-    return await this.orderRepo
-      .createQueryBuilder("order")
-      .where({ soft_delete: false })
-      .orderBy("order.shop_order_id", "ASC")
-      .getMany();
+    // return await this.orderRepo
+    //   .createQueryBuilder("order")
+    //   .where({ soft_delete: false })
+    //   .orderBy("order.shop_order_id", "ASC")
+    //   .getMany();
+    return await this.orderRepo.find({
+      where: { soft_delete: false },
+      order: { shop_order_id: "ASC" },
+    });
   }
 
   async getOrdersWithPagination(
@@ -26,13 +30,19 @@ export class ShopOrderService {
     pageSize: number
   ): Promise<Array<ShopOrderEntity>> {
     const skip = (page - 1) * pageSize;
-    return await this.orderRepo
-      .createQueryBuilder("order")
-      .where({ soft_delete: false })
-      .orderBy("order.shop_order_id", "ASC")
-      .skip(skip)
-      .take(pageSize)
-      .getMany();
+    // return await this.orderRepo
+    //   .createQueryBuilder("order")
+    //   .where({ soft_delete: false })
+    //   .orderBy("order.shop_order_id", "ASC")
+    //   .skip(skip)
+    //   .take(pageSize)
+    //   .getMany();
+    return await this.orderRepo.find({
+      where: { soft_delete: false },
+      order: { shop_order_id: "ASC" },
+      skip: skip,
+      take: pageSize,
+    });
   }
 
   async getOrderById(id: number): Promise<ShopOrderEntity | null> {

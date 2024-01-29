@@ -19,7 +19,7 @@ export class StockEntryEntity implements StockEntry {
   @PrimaryGeneratedColumn()
   entry_id!: number;
 
-  @OneToOne(() => ProductEntity, { nullable: false })
+  @OneToOne(() => ProductEntity, { eager: true, nullable: false })
   @JoinColumn({ name: "product_id" })
   product!: Product;
 

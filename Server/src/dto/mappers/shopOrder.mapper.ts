@@ -1,9 +1,8 @@
 import { ShopOrder } from "../../models/ShopOrder";
 import { ShopOrderService } from "../../services/ShopOrderService";
-import { UserService } from "../../services/UserService";
 import { ShopOrderRequest } from "../requests/shopOrder.request";
 import { ShopOrderResponse } from "../responses/shopOrder.response";
-import { ProductMapper } from "./product.maper";
+import { ProductMapper } from "./product.mapper";
 const prodMapper = new ProductMapper();
 const orderServ = new ShopOrderService();
 

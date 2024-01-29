@@ -3,7 +3,7 @@ import { StockEntry } from "../../models/StockEntry";
 import { StockService } from "../../services/StockService";
 import { StockRequest } from "../requests/stock.request";
 import { StockResponse } from "../responses/stock.response";
-import { ProductMapper } from "./product.maper";
+import { ProductMapper } from "./product.mapper";
 import { StockEntryMapper } from "./stockEntry.mapper";
 
 const prodMapper = new ProductMapper();
@@ -14,6 +14,8 @@ export class StockMapper {
   toStockResponse(stock: Stock): StockResponse {
     const stockRes = {} as StockResponse;
     stockRes.stock_id = stock.stock_id;
+    console.log("FROM MAPPER");
+    console.log(stock);
     stockRes.product = prodMapper.toProductResponse(stock.product);
     stockRes.cantidad = stock.cantidad;
     return stockRes;

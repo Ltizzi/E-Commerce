@@ -15,19 +15,19 @@ const purchMapper = new PurchaseMapper();
 
 export class UserMapper {
   toUserResponse(user: User): UserResponse {
-    const userRes: UserResponse = {
-      user_id: user.user_id,
-      username: user.username,
-      name: user.name,
-      lastname: user.lastname,
-      email: user.email,
-      avatar: user.avatar,
-      birthday: user.birthday,
-      carts: cartMapper.toArrayCartResponse(user.carts),
-      purchases: purchMapper.toArrayPurchaseResponse(user.purchases),
-      roles: user.roles,
-    };
-    return userRes;
+    const res = {} as UserResponse;
+    res.user_id = user.user_id;
+    res.username = user.username;
+    res.name = user.name;
+    res.lastname = user.lastname;
+    res.email = user.email;
+    res.avatar = user.avatar;
+    res.birthday = user.birthday;
+    if (user.carts) res.carts = cartMapper.toArrayCartResponse(user.carts);
+    if (user.purchases)
+      res.purchases = purchMapper.toArrayPurchaseResponse(user.purchases);
+    res.roles = user.roles;
+    return res;
   }
 
   async toUserEntity(userReq: UserRequest | UserResponse): Promise<User> {
@@ -37,17 +37,21 @@ export class UserMapper {
     }
     user.avatar = userReq.avatar;
     user.birthday = userReq.birthday;
-    user.carts = await cartMapper.toArrayCartEntity(
-      userReq.carts as Array<CartResponse | CartRequest>
-    );
+    if (userReq.carts) {
+      user.carts = await cartMapper.toArrayCartEntity(
+        userReq.carts as Array<CartResponse | CartRequest>
+      );
+    }
     user.email = userReq.email;
     user.name = userReq.name;
     user.lastname = userReq.lastname;
     user.username = userReq.username;
-    user.purchases = await purchMapper.toArrayPurchaseEntity(
-      userReq.purchases as Array<PurchaseRequest | PurchaseResponse>
-    );
-    user.roles = userReq.roles;
+    if (userReq.purchases) {
+      user.purchases = await purchMapper.toArrayPurchaseEntity(
+        userReq.purchases as Array<PurchaseRequest | PurchaseResponse>
+      );
+    }
+    if (userReq.roles) user.roles = userReq.roles;
     return user;
   }
 

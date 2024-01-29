@@ -63,9 +63,11 @@ export class UserEntity implements User {
   @Column({ default: false })
   soft_delete!: boolean;
 
-  @OneToMany(() => CartEntity, (cart) => cart.user)
+  @OneToMany(() => CartEntity, (cart) => cart.user, { eager: true })
   carts!: Cart[];
 
-  @OneToMany(() => PurchaseEntity, (purchase) => purchase.user)
+  @OneToMany(() => PurchaseEntity, (purchase) => purchase.user, {
+    eager: false,
+  })
   purchases!: Purchase[];
 }

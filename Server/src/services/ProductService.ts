@@ -3,6 +3,7 @@ import { ProductEntity } from "../entities/ProductEntity";
 import { StockEntity } from "../entities/StockEntity";
 import { Product } from "../models/Product";
 import { StockEntry } from "../models/StockEntry";
+import { Cart } from "../models/Cart";
 
 export class ProductService {
   private productRepo = AppDataSource.getRepository(ProductEntity);
@@ -10,11 +11,17 @@ export class ProductService {
   private stockRepo = AppDataSource.getRepository(StockEntity);
 
   async getProducts(): Promise<Array<ProductEntity>> {
-    return await this.productRepo
-      .createQueryBuilder("product")
-      .where({ soft_delete: false })
-      .orderBy("product.product_id", "ASC")
-      .getMany();
+    // const products = await this.productRepo
+    //   .createQueryBuilder("product")
+    //   .where({ soft_delete: false })
+    //   .orderBy("product.product_id", "ASC")
+    //   .getMany();
+    const products = await this.productRepo.find({
+      where: { soft_delete: false },
+      order: { product_id: "ASC" },
+    });
+
+    return products;
   }
 
   async getProductsByPagination(
@@ -22,13 +29,21 @@ export class ProductService {
     pageSize: number
   ): Promise<Array<ProductEntity>> {
     const skip = (page - 1) * pageSize;
-    return await this.productRepo
-      .createQueryBuilder("product")
-      .where({ soft_delete: false })
-      .orderBy("product.product_id", "ASC")
-      .skip(skip)
-      .take(pageSize)
-      .getMany();
+    // return await this.productRepo
+    //   .createQueryBuilder("product")
+    //   .where({ soft_delete: false })
+    //   .orderBy("product.product_id", "ASC")
+    //   .skip(skip)
+    //   .take(pageSize)
+    //   .getMany();
+    const products = await this.productRepo.find({
+      where: { soft_delete: false },
+      skip: skip,
+      take: pageSize,
+      order: { product_id: "ASC" },
+    });
+
+    return products;
   }
 
   async countProducts(): Promise<number> {
@@ -43,12 +58,12 @@ export class ProductService {
   }
 
   async saveProduct(product: Product): Promise<ProductEntity | null> {
+    // product.imageUrl = [];
     const newProduct: ProductEntity = await this.productRepo.save(product);
     if (newProduct) {
       const newStock: StockEntity = new StockEntity();
       newStock.product = product;
       newStock.cantidad = 0;
-      newStock.entries = new Array<StockEntry>();
       await this.stockRepo.save(newStock);
 
       return newProduct;

@@ -6,11 +6,15 @@ export class StockService {
   private stockRepo = AppDataSource.getRepository(StockEntity);
 
   async getStocks(): Promise<Array<StockEntity>> {
-    return await this.stockRepo
-      .createQueryBuilder("stock")
-      .where({ soft_delete: false })
-      .orderBy("stock.stock_id", "ASC")
-      .getMany();
+    // return await this.stockRepo
+    //   .createQueryBuilder("stock")
+    //   .where({ soft_delete: false })
+    //   .orderBy("stock.stock_id", "ASC")
+    //   .getMany();
+    return await this.stockRepo.find({
+      where: { soft_delete: false },
+      order: { stock_id: "ASC" },
+    });
   }
 
   async getStockWithPagination(
@@ -18,13 +22,19 @@ export class StockService {
     pageSize: number
   ): Promise<Array<StockEntity>> {
     const skip = (page - 1) * pageSize;
-    return await this.stockRepo
-      .createQueryBuilder("stock")
-      .where({ soft_delete: false })
-      .orderBy("stock.stock_id", "ASC")
-      .skip(skip)
-      .take(pageSize)
-      .getMany();
+    // return await this.stockRepo
+    //   .createQueryBuilder("stock")
+    //   .where({ soft_delete: false })
+    //   .orderBy("stock.stock_id", "ASC")
+    //   .skip(skip)
+    //   .take(pageSize)
+    //   .getMany();
+    return await this.stockRepo.find({
+      where: { soft_delete: false },
+      order: { stock_id: "ASC" },
+      skip: skip,
+      take: pageSize,
+    });
   }
 
   async countStocks(): Promise<number> {
@@ -45,6 +55,7 @@ export class StockService {
   }
 
   async saveStock(stock: Stock): Promise<StockEntity | null> {
+    stock.entries = [];
     return await this.stockRepo.save(stock);
   }
 

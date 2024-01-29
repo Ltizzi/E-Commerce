@@ -6,11 +6,15 @@ export class ProductTypeService {
   private typeRepo = AppDataSource.getRepository(ProductTypeEntity);
 
   async getAllTypes(): Promise<Array<ProductTypeEntity>> {
-    return await this.typeRepo
-      .createQueryBuilder("product_type")
-      .where({ soft_delete: false })
-      .orderBy("product_type.prod_type_id", "ASC")
-      .getMany();
+    // return await this.typeRepo
+    //   .createQueryBuilder("product_type")
+    //   .where({ soft_delete: false })
+    //   .orderBy("product_type.prod_type_id", "ASC")
+    //   .getMany();
+    return await this.typeRepo.find({
+      where: { soft_delete: false },
+      order: { prod_type_id: "ASC" },
+    });
   }
 
   async getTypesByPagination(
@@ -18,13 +22,19 @@ export class ProductTypeService {
     pageSize: number
   ): Promise<Array<ProductTypeEntity>> {
     const skip = (page - 1) * pageSize;
-    return await this.typeRepo
-      .createQueryBuilder("product_type")
-      .where({ soft_delete: false })
-      .orderBy("product_type.prod_type_id", "ASC")
-      .skip(skip)
-      .take(pageSize)
-      .getMany();
+    // return await this.typeRepo
+    //   .createQueryBuilder("product_type")
+    //   .where({ soft_delete: false })
+    //   .orderBy("product_type.prod_type_id", "ASC")
+    //   .skip(skip)
+    //   .take(pageSize)
+    //   .getMany();
+    return await this.typeRepo.find({
+      where: { soft_delete: false },
+      order: { prod_type_id: "ASC" },
+      skip: skip,
+      take: pageSize,
+    });
   }
 
   async countTypes(): Promise<number> {

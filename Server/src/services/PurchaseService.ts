@@ -18,13 +18,19 @@ export class PurchaseService {
     pageSize: number
   ): Promise<Array<PurchaseEntity>> {
     const skip = (page - 1) * pageSize;
-    return await this.purchaseRepo
-      .createQueryBuilder("purchase")
-      .where({ soft_delete: false })
-      .orderBy("purchase.purchase_id", "ASC")
-      .skip(skip)
-      .take(pageSize)
-      .getMany();
+    // return await this.purchaseRepo
+    //   .createQueryBuilder("purchase")
+    //   .where({ soft_delete: false })
+    //   .orderBy("purchase.purchase_id", "ASC")
+    //   .skip(skip)
+    //   .take(pageSize)
+    //   .getMany();
+    return await this.purchaseRepo.find({
+      where: { soft_delete: false },
+      order: { purchase_id: "ASC" },
+      skip: skip,
+      take: pageSize,
+    });
   }
 
   async countPurchases(): Promise<number> {

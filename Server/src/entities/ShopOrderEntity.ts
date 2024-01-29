@@ -21,13 +21,13 @@ export class ShopOrderEntity implements ShopOrder {
   @Column("integer", { nullable: true })
   total!: number;
 
-  @OneToOne(() => ProductEntity, { nullable: false })
+  @OneToOne(() => ProductEntity, { eager: true, nullable: false })
   product!: Product;
 
   @Column()
   cantidad!: number;
 
-  @OneToOne(() => UserEntity, { nullable: false })
+  @OneToOne(() => UserEntity, { eager: true, nullable: false })
   @JoinColumn({ name: "user_id" })
   user!: User;
 

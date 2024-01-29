@@ -65,7 +65,7 @@ export class ProductTypeController {
 
   async httpCreateProductType(req: Request, res: Response): Promise<Response> {
     try {
-      const type = req.query.body as unknown as ProductTypeRequest;
+      const type = req.body as unknown as ProductTypeRequest;
       const newType = (await prodTypeServ.saveProductType(
         await mapper.toProductTypeEntity(type)
       )) as ProductType;

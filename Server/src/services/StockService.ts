@@ -55,7 +55,7 @@ export class StockService {
   }
 
   async saveStock(stock: Stock): Promise<StockEntity | null> {
-    stock.entries = [];
+    stock.product_id = stock.product.product_id;
     return await this.stockRepo.save(stock);
   }
 

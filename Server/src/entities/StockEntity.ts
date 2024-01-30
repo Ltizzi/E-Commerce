@@ -20,8 +20,11 @@ export class StockEntity implements Stock {
   stock_id!: number;
 
   @OneToOne(() => ProductEntity, { eager: true, nullable: false })
-  @JoinColumn({ name: "product_id", referencedColumnName: "product_id" })
+  @JoinColumn({ name: "product", referencedColumnName: "product_id" })
   product!: Product;
+
+  @Column()
+  product_id!: number;
 
   @Column()
   cantidad!: number;

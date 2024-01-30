@@ -17,6 +17,7 @@ export class StockMapper {
     console.log("FROM MAPPER");
     console.log(stock);
     stockRes.product = prodMapper.toProductResponse(stock.product);
+    stockRes.product_id = stock.product_id;
     stockRes.cantidad = stock.cantidad;
     return stockRes;
   }
@@ -33,6 +34,7 @@ export class StockMapper {
     }
     stock.cantidad = fromStock.cantidad;
     stock.product = await prodMapper.toProductEntity(fromStock.product);
+    stock.product_id = fromStock.product_id;
     return stock;
   }
 

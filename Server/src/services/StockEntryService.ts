@@ -57,7 +57,7 @@ export class StockEntryService {
       entries.push(entry);
       stock.entries = entries;
       await this.stockRepo.save(stock);
-      return await this.entryRepo.save(entry);
+      return (await this.entryRepo.save(entry)) as StockEntry;
     } else return null;
   }
 
@@ -68,11 +68,13 @@ export class StockEntryService {
         entryToRemove?.stock.stock_id
       )) as Stock;
       if (stock) {
-        stock.cantidad = stock.cantidad - entryToRemove.cantidad;
-        await this.stockRepo.save(stock);
         entryToRemove.soft_delete = true;
-        await this.entryRepo.save(entryToRemove);
-        return { status: "OK" };
+        const updatedEntry = await this.entryRepo.save(entryToRemove);
+        if (updatedEntry) {
+          stock.cantidad = stock.cantidad - entryToRemove.cantidad;
+          await this.stockRepo.save(stock);
+          return { status: "OK" };
+        } else throw new Error("Something went wrong");
       } else return { error: "entry's stock not found!" };
     } else return { error: "entry not found!" };
   }

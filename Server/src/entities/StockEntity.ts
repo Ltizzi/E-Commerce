@@ -20,14 +20,17 @@ export class StockEntity implements Stock {
   stock_id!: number;
 
   @OneToOne(() => ProductEntity, { eager: true, nullable: false })
-  @JoinColumn({ name: "product_id" })
+  @JoinColumn({ name: "product_id", referencedColumnName: "product_id" })
   product!: Product;
 
   @Column()
   cantidad!: number;
 
-  @OneToMany(() => StockEntryEntity, (entry) => entry.stock, { eager: true })
-  @JoinColumn({ name: "stock_id" })
+  @OneToMany(() => StockEntryEntity, (entry) => entry.stock, {
+    eager: true,
+    nullable: false,
+  })
+  @JoinColumn({ name: "entry_id", referencedColumnName: "shop_entry_id" })
   entries!: StockEntry[];
 
   @CreateDateColumn({

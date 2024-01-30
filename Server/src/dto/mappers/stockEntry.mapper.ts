@@ -30,6 +30,7 @@ export class StockEntryMapper {
     }
     entry.cantidad = fromEntry.cantidad;
     entry.stock = await mapper.toStockEntity(fromEntry.stock);
+    entry.product = entry.stock.product;
     return entry;
   }
 

@@ -12,6 +12,7 @@ export class PurchaseService {
   private purchaseRepo = AppDataSource.getRepository(PurchaseEntity);
   private userRepo = AppDataSource.getRepository(UserEntity);
   private stockRepo = AppDataSource.getRepository(StockEntity);
+  private stockService = new StockService();
 
   async getPurchasesWithPagination(
     page: number,
@@ -53,21 +54,34 @@ export class PurchaseService {
   }
 
   async savePurchase(purchase: Purchase): Promise<PurchaseEntity | null> {
+    console.log("FROM SERVICE:");
+    console.log(purchase);
     const items: Array<ShopOrder> = purchase.orders;
-    let stocks: Array<Stock> = [];
     let totalIncome: number = 0;
-    items.forEach(async (item) => {
+    let stocksPromises: Promise<Stock | null>[] = [];
+
+    for (const item of items) {
       const product: Product = item.product;
-      const stock: StockEntity | null = await this.stockRepo.findOneBy({
-        product: product,
-      });
-      if (stock) {
-        totalIncome += item.total;
-        stock.cantidad -= item.cantidad;
-        stocks.push(stock);
+      console.log(product);
+      try {
+        const stock = (await this.stockRepo.findOneBy({
+          product: product,
+        })) as Stock;
+        console.log("ASDASDASD");
+        console.log(stock);
+        if (stock) {
+          console.log("entroooooo");
+          console.log(stock);
+          totalIncome += item.total;
+          stock.cantidad -= item.cantidad;
+          stocksPromises.push(this.stockRepo.save(stock));
+        } else throw new Error("stock not found");
+      } catch (err: any) {
+        throw new Error(err);
       }
-    });
-    stocks.forEach(async (stock) => await this.stockRepo.save(stock));
+    }
+
+    await Promise.all(stocksPromises);
     purchase.total_income = totalIncome;
     return await this.purchaseRepo.save(purchase);
   }

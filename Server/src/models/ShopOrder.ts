@@ -7,6 +7,7 @@ export interface ShopOrder {
   product: Product;
   cantidad: number;
   user: User;
+  user_id: number;
   order_state: string;
   createdAt: Date;
   updatedAt: Date;

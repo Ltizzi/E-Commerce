@@ -70,9 +70,7 @@ export class ShopOrderController {
   async httpCreateShopOrder(req: Request, res: Response): Promise<Response> {
     try {
       const cart = req.body as unknown as CartRequest;
-      const newOrder = (await orderServ.saveOrder(
-        await cartMapper.toCartEntity(cart)
-      )) as ShopOrder;
+      const newOrder = (await orderServ.saveOrder(cart)) as ShopOrder;
       return res.status(200).json(mapper.toShopOrderResponse(newOrder));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });

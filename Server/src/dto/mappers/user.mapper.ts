@@ -38,9 +38,7 @@ export class UserMapper {
     user.avatar = userReq.avatar;
     user.birthday = userReq.birthday;
     if (userReq.carts) {
-      user.carts = await cartMapper.toArrayCartEntity(
-        userReq.carts as Array<CartResponse | CartRequest>
-      );
+      user.carts = await cartMapper.toArrayCartEntity(userReq.carts);
     }
     user.email = userReq.email;
     user.name = userReq.name;
@@ -48,7 +46,7 @@ export class UserMapper {
     user.username = userReq.username;
     if (userReq.purchases) {
       user.purchases = await purchMapper.toArrayPurchaseEntity(
-        userReq.purchases as Array<PurchaseRequest | PurchaseResponse>
+        userReq.purchases
       );
     }
     if (userReq.roles) user.roles = userReq.roles;
@@ -57,7 +55,7 @@ export class UserMapper {
 
   toArrayUserResponse(users: Array<User>): Array<UserResponse> {
     let usersRes: Array<UserResponse> = [];
-    users.forEach((user) => usersRes.push(this.toUserResponse(user)));
+    users.forEach(async (user) => usersRes.push(this.toUserResponse(user)));
     return usersRes;
   }
 }

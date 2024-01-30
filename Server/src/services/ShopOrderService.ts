@@ -3,9 +3,9 @@ import { AppDataSource } from "../data-source";
 import { CartEntity } from "../entities/CartEntity";
 import { ShopOrderEntity } from "../entities/ShopOrderEntity";
 import { UserEntity } from "../entities/UserEntity";
-import { Cart } from "../models/Cart";
 import { User } from "../models/User";
 import { CartService } from "./CartService";
+import { CartRequest } from "../dto/requests/cart.request";
 
 export class ShopOrderService {
   private orderRepo = AppDataSource.getRepository(ShopOrderEntity);
@@ -21,6 +21,7 @@ export class ShopOrderService {
     //   .getMany();
     return await this.orderRepo.find({
       where: { soft_delete: false },
+      relations: { product: true },
       order: { shop_order_id: "ASC" },
     });
   }
@@ -61,16 +62,21 @@ export class ShopOrderService {
     return await this.orderRepo.findBy({ user: user as User });
   }
 
-  async saveOrder(cartReq: Cart): Promise<ShopOrderEntity | null> {
+  async saveOrder(cartReq: CartRequest): Promise<ShopOrderEntity | null> {
     const cart: CartEntity = (await this.cartRepo.findOneBy({
       cart_id: cartReq.cart_id,
       soft_delete: false,
     })) as CartEntity;
+    console.log("FROM SERVICE");
+    console.log(cart);
     const order: ShopOrderEntity = new ShopOrderEntity();
     order.product = cart.product;
     order.cantidad = cart.cantidad;
     order.total = cart.cantidad * cart.product.price;
-    order.user = cart.user;
+    order.user = (await this.userRepo.findOneBy({
+      user_id: cart.user_id,
+    })) as User;
+    order.user_id = cart.user_id;
     order.order_state = "PENDING";
     await this.cartService.softDeleteCartById(cart.cart_id);
     return await this.orderRepo.save(order);

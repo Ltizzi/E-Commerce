@@ -29,7 +29,9 @@ export class CartController {
   async httpGetCartById(req: Request, res: Response): Promise<Response> {
     try {
       const id = req.query.cart_id as unknown as number;
+      console.log("CART ID QUERY: " + id);
       const cart = (await cartServ.getCartById(id)) as Cart;
+      console.log("CART: ", cart);
       return res.status(200).json(cartMapper.toCartResponse(cart));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });

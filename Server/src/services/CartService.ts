@@ -13,15 +13,30 @@ export class CartService {
   constructor() {}
 
   async getCartsByUserId(user_id: number): Promise<Array<CartEntity>> {
-    const user = await this.userRepo.findOneBy({ user_id: user_id });
-    return await this.cartRepo.findBy({
-      soft_delete: false,
-      user: user as User,
+    // const user = await this.userRepo.findOneBy({ user_id: user_id });
+    // console.log("FETCHING FROM USER...");
+    // console.log(user);
+    return await this.cartRepo.find({
+      where: {
+        soft_delete: false,
+        user_id,
+      },
     });
   }
 
   async getCartById(id: number): Promise<CartEntity | null> {
-    return await this.cartRepo.findOneBy({ cart_id: id, soft_delete: false });
+    const cart = await this.cartRepo.findOne({
+      where: {
+        cart_id: id,
+        soft_delete: false,
+      },
+      relations: {
+        user: false,
+        product: true,
+      },
+    });
+    console.log("FROM SERVICE: ", cart);
+    return cart;
   }
 
   async saveCart(cart: Cart): Promise<CartEntity | null> {
@@ -30,7 +45,13 @@ export class CartService {
     });
     if (prod) {
       cart.total = prod.price * cart.cantidad;
-      return await this.cartRepo.save(cart);
+      cart.user_id = cart.user.user_id;
+      console.log("PRE: ");
+      console.log(cart);
+      const newCart = await this.cartRepo.save(cart);
+      console.log("POST");
+      console.log(newCart);
+      return newCart;
     }
     return null;
   }

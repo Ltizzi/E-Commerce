@@ -20,15 +20,21 @@ export class ProductListComponent {
     //   this.products = JSON.parse(localStorage.getItem('products') as string);
     //   this.isLoaded = true;
     // } else {
-    this.getAll();
-    localStorage.setItem('products', JSON.stringify(this.products));
-    this.isLoaded = true;
+    //this.getAll();
+    this.prodServ.getAll().subscribe((data: any) => {
+      localStorage.setItem('products', JSON.stringify(data));
+      this.products = data;
+      console.log(this.products);
+      this.isLoaded = true;
+    });
+
     //}
   }
 
   getAll() {
     this.prodServ.getAll().subscribe((data: any) => {
       this.products = data;
+      return data;
     });
   }
 }

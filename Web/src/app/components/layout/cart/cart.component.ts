@@ -42,7 +42,7 @@ export class CartComponent {
       this.cartServ.create(cart).subscribe((data: any) => {
         console.log(data);
         console.log(cart);
-        if (data.product.id == cart.product.id) {
+        if (data.product.id == cart.product.product_id) {
           console.log('yeah');
           arrChecker.push(data);
         }

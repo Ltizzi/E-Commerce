@@ -45,7 +45,7 @@ export class EntryTableComponent {
   //Fetch
 
   fetchEntries(page: number, limit: number) {
-    let correctPage = page - 1;
+    let correctPage = page;
     this.entryServ
       .getAllWithPagination(correctPage, limit)
       .subscribe((data: any) => {

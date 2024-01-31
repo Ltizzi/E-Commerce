@@ -41,7 +41,7 @@ export class PurchaseTableComponent {
   //DATA FETCH
 
   fetchPurchases(page: number, limit: number) {
-    let correctPage = page - 1;
+    let correctPage = page;
     this.purchServ
       .getAllWithPagination(correctPage, limit)
       .subscribe((data: any) => {

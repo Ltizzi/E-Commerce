@@ -39,7 +39,7 @@ export class UserTableComponent {
   //DATA FETCH
 
   fetchUsers(page: number, limit: number) {
-    let correctPage = page - 1;
+    let correctPage = page;
     this.userServ
       .getAllWithPagination(correctPage, limit)
       .subscribe((data: any) => {

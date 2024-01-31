@@ -23,9 +23,12 @@ export class DataService {
   }
 
   getAllWithPagination(page: number, limit: number) {
-    return this.http.get(this.url + '/all?page=' + page + '&limit=' + limit, {
-      withCredentials: true,
-    });
+    return this.http.get(
+      this.url + '/withPagination?page=' + page + '&pageSize=' + limit,
+      {
+        withCredentials: true,
+      }
+    );
   }
 
   getTotal() {

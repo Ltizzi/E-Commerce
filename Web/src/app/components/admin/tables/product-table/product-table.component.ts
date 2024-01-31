@@ -47,7 +47,7 @@ export class ProductTableComponent {
   //DATA FETCH
 
   fetchProducts(page: number, limit: number) {
-    let correctPage = page - 1;
+    let correctPage = page;
     this.prodServ
       .getAllWithPagination(correctPage, limit)
       .subscribe((data: any) => {

@@ -61,7 +61,7 @@ export class TypeTableComponent {
   }
 
   fetchTypes(page: number, limit: number) {
-    let correctPage = page - 1;
+    let correctPage = page;
     this.typeServ
       .getAllWithPagination(correctPage, limit)
       .subscribe((data: any) => {

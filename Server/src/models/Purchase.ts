@@ -6,6 +6,7 @@ export interface Purchase {
   orders: Array<ShopOrder>;
   total_income: number;
   user: User;
+  user_id: number;
   createdAt: Date;
   updatedAt: Date;
   soft_delete: boolean;

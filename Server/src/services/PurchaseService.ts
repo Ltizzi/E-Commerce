@@ -12,19 +12,27 @@ export class PurchaseService {
   private purchaseRepo = AppDataSource.getRepository(PurchaseEntity);
   private userRepo = AppDataSource.getRepository(UserEntity);
   private stockRepo = AppDataSource.getRepository(StockEntity);
+  private stockService = new StockService();
 
   async getPurchasesWithPagination(
     page: number,
     pageSize: number
   ): Promise<Array<PurchaseEntity>> {
     const skip = (page - 1) * pageSize;
-    return await this.purchaseRepo
-      .createQueryBuilder("purchase")
-      .where({ soft_delete: false })
-      .orderBy("purchase.purchase_id", "ASC")
-      .skip(skip)
-      .take(pageSize)
-      .getMany();
+    // return await this.purchaseRepo
+    //   .createQueryBuilder("purchase")
+    //   .where({ soft_delete: false })
+    //   .orderBy("purchase.purchase_id", "ASC")
+    //   .skip(skip)
+    //   .take(pageSize)
+    //   .getMany();
+    return await this.purchaseRepo.find({
+      where: { soft_delete: false },
+      order: { purchase_id: "ASC" },
+      relations: { orders: true, user: false },
+      skip: skip,
+      take: pageSize,
+    });
   }
 
   async countPurchases(): Promise<number> {
@@ -48,20 +56,26 @@ export class PurchaseService {
 
   async savePurchase(purchase: Purchase): Promise<PurchaseEntity | null> {
     const items: Array<ShopOrder> = purchase.orders;
-    let stocks: Array<Stock> = [];
     let totalIncome: number = 0;
-    items.forEach(async (item) => {
+    let stocksPromises: Promise<Stock | null>[] = [];
+
+    for (const item of items) {
       const product: Product = item.product;
-      const stock: StockEntity | null = await this.stockRepo.findOneBy({
-        product: product,
-      });
-      if (stock) {
-        totalIncome += item.total;
-        stock.cantidad -= item.cantidad;
-        stocks.push(stock);
+      try {
+        const stock = (await this.stockRepo.findOneBy({
+          product_id: product.product_id,
+        })) as Stock;
+        if (stock) {
+          totalIncome += item.total;
+          stock.cantidad -= item.cantidad;
+          stocksPromises.push(this.stockRepo.save(stock));
+        } else throw new Error("stock not found");
+      } catch (err: any) {
+        throw new Error(err);
       }
-    });
-    stocks.forEach(async (stock) => await this.stockRepo.save(stock));
+    }
+
+    await Promise.all(stocksPromises);
     purchase.total_income = totalIncome;
     return await this.purchaseRepo.save(purchase);
   }
@@ -95,28 +109,30 @@ export class PurchaseService {
     })) as Purchase;
     const oldItems = oldPurchase?.orders as Array<ShopOrder>;
     const items = purchase.orders as Array<ShopOrder>;
-    let stocks: Array<Stock> = [];
+    let stocksPromises: Promise<Stock | null>[] = [];
     let total_income = 0;
 
-    items.forEach(async (item) => {
+    for (const item of items) {
       const oldItem = oldItems.filter(
         (old) => old.shop_order_id == item.shop_order_id
       );
       const product = item.product as Product;
-      let stock = (await this.stockRepo.findOneBy({
-        product: product,
-      })) as Stock;
-      total_income += item.total;
-      if (oldItem.length == 1) {
-        stock.cantidad -= oldItem[0].cantidad;
-      } else
-        throw new Error(
-          "update purchase failed: there is no posibility to be more than one"
-        );
-      stock.cantidad += item.cantidad;
-      stocks.push(stock);
-    });
-    stocks.forEach(async (stock) => await this.stockRepo.save(stock));
+      try {
+        let stock = (await this.stockRepo.findOneBy({
+          product_id: product.product_id,
+        })) as Stock;
+        total_income += item.total;
+        if (oldItem.length == 1) {
+          stock.cantidad -= oldItem[0].cantidad;
+        } else
+          throw new Error(
+            "update purchase failed: there is no posibility to be more than one"
+          );
+        stock.cantidad += item.cantidad;
+        stocksPromises.push(this.stockRepo.save(stock));
+      } catch (err: any) {}
+    }
+    await Promise.all(stocksPromises);
     purchase.total_income = total_income;
     purchase.createdAt = oldPurchase.createdAt;
     purchase.soft_delete = oldPurchase.soft_delete;

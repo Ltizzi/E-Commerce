@@ -9,6 +9,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  JoinColumn,
 } from "typeorm";
 import { CartEntity } from "./CartEntity";
 import { PurchaseEntity } from "./PurchaseEntity";
@@ -63,9 +64,17 @@ export class UserEntity implements User {
   @Column({ default: false })
   soft_delete!: boolean;
 
-  @OneToMany(() => CartEntity, (cart) => cart.user)
+  @OneToMany(() => CartEntity, (cart) => cart.user, {
+    eager: true,
+    nullable: false,
+  })
+  @JoinColumn({ name: "carts", referencedColumnName: "cart_id" })
   carts!: Cart[];
 
-  @OneToMany(() => PurchaseEntity, (purchase) => purchase.user)
+  @OneToMany(() => PurchaseEntity, (purchase) => purchase.user, {
+    eager: false,
+    nullable: true,
+  })
+  @JoinColumn({ name: "purchases", referencedColumnName: "purchase_id" })
   purchases!: Purchase[];
 }

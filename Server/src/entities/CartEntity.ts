@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -21,14 +22,21 @@ export class CartEntity implements Cart {
   @Column()
   total!: number;
 
-  @OneToOne(() => ProductEntity, { nullable: true })
+  @ManyToOne(() => ProductEntity, { eager: true, nullable: false })
+  @JoinColumn({ name: "product", referencedColumnName: "product_id" })
   product!: Product;
 
   @Column()
   cantidad!: number;
 
-  @OneToOne(() => UserEntity, { nullable: false })
-  @JoinColumn({ name: "user_id" })
+  @Column()
+  user_id!: number;
+
+  @ManyToOne(() => UserEntity, (user) => user.carts, {
+    eager: false,
+    nullable: false,
+  })
+  @JoinColumn({ name: "user_id", referencedColumnName: "user_id" })
   user!: User;
 
   @CreateDateColumn({

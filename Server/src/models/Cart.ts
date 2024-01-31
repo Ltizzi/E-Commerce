@@ -6,6 +6,7 @@ export interface Cart {
   total: number;
   product: Product;
   cantidad: number;
+  user_id: number;
   user: User;
   createdAt: Date;
   updatedAt: Date;

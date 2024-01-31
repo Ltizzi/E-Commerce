@@ -10,5 +10,5 @@ export interface Product {
   createdAt: Date;
   updatedAt: Date;
   soft_delete: boolean;
-  product_type: ProductType;
+  type: ProductType;
 }

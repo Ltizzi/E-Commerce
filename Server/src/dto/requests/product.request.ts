@@ -7,5 +7,5 @@ export interface ProductRequest {
   about: string;
   imageUrl: Array<string>;
   price: number;
-  prod_type: ProductTypeRequest;
+  type: ProductTypeRequest;
 }

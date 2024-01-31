@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -21,13 +22,17 @@ export class ShopOrderEntity implements ShopOrder {
   @Column("integer", { nullable: true })
   total!: number;
 
-  @OneToOne(() => ProductEntity, { nullable: false })
+  @ManyToOne(() => ProductEntity, { eager: true, nullable: false })
+  @JoinColumn({ name: "product_id", referencedColumnName: "product_id" })
   product!: Product;
 
   @Column()
   cantidad!: number;
 
-  @OneToOne(() => UserEntity, { nullable: false })
+  @Column()
+  user_id!: number;
+
+  @OneToOne(() => UserEntity, { eager: false, nullable: false })
   @JoinColumn({ name: "user_id" })
   user!: User;
 

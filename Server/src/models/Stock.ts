@@ -4,6 +4,7 @@ import { StockEntry } from "./StockEntry";
 export interface Stock {
   stock_id: number;
   product: Product;
+  product_id: number;
   cantidad: number;
   entries: Array<StockEntry>;
   createdAt: Date;

@@ -62,8 +62,9 @@ export class PurchaseController {
   async httpCreateNewPurchase(req: Request, res: Response): Promise<Response> {
     try {
       const purchase = req.body as unknown as PurchaseRequest;
+      const purchEntity = await mapper.toPurchaseEntity(purchase);
       const newPurchase = (await purchaseServ.savePurchase(
-        await mapper.toPurchaseEntity(purchase)
+        purchEntity
       )) as Purchase;
       return res.status(200).json(mapper.toPurchaseResponse(newPurchase));
     } catch (err: any) {

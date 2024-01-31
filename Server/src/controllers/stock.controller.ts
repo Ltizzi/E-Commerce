@@ -62,6 +62,15 @@ export class StockController {
     }
   }
 
+  async httpCountStocks(req: Request, res: Response): Promise<Response> {
+    try {
+      const totalStocks = (await stockServ.countStocks()) as number;
+      return res.status(200).json({ total: totalStocks });
+    } catch (err: any) {
+      return res.status(404).json({ error: err.message });
+    }
+  }
+
   async httpCreateNewStock(req: Request, res: Response): Promise<Response> {
     try {
       const stock = req.body as unknown as StockRequest;

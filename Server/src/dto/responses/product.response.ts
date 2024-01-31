@@ -7,5 +7,5 @@ export interface ProductResponse {
   about: string;
   imageUrl: Array<string>;
   price: number;
-  prod_type: ProductTypeResponse;
+  type: ProductTypeResponse;
 }

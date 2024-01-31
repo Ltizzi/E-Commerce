@@ -4,7 +4,7 @@ import { CartService } from "../../services/CartService";
 import { UserService } from "../../services/UserService";
 import { CartRequest } from "../requests/cart.request";
 import { CartResponse } from "../responses/cart.response";
-import { ProductMapper } from "./product.maper";
+import { ProductMapper } from "./product.mapper";
 
 const prodMapper = new ProductMapper();
 const userServ = new UserService();
@@ -13,21 +13,25 @@ const cartServ = new CartService();
 export class CartMapper {
   toCartResponse(cart: Cart): CartResponse {
     const cartRes = {} as CartResponse;
+    // console.log("FROM MAPPER: ");
+    // console.log(cart);
     cartRes.cart_id = cart.cart_id;
     cartRes.product = prodMapper.toProductResponse(cart.product);
     cartRes.cantidad = cart.cantidad;
     cartRes.total = cart.total;
-    cartRes.user_id = cart.user.user_id;
+    cartRes.user_id = cart.user_id;
     return cartRes;
   }
 
   async toCartEntity(fromCart: CartResponse | CartRequest): Promise<Cart> {
     let cart = {} as Cart;
+    console.log("FROM MAPPER: ");
+    console.log(fromCart);
     if (fromCart.cart_id) {
       cart = (await cartServ.getCartById(fromCart.cart_id)) as Cart;
-    } else {
-      cart.user = (await userServ.getUserById(fromCart.user_id)) as User;
     }
+    cart.user = (await userServ.getUserById(fromCart.user_id)) as User;
+    cart.user_id = fromCart.user_id;
     cart.cantidad = fromCart.cantidad;
     cart.total = fromCart.total;
     cart.product = await prodMapper.toProductEntity(fromCart.product);

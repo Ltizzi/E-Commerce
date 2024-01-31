@@ -1,23 +1,24 @@
 import { StockEntryEntity } from "../../entities/StockEntryEntity";
+import { Stock } from "../../models/Stock";
 import { StockEntry } from "../../models/StockEntry";
 import { StockEntryService } from "../../services/StockEntryService";
 import { StockService } from "../../services/StockService";
+import { StockRequest } from "../requests/stock.request";
 import { StockEntryRequest } from "../requests/stockEntry.request";
+import { StockResponse } from "../responses/stock.response";
 import { StockEntryResponse } from "../responses/stockEntry.response";
-import { ProductMapper } from "./product.maper";
-import { StockMapper } from "./stock.mapper";
+import { ProductMapper } from "./product.mapper";
 
-const prodMapper = new ProductMapper();
-const stockMapper = new StockMapper();
-const stockServ = new StockService();
 const entryServ = new StockEntryService();
+const stockServ = new StockService();
 
 export class StockEntryMapper {
   toStockEntryResponse(entry: StockEntry): StockEntryResponse {
     const entryRes = {} as StockEntryResponse;
     entryRes.entry_id = entry.entry_id;
     // entryRes.product = prodMapper.toProductResponse(entry.product);
-    entryRes.stock = stockMapper.toStockResponse(entry.stock);
+    // entryRes.stock = mapper.toStockResponse(entry.stock);
+    entryRes.stock_id = entry.stock_id;
     entryRes.cantidad = entry.cantidad;
     return entryRes;
   }
@@ -30,7 +31,12 @@ export class StockEntryMapper {
       entry = (await entryServ.getEntryById(fromEntry.entry_id)) as StockEntry;
     }
     entry.cantidad = fromEntry.cantidad;
-    entry.stock = await stockMapper.toStockEntity(fromEntry.stock);
+    entry.stock = await mapper.toStockEntity(
+      (await stockServ.getStockById(fromEntry.stock_id)) as Stock
+    );
+    // entry.product = prodMapper.toProductEntity(
+    //   fromEntry.product
+    // ) as unknown as Product;
     return entry;
   }
 
@@ -46,9 +52,46 @@ export class StockEntryMapper {
     fromEntries: Array<StockEntryRequest | StockEntryResponse>
   ): Promise<Array<StockEntry>> {
     let entries = [] as Array<StockEntry>;
+    console.log("FROM ENTRY MAPPER");
     fromEntries.forEach(async (entry) =>
       entries.push(await this.toStockEntryEntity(entry))
     );
     return entries;
   }
 }
+
+const prodMapper = new ProductMapper();
+//const stockServ = new StockService();
+const entryMapper = new StockEntryMapper();
+
+export class StockMapper {
+  toStockResponse(stock: Stock): StockResponse {
+    const stockRes = {} as StockResponse;
+    stockRes.stock_id = stock.stock_id;
+    stockRes.product = prodMapper.toProductResponse(stock.product);
+    stockRes.cantidad = stock.cantidad;
+    return stockRes;
+  }
+
+  async toStockEntity(fromStock: StockResponse | StockRequest): Promise<Stock> {
+    let stock = {} as Stock;
+    if (fromStock.stock_id) {
+      stock = (await stockServ.getStockById(fromStock.stock_id)) as Stock;
+    }
+    // if (fromStock.hasOwnProperty("entries")) {
+    //   stock.entries = (await entryMapper.toArrayEntryEntity(
+    //     fromStock.entries
+    //   )) as Array<StockEntry>;
+    // }
+    stock.cantidad = fromStock.cantidad;
+    stock.product = await prodMapper.toProductEntity(fromStock.product);
+    return stock;
+  }
+
+  toArrayStockResponse(stocks: Array<Stock>): Array<StockResponse> {
+    let stocksRes = [] as Array<StockResponse>;
+    stocks.forEach((stock) => stocksRes.push(this.toStockResponse(stock)));
+    return stocksRes;
+  }
+}
+const mapper = new StockMapper();

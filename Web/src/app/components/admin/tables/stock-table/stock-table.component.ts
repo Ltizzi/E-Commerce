@@ -44,7 +44,7 @@ export class StockTableComponent {
   //DATA FETCH
 
   fetchStocks(page: number, limit: number) {
-    let correctPage = page - 1;
+    let correctPage = page;
     this.stockServ
       .getAllWithPagination(correctPage, limit)
       .subscribe((data: any) => {

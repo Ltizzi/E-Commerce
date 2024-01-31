@@ -37,7 +37,7 @@ export class ProductTypeController {
   async httpCountTypes(req: Request, res: Response): Promise<Response> {
     try {
       const totalTypeNumber = (await prodTypeServ.countTypes()) as number;
-      return res.status(200).json({ totalTypes: totalTypeNumber });
+      return res.status(200).json({ total: totalTypeNumber });
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }

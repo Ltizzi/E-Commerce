@@ -47,7 +47,10 @@ export class ProductPageComponent {
 
   checkStock() {
     this.stockServ
-      .checkStock(this.product)
-      .subscribe((data: any) => (this.isStock = data));
+      .checkStock(this.product.product_id as number)
+      .subscribe((data: any) => {
+        console.log(data);
+        this.isStock = data.stock;
+      });
   }
 }

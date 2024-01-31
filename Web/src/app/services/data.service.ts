@@ -35,8 +35,8 @@ export class DataService {
     return this.http.get(this.url + '/count', { withCredentials: true });
   }
 
-  checkStock(product: Product) {
-    return this.http.post(this.url + '/checkStock', product).pipe(
+  checkStock(id: number) {
+    return this.http.get(this.url + '/checkStock?product_id=' + id).pipe(
       map((response) => response),
       catchError(this.handleError)
     );

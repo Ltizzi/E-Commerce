@@ -63,6 +63,7 @@ export class ProductService {
     if (newProduct) {
       const newStock: StockEntity = new StockEntity();
       newStock.product = product;
+      newStock.product_id = product.product_id;
       newStock.cantidad = 0;
       await this.stockRepo.save(newStock);
 

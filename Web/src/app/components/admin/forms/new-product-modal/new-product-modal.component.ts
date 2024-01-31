@@ -126,7 +126,7 @@ export class NewProductModalComponent {
         price: parseFloat(this.newProductForm.value.price as string),
         about: this.newProductForm.value.about as string,
         imageUrl: this.urls,
-        prod_type: type as ProductType,
+        type: type as ProductType,
       };
 
       this.prodServ.create(newProduct).subscribe((data) => {

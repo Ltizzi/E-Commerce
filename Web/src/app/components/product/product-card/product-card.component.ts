@@ -9,8 +9,19 @@ import { Product } from 'src/common/models/product';
   styleUrls: ['./product-card.component.css'],
 })
 export class ProductCardComponent {
+  private _product!: Product;
+  isLoaded = false;
+
   @Input('data')
-  product!: Product;
+  set product(value: Product) {
+    this._product = value;
+    this.isLoaded = !!value;
+    console.log(this._product);
+  }
+
+  get product(): Product {
+    return this._product;
+  }
 
   constructor(private router: Router) {}
 

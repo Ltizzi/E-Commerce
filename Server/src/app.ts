@@ -1,5 +1,5 @@
 const express = require("express");
-
+const cors = require("cors");
 const session = require("express-session");
 const morgan = require("morgan");
 const helmet = require("helmet");
@@ -18,6 +18,13 @@ startDBConnection();
 const PORT: number = parseInt(process.env.DB_PORT!) || 5432;
 
 app.use(helmet());
+
+app.use(
+  cors({
+    origin: [process.env.DEV_CLIENT_URL],
+    credentials: true,
+  })
+);
 app.use(morgan("combined"));
 
 // app.use(

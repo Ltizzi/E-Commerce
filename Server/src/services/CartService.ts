@@ -19,7 +19,7 @@ export class CartService {
     return await this.cartRepo.find({
       where: {
         soft_delete: false,
-        user_id,
+        user_id: user_id,
       },
     });
   }

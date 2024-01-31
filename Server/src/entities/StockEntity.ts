@@ -30,7 +30,7 @@ export class StockEntity implements Stock {
   cantidad!: number;
 
   @OneToMany(() => StockEntryEntity, (entry) => entry.stock, {
-    eager: true,
+    eager: false,
     nullable: false,
   })
   @JoinColumn({ name: "entry_id", referencedColumnName: "shop_entry_id" })

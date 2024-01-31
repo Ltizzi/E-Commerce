@@ -15,10 +15,14 @@ export class StockEntryService {
     //   .where({ soft_delete: false })
     //   .orderBy("entry.entry.id", "ASC")
     //   .getMany();
-    return await this.entryRepo.find({
+    const entries = await this.entryRepo.find({
       where: { soft_delete: false },
       order: { entry_id: "ASC" },
+      relations: { stock: true, product: false },
     });
+    console.log("FROM entry SERVICE: ");
+    console.log(entries);
+    return entries;
   }
 
   async getEntriesWithPagination(
@@ -52,11 +56,15 @@ export class StockEntryService {
   async saveEntry(entry: StockEntry): Promise<StockEntryEntity | null> {
     const stock = (await this.getStockById(entry.stock.stock_id)) as Stock;
     if (stock) {
+      console.log("FROM entry SERVICE");
+      console.log(stock);
       stock.cantidad = stock?.cantidad + entry.cantidad;
-      const entries: Array<StockEntry> = stock.entries;
-      entries.push(entry);
-      stock.entries = entries;
-      await this.stockRepo.save(stock);
+      // const entries: Array<StockEntry> = stock.entries;
+      // entries.push(entry);
+      // stock.entries = entries;
+      const updatedStock = await this.stockRepo.save(stock);
+      entry.stock = updatedStock;
+      entry.stock_id = updatedStock.stock_id;
       return (await this.entryRepo.save(entry)) as StockEntry;
     } else return null;
   }
@@ -88,12 +96,13 @@ export class StockEntryService {
       if (stock) {
         stock.cantidad = stock.cantidad - oldQuantity;
         stock.cantidad = stock.cantidad + newQuantity;
-        let entries = stock.entries;
-        entries.push(entry);
-        stock.entries = entries;
+        // let entries = stock.entries;
+        // entries.push(entry);
+        // stock.entries = entries;
         await this.stockRepo.save(stock);
         entry.createdAt = oldEntry.createdAt;
         entry.soft_delete = oldEntry.soft_delete;
+        entry.stock_id = oldEntry.stock_id;
         return await this.entryRepo.save(entry);
       } else return null;
     } else return null;

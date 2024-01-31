@@ -19,14 +19,17 @@ export class StockEntryEntity implements StockEntry {
   @PrimaryGeneratedColumn()
   entry_id!: number;
 
-  @ManyToOne(() => ProductEntity, { eager: true, nullable: false })
-  @JoinColumn({ name: "product_id" })
+  @ManyToOne(() => ProductEntity, { eager: false, nullable: true })
+  @JoinColumn({ name: "product_id", referencedColumnName: "product_id" })
   product!: Product;
 
   @Column()
   cantidad!: number;
 
-  @ManyToOne(() => StockEntity, { nullable: false })
+  @Column()
+  stock_id!: number;
+
+  @ManyToOne(() => StockEntity, { eager: true, nullable: false })
   @JoinColumn({ name: "stock_id" })
   stock!: Stock;
 

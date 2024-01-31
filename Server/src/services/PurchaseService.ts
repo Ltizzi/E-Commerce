@@ -29,6 +29,7 @@ export class PurchaseService {
     return await this.purchaseRepo.find({
       where: { soft_delete: false },
       order: { purchase_id: "ASC" },
+      relations: { orders: true, user: false },
       skip: skip,
       take: pageSize,
     });

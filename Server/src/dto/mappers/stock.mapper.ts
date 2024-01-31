@@ -27,11 +27,11 @@ export class StockMapper {
     if (fromStock.stock_id) {
       stock = (await stockServ.getStockById(fromStock.stock_id)) as Stock;
     }
-    if (fromStock.hasOwnProperty("entries")) {
-      stock.entries = (await entryMapper.toArrayEntryEntity(
-        fromStock.entries
-      )) as Array<StockEntry>;
-    }
+    // if (fromStock.hasOwnProperty("entries")) {
+    //   stock.entries = (await entryMapper.toArrayEntryEntity(
+    //     fromStock.entries
+    //   )) as Array<StockEntry>;
+    // }
     stock.cantidad = fromStock.cantidad;
     stock.product = await prodMapper.toProductEntity(fromStock.product);
     stock.product_id = fromStock.product_id;

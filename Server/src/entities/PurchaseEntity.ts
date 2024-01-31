@@ -3,6 +3,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -19,13 +21,17 @@ export class PurchaseEntity implements Purchase {
   @PrimaryGeneratedColumn()
   purchase_id!: number;
 
-  @OneToMany(() => ShopOrderEntity, (order) => order.shop_order_id, {
-    cascade: true,
-    eager: true,
-    nullable: false,
-    onDelete: "CASCADE",
-  })
-  @JoinColumn({ name: "orders", referencedColumnName: "shop_order_id" })
+  @ManyToMany(
+    () => ShopOrderEntity,
+    { eager: true, nullable: false }
+
+    // {cascade: true,
+    // eager: true,
+    // nullable: false,
+    // onDelete: "CASCADE",}
+  )
+  // @JoinColumn({ name: "orders", referencedColumnName: "shop_order_id" })
+  @JoinTable()
   orders!: ShopOrder[];
 
   @Column()

@@ -10,13 +10,15 @@ import { StockEntryResponse } from "../responses/stockEntry.response";
 import { ProductMapper } from "./product.mapper";
 
 const entryServ = new StockEntryService();
+const stockServ = new StockService();
 
 export class StockEntryMapper {
   toStockEntryResponse(entry: StockEntry): StockEntryResponse {
     const entryRes = {} as StockEntryResponse;
     entryRes.entry_id = entry.entry_id;
     // entryRes.product = prodMapper.toProductResponse(entry.product);
-    entryRes.stock = mapper.toStockResponse(entry.stock);
+    // entryRes.stock = mapper.toStockResponse(entry.stock);
+    entryRes.stock_id = entry.stock_id;
     entryRes.cantidad = entry.cantidad;
     return entryRes;
   }
@@ -29,8 +31,12 @@ export class StockEntryMapper {
       entry = (await entryServ.getEntryById(fromEntry.entry_id)) as StockEntry;
     }
     entry.cantidad = fromEntry.cantidad;
-    entry.stock = await mapper.toStockEntity(fromEntry.stock);
-    entry.product = entry.stock.product;
+    entry.stock = await mapper.toStockEntity(
+      (await stockServ.getStockById(fromEntry.stock_id)) as Stock
+    );
+    // entry.product = prodMapper.toProductEntity(
+    //   fromEntry.product
+    // ) as unknown as Product;
     return entry;
   }
 
@@ -46,6 +52,7 @@ export class StockEntryMapper {
     fromEntries: Array<StockEntryRequest | StockEntryResponse>
   ): Promise<Array<StockEntry>> {
     let entries = [] as Array<StockEntry>;
+    console.log("FROM ENTRY MAPPER");
     fromEntries.forEach(async (entry) =>
       entries.push(await this.toStockEntryEntity(entry))
     );
@@ -54,7 +61,7 @@ export class StockEntryMapper {
 }
 
 const prodMapper = new ProductMapper();
-const stockServ = new StockService();
+//const stockServ = new StockService();
 const entryMapper = new StockEntryMapper();
 
 export class StockMapper {
@@ -71,11 +78,11 @@ export class StockMapper {
     if (fromStock.stock_id) {
       stock = (await stockServ.getStockById(fromStock.stock_id)) as Stock;
     }
-    if (fromStock.hasOwnProperty("entries")) {
-      stock.entries = (await entryMapper.toArrayEntryEntity(
-        fromStock.entries
-      )) as Array<StockEntry>;
-    }
+    // if (fromStock.hasOwnProperty("entries")) {
+    //   stock.entries = (await entryMapper.toArrayEntryEntity(
+    //     fromStock.entries
+    //   )) as Array<StockEntry>;
+    // }
     stock.cantidad = fromStock.cantidad;
     stock.product = await prodMapper.toProductEntity(fromStock.product);
     return stock;

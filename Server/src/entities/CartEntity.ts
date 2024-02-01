@@ -19,7 +19,7 @@ export class CartEntity implements Cart {
   @PrimaryGeneratedColumn()
   cart_id!: number;
 
-  @Column()
+  @Column({ type: "numeric" })
   total!: number;
 
   @ManyToOne(() => ProductEntity, { eager: true, nullable: false })

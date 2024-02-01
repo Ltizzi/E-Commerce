@@ -38,7 +38,7 @@ export class ProductEntity implements Product {
   imageUrl!: string[];
 
   @Column({
-    type: "float",
+    type: "numeric",
     default: "1.00",
   })
   price!: number;

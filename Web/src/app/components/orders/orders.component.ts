@@ -30,7 +30,7 @@ export class OrdersComponent {
   ) {}
 
   ngOnInit() {
-    this.cartServ.getByUserId(4).subscribe((data: any) => {
+    this.cartServ.getByUserId(1).subscribe((data: any) => {
       this.carts = data;
       this.isLoaded = true;
     });
@@ -66,7 +66,7 @@ export class OrdersComponent {
   makePurchase() {
     const purchase: Purchase = {
       orders: this.orders,
-      user_id: 4,
+      user_id: 1,
     };
     this.purchServ.create(purchase).subscribe((data: any) => {
       this.purchaseSucces = true;

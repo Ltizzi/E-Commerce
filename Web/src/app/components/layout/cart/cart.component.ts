@@ -37,6 +37,7 @@ export class CartComponent {
 
   saveCarts() {
     let arrChecker: Array<Cart> = [];
+    console.log(this.products);
     for (const cart of this.products) {
       // cart.total = cart.product.price * cart.cantidad;
       this.cartServ.create(cart).subscribe((data: any) => {

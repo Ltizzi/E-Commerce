@@ -25,7 +25,7 @@ export class CartMapper {
 
   async toCartEntity(fromCart: CartResponse | CartRequest): Promise<Cart> {
     let cart = {} as Cart;
-    console.log("FROM MAPPER: ");
+    console.log("FROM cart MAPPER: ");
     console.log(fromCart);
     if (fromCart.cart_id) {
       cart = (await cartServ.getCartById(fromCart.cart_id)) as Cart;

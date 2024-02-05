@@ -19,7 +19,7 @@ export class ShopOrderEntity implements ShopOrder {
   @PrimaryGeneratedColumn()
   shop_order_id!: number;
 
-  @Column("integer", { nullable: true })
+  @Column({ type: "numeric", nullable: true })
   total!: number;
 
   @ManyToOne(() => ProductEntity, { eager: true, nullable: false })

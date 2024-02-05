@@ -4,7 +4,9 @@
   "description": "an e-commerce project for my portfolio.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "npm run server && npm run web",
+    "server": "npm run dev --prefix Server",
+    "web": "npm run dev --prefix Web"
   },
   "author": "ltizzi",
   "license": "ISC",

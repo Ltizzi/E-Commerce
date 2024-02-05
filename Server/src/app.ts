@@ -4,6 +4,7 @@ const session = require("express-session");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const apiRouter = require("./routes/api.router");
+const types = require("pg").types;
 
 import "reflect-metadata";
 import connectPgSimple from "connect-pg-simple";
@@ -26,6 +27,10 @@ app.use(
   })
 );
 app.use(morgan("combined"));
+
+types.setTypeParser(1700, function (val: any) {
+  return parseFloat(val);
+});
 
 // app.use(
 //   session({

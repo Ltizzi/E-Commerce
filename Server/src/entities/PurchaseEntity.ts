@@ -34,7 +34,7 @@ export class PurchaseEntity implements Purchase {
   @JoinTable()
   orders!: ShopOrder[];
 
-  @Column()
+  @Column({ type: "numeric" })
   total_income!: number;
 
   @Column()

@@ -30,16 +30,17 @@ export class OrdersComponent {
   ) {}
 
   ngOnInit() {
-    this.cartServ.getByUserId(4).subscribe((data: any) => {
+    this.cartServ.getByUserId(1).subscribe((data: any) => {
       this.carts = data;
       this.isLoaded = true;
     });
   }
   calcTotal() {
-    let total = 0;
+    let total: number = 0;
     for (let cart of this.carts as Array<Cart>) {
       total += cart.total as number;
     }
+    console.log(total, ' ', typeof total);
     return parseFloat(total.toFixed(2));
   }
 
@@ -66,7 +67,7 @@ export class OrdersComponent {
   makePurchase() {
     const purchase: Purchase = {
       orders: this.orders,
-      user_id: 4,
+      user_id: 1,
     };
     this.purchServ.create(purchase).subscribe((data: any) => {
       this.purchaseSucces = true;

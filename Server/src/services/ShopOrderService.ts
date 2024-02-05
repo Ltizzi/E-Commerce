@@ -69,17 +69,19 @@ export class ShopOrderService {
     })) as CartEntity;
     console.log("FROM SERVICE");
     console.log(cart);
-    const order: ShopOrderEntity = new ShopOrderEntity();
-    order.product = cart.product;
-    order.cantidad = cart.cantidad;
-    order.total = cart.cantidad * cart.product.price;
-    order.user = (await this.userRepo.findOneBy({
-      user_id: cart.user_id,
-    })) as User;
-    order.user_id = cart.user_id;
-    order.order_state = "PENDING";
-    await this.cartService.softDeleteCartById(cart.cart_id);
-    return await this.orderRepo.save(order);
+    if (cart) {
+      const order: ShopOrderEntity = new ShopOrderEntity();
+      order.product = cart.product;
+      order.cantidad = cart.cantidad;
+      order.total = cart.cantidad * cart.product.price;
+      order.user = (await this.userRepo.findOneBy({
+        user_id: cart.user_id,
+      })) as User;
+      order.user_id = cart.user_id;
+      order.order_state = "PENDING";
+      await this.cartService.softDeleteCartById(cart.cart_id);
+      return await this.orderRepo.save(order);
+    } else throw new Error("SOMETHING WENT VERY WWWWRRRONGGG");
   }
 
   async softDeleteOrderById(id: number): Promise<Object> {

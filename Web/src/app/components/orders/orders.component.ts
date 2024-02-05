@@ -36,10 +36,11 @@ export class OrdersComponent {
     });
   }
   calcTotal() {
-    let total = 0;
+    let total: number = 0;
     for (let cart of this.carts as Array<Cart>) {
       total += cart.total as number;
     }
+    console.log(total, ' ', typeof total);
     return parseFloat(total.toFixed(2));
   }
 

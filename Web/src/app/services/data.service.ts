@@ -85,11 +85,16 @@ export class DataService {
       );
   }
 
-  update(id: number, resource: any) {
+  update(resource: any) {
     return this.http
-      .patch(this.url + '/update?' + this.urlParam + id, resource, {
-        withCredentials: true,
-      })
+      .patch(
+        this.url + '/update',
+        //'/update?' + this.urlParam + id
+        resource,
+        {
+          withCredentials: true,
+        }
+      )
       .pipe(
         map((response) => response),
         catchError(this.handleError)

@@ -14,8 +14,8 @@ export class StockMapper {
   toStockResponse(stock: Stock): StockResponse {
     const stockRes = {} as StockResponse;
     stockRes.stock_id = stock.stock_id;
-    console.log("FROM MAPPER");
-    console.log(stock);
+    // console.log("FROM MAPPER");
+    // console.log(stock);
     stockRes.product = prodMapper.toProductResponse(stock.product);
     stockRes.product_id = stock.product_id;
     stockRes.cantidad = stock.cantidad;

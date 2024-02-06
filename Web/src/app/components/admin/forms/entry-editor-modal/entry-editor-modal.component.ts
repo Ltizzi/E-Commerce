@@ -65,6 +65,7 @@ export class EntryEditorModalComponent {
         let entry: Entry = {
           cantidad: this.entryForm.value.cantidad as number,
           stock: this.stock,
+          stock_id: this.stock.stock_id as number,
         };
         this.entryServ.create(entry).subscribe((data: any) => {
           this.successOperation = true;
@@ -79,17 +80,16 @@ export class EntryEditorModalComponent {
           entry_id: this.entryToEdit.entry_id,
           cantidad: this.entryForm.value.cantidad as number,
           stock: this.entryToEdit.stock,
+          stock_id: this.entryToEdit.stock_id,
         };
-        this.entryServ
-          .update(this.entryToEdit.entry_id as number, entry)
-          .subscribe((data: any) => {
-            this.successOperation = true;
-            this.reloadEntries.emit(true);
-            setTimeout(() => {
-              this.successOperation = false;
-              this.show = false;
-            }, 5000);
-          });
+        this.entryServ.update(entry).subscribe((data: any) => {
+          this.successOperation = true;
+          this.reloadEntries.emit(true);
+          setTimeout(() => {
+            this.successOperation = false;
+            this.show = false;
+          }, 5000);
+        });
       }
     }
   }

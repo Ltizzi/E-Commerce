@@ -130,12 +130,13 @@ export class EditProductModalComponent {
       );
 
       let updatedProduct: any = {
+        product_id: this.product.product_id,
         name: this.editProductForm.value.name as string,
         brand: this.editProductForm.value.brand as string,
         price: parseFloat(this.editProductForm.value.price as string),
         about: this.editProductForm.value.about as string,
         imageUrl: this.urls,
-        prod_type: type as ProductType,
+        type: type as ProductType,
       };
 
       // for (let prop in updatedProduct) {
@@ -144,13 +145,11 @@ export class EditProductModalComponent {
       //   }
       // }
       console.log(updatedProduct);
-      this.prodServ
-        .update(this.product.id, updatedProduct)
-        .subscribe((data: any) => {
-          console.log(data);
-          this.reloadProducts.emit(true);
-          this.successOperation = true;
-        });
+      this.prodServ.update(updatedProduct).subscribe((data: any) => {
+        console.log(data);
+        this.reloadProducts.emit(true);
+        this.successOperation = true;
+      });
 
       // en el subscribe agregar this.reloadProducts.emit(true)
     }

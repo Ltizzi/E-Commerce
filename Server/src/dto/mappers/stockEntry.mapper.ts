@@ -17,7 +17,7 @@ export class StockEntryMapper {
     const entryRes = {} as StockEntryResponse;
     entryRes.entry_id = entry.entry_id;
     // entryRes.product = prodMapper.toProductResponse(entry.product);
-    // entryRes.stock = mapper.toStockResponse(entry.stock);
+    entryRes.stock = mapper.toStockResponse(entry.stock);
     entryRes.stock_id = entry.stock_id;
     entryRes.cantidad = entry.cantidad;
     return entryRes;
@@ -52,7 +52,7 @@ export class StockEntryMapper {
     fromEntries: Array<StockEntryRequest | StockEntryResponse>
   ): Promise<Array<StockEntry>> {
     let entries = [] as Array<StockEntry>;
-    console.log("FROM ENTRY MAPPER");
+    //   console.log("FROM ENTRY MAPPER");
     fromEntries.forEach(async (entry) =>
       entries.push(await this.toStockEntryEntity(entry))
     );
@@ -68,7 +68,10 @@ export class StockMapper {
   toStockResponse(stock: Stock): StockResponse {
     const stockRes = {} as StockResponse;
     stockRes.stock_id = stock.stock_id;
+    // console.log("FROM MAPPER");
+    // console.log(stock);
     stockRes.product = prodMapper.toProductResponse(stock.product);
+    stockRes.product_id = stock.product_id;
     stockRes.cantidad = stock.cantidad;
     return stockRes;
   }
@@ -85,6 +88,7 @@ export class StockMapper {
     // }
     stock.cantidad = fromStock.cantidad;
     stock.product = await prodMapper.toProductEntity(fromStock.product);
+    stock.product_id = fromStock.product_id;
     return stock;
   }
 
@@ -94,4 +98,5 @@ export class StockMapper {
     return stocksRes;
   }
 }
+
 const mapper = new StockMapper();

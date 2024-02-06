@@ -77,7 +77,7 @@ export class TypePanelComponent {
     } else if (
       !this.showNewTypeForm &&
       this.typeEditor &&
-      type.id == this.typeToEdit.id
+      type.prod_type_id == this.typeToEdit.prod_type_id
     ) {
       this.showNewTypeForm = !this.showNewTypeForm;
       this.typeEditor = !this.typeEditor;
@@ -99,24 +99,26 @@ export class TypePanelComponent {
   }
 
   submitDelete() {
-    this.typeServ.delete(this.typeToDelete.id as number).subscribe((data) => {
-      this.successDelete = true;
-      this.shouldReload = true;
-      setTimeout(() => {
-        this.successDelete = false;
-        this.showDeleteType = !this.showDeleteType;
-      }, 2000);
-    });
+    this.typeServ
+      .delete(this.typeToDelete.prod_type_id as number)
+      .subscribe((data) => {
+        this.successDelete = true;
+        this.shouldReload = true;
+        setTimeout(() => {
+          this.successDelete = false;
+          this.showDeleteType = !this.showDeleteType;
+        }, 2000);
+      });
   }
 
   submitEditForm() {
     if (this.editTypeForm.valid) {
       let updatedType: ProductType = {
-        id: this.typeToEdit.id,
+        prod_type_id: this.typeToEdit.prod_type_id,
         name: this.editTypeForm.value.name as string,
       };
 
-      this.typeServ.update(updatedType.id!, updatedType).subscribe((data) => {
+      this.typeServ.update(updatedType).subscribe((data) => {
         this.successEdit = true;
         this.shouldReload = true;
         this.editTypeForm.value.name = '';

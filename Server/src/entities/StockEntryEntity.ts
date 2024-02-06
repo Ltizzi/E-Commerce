@@ -30,7 +30,7 @@ export class StockEntryEntity implements StockEntry {
   stock_id!: number;
 
   @ManyToOne(() => StockEntity, { eager: true, nullable: false })
-  @JoinColumn({ name: "stock_id" })
+  @JoinColumn({ name: "stock", referencedColumnName: "stock_id" })
   stock!: Stock;
 
   @CreateDateColumn({

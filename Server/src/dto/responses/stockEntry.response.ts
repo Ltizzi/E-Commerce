@@ -5,6 +5,6 @@ export interface StockEntryResponse {
   entry_id: number;
   //product: ProductResponse;
   cantidad: number;
-  //stock: StockResponse;
+  stock: StockResponse;
   stock_id: number;
 }

@@ -32,8 +32,8 @@ export class ShopOrderEntity implements ShopOrder {
   @Column()
   user_id!: number;
 
-  @OneToOne(() => UserEntity, { eager: false, nullable: false })
-  @JoinColumn({ name: "user_id" })
+  @ManyToOne(() => UserEntity, { eager: false, nullable: false })
+  @JoinColumn({ name: "user", referencedColumnName: "user_id" })
   user!: User;
 
   @Column({

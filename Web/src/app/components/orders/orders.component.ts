@@ -6,6 +6,7 @@ import { Cart } from 'src/common/models/cart';
 import { Order } from 'src/common/models/order';
 import { Product } from 'src/common/models/product';
 import { Purchase } from 'src/common/models/purchase';
+import { User } from 'src/common/models/user';
 
 @Component({
   selector: 'app-orders',
@@ -18,6 +19,7 @@ export class OrdersComponent {
   @Output() showSuccess = new EventEmitter<Array<Order>>();
   carts!: Array<Cart>;
   orders: Array<Order> = [];
+  user!: User;
 
   isLoaded: boolean = false;
   orderSuccess: boolean = false;
@@ -33,6 +35,9 @@ export class OrdersComponent {
     this.cartServ.getByUserId(1).subscribe((data: any) => {
       this.carts = data;
       this.isLoaded = true;
+      if (localStorage.getItem('user')) {
+        this.user = JSON.parse(localStorage.getItem('user') as string);
+      }
     });
   }
   calcTotal() {
@@ -67,7 +72,7 @@ export class OrdersComponent {
   makePurchase() {
     const purchase: Purchase = {
       orders: this.orders,
-      user_id: 1,
+      user_id: this.user.user_id as number,
     };
     this.purchServ.create(purchase).subscribe((data: any) => {
       this.purchaseSucces = true;

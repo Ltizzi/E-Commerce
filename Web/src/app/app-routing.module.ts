@@ -6,6 +6,7 @@ import { ProductPageComponent } from './components/product/product-page/product-
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { PurchaseComponent } from './components/layout/purchase/purchase.component';
 import { OrdersComponent } from './components/orders/orders.component';
+import { TokenComponent } from './token/token.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminDashboardComponent },
   { path: 'purchase', component: PurchaseComponent },
   { path: 'order', component: OrdersComponent },
+  { path: 'token', component: TokenComponent },
 ];
 
 @NgModule({

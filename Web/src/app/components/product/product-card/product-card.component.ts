@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cart } from 'src/common/models/cart';
 import { Product } from 'src/common/models/product';
+import { User } from 'src/common/models/user';
 
 @Component({
   selector: 'app-product-card',
@@ -11,6 +12,7 @@ import { Product } from 'src/common/models/product';
 export class ProductCardComponent {
   private _product!: Product;
   isLoaded = false;
+  user!: User;
 
   @Input('data')
   set product(value: Product) {
@@ -25,6 +27,12 @@ export class ProductCardComponent {
 
   constructor(private router: Router) {}
 
+  ngOnInit(): void {
+    if (localStorage.getItem('user')) {
+      this.user = JSON.parse(localStorage.getItem('user') as string);
+    }
+  }
+
   goToProduct(id: number | undefined, event: Event) {
     event.preventDefault();
     this.router.navigate(['/product'], { queryParams: { id: id } });
@@ -34,7 +42,7 @@ export class ProductCardComponent {
     const cart: Cart = {
       product: product,
       cantidad: 1,
-      user_id: 1, //TODO
+      user_id: this.user.user_id as number, //TODO
     };
     if (localStorage.getItem('carts')) {
       const carts: Array<Cart> = JSON.parse(

@@ -13,7 +13,7 @@ import { ProductPageComponent } from './components/product/product-page/product-
 import { CategoryNavComponent } from './components/product/category-nav/category-nav.component';
 import { LandingComponent } from './components/layout/landing/landing.component';
 import { CartComponent } from './components/layout/cart/cart.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DataService } from './services/data.service';
 import { ProductService } from './services/product.service';
 import { StockService } from './services/stock.service';
@@ -45,6 +45,7 @@ import { DeleteEntryModalComponent } from './components/admin/ui/delete-entry-mo
 import { OrdersComponent } from './components/orders/orders.component';
 import { SuccessComponent } from './components/success/success.component';
 import { TokenComponent } from './token/token.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { TokenComponent } from './token/token.component';
     ShopOrderService,
     ModalService,
     NewProductModalComponent,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

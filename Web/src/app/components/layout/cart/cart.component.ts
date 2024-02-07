@@ -51,7 +51,8 @@ export class CartComponent {
     }
 
     this.successOperation = true;
-    localStorage.setItem('carts', JSON.stringify(this.products));
+    //localStorage.setItem('carts', JSON.stringify(this.products));
+    localStorage.removeItem('carts');
     setTimeout(() => {
       this.displayOrders.emit(true);
     }, 3000);

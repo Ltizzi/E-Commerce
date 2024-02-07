@@ -32,13 +32,15 @@ export class OrdersComponent {
   ) {}
 
   ngOnInit() {
-    this.cartServ.getByUserId(1).subscribe((data: any) => {
-      this.carts = data;
-      this.isLoaded = true;
-      if (localStorage.getItem('user')) {
-        this.user = JSON.parse(localStorage.getItem('user') as string);
-      }
-    });
+    if (localStorage.getItem('user')) {
+      this.user = JSON.parse(localStorage.getItem('user') as string);
+    }
+    this.cartServ
+      .getByUserId(this.user.user_id as number)
+      .subscribe((data: any) => {
+        this.carts = data;
+        this.isLoaded = true;
+      });
   }
   calcTotal() {
     let total: number = 0;

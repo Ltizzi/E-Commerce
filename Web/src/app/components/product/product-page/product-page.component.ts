@@ -5,6 +5,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { StockService } from 'src/app/services/stock.service';
 import { Cart } from 'src/common/models/cart';
 import { Product } from 'src/common/models/product';
+import { User } from 'src/common/models/user';
 
 @Component({
   selector: 'app-product-page',
@@ -16,6 +17,7 @@ export class ProductPageComponent {
   id!: number;
   isLoaded: Boolean = false;
   isStock!: boolean;
+  user!: User;
 
   constructor(
     private prodServ: ProductService,
@@ -40,6 +42,9 @@ export class ProductPageComponent {
     this.getById(this.id);
     localStorage.setItem('product', JSON.stringify(this.product));
     this.isLoaded = true;
+    if (localStorage.getItem('user')) {
+      this.user = JSON.parse(localStorage.getItem('user') as string);
+    }
   }
 
   getById(id: number) {
@@ -64,7 +69,7 @@ export class ProductPageComponent {
       const cart = {} as Cart;
       cart.cantidad = 1;
       cart.product = this.product;
-      cart.user_id = 1; //TODO
+      cart.user_id = this.user.user_id as number; //TODO
       cart.total = this.product.price * cart.cantidad;
       if (localStorage.getItem('carts')) {
         const carts: Array<Cart> = JSON.parse(

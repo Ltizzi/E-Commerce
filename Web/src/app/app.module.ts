@@ -44,6 +44,7 @@ import { EntryPanelComponent } from './components/admin/layout/entry-panel/entry
 import { DeleteEntryModalComponent } from './components/admin/ui/delete-entry-modal/delete-entry-modal.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { SuccessComponent } from './components/success/success.component';
+import { TokenComponent } from './token/token.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { SuccessComponent } from './components/success/success.component';
     DeleteEntryModalComponent,
     OrdersComponent,
     SuccessComponent,
+    TokenComponent,
   ],
   imports: [
     BrowserModule,

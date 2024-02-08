@@ -7,6 +7,7 @@ import { AdminDashboardComponent } from './components/admin/admin-dashboard/admi
 import { PurchaseComponent } from './components/layout/purchase/purchase.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { TokenComponent } from './token/token.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'purchase', component: PurchaseComponent },
   { path: 'order', component: OrdersComponent },
   { path: 'token', component: TokenComponent },
+  { path: 'profile', component: ProfileComponent },
 ];
 
 @NgModule({

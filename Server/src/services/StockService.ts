@@ -38,7 +38,7 @@ export class StockService {
   }
 
   async countStocks(): Promise<number> {
-    return await this.stockRepo.count();
+    return await this.stockRepo.count({ where: { soft_delete: false } });
   }
 
   async isThereStockForProduct(id: number): Promise<boolean> {

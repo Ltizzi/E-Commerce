@@ -8,7 +8,7 @@ purchaseRouter.get(
   "/withPagination",
   purchaseController.httpGetPurchasesWithPagination
 );
-purchaseRouter.get("/byUser", purchaseController.httpPurchasesFromUser);
+purchaseRouter.get("/byUserId", purchaseController.httpPurchasesFromUser);
 purchaseRouter.get("/byId", purchaseController.httpGetPurchaseById);
 purchaseRouter.get("/count", purchaseController.httpGetTotalPurchases);
 purchaseRouter.post("/new", purchaseController.httpCreateNewPurchase);

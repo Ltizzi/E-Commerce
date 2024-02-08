@@ -46,7 +46,7 @@ export class StockEntryService {
   }
 
   async countEntries(): Promise<number> {
-    return await this.entryRepo.count();
+    return await this.entryRepo.count({ where: { soft_delete: false } });
   }
 
   async getEntryById(id: number): Promise<StockEntryEntity | null> {

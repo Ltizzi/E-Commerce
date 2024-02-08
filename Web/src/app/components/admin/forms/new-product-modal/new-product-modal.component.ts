@@ -6,6 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { EventService } from 'src/app/services/event.service';
 import { ProductTypeService } from 'src/app/services/product-type.service';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/common/models/product';
@@ -94,7 +95,8 @@ export class NewProductModalComponent {
   constructor(
     private el: ElementRef,
     private typeServ: ProductTypeService,
-    private prodServ: ProductService
+    private prodServ: ProductService,
+    private eventServ: EventService
   ) {
     this.element = el.nativeElement;
   }
@@ -131,6 +133,7 @@ export class NewProductModalComponent {
 
       this.prodServ.create(newProduct).subscribe((data) => {
         this.successOperation = true;
+        this.eventServ.emit('updateProducts');
       });
     }
   }

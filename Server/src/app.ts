@@ -13,9 +13,12 @@ import { AppDataSource } from "./data-source";
 import { Request, Response } from "express";
 import { UserService } from "./services/UserService";
 import { User } from "./models/User";
+import { authenticateJWT } from "./utils/authMiddleware";
+import { UserMapper } from "./dto/mappers/user.mapper";
 
 const app = express();
 const userServ = new UserService();
+const userMapper = new UserMapper();
 
 app.use(express.json());
 startDBConnection();
@@ -49,9 +52,10 @@ passport.use(
         //  console.log("DATA FROM GOOGLE: ", profile);
         const name = profile.name?.givenName;
         const lastname = profile.name?.familyName;
+        const username = profile.displayName.split(" ");
         const user = {
           email: profile.emails![0].value,
-          username: profile.displayName,
+          username: username[0],
           name: name,
           lastname: lastname,
           avatar: profile.photos![0].value,
@@ -62,7 +66,13 @@ passport.use(
         if (!alreadyUser) {
           await userServ.saveUser(user as User);
         }
-        const token = jwt.sign(user, process.env.JWT_SECRET!);
+        const tokenUserData = {
+          email: user.email,
+          roles: user.roles,
+        };
+        const token = jwt.sign(tokenUserData, process.env.JWT_SECRET!, {
+          expiresIn: 3600 * 12,
+        });
         return done(null, token);
       } catch (err: any) {
         return done(err);
@@ -89,6 +99,14 @@ app.get(
     res.redirect(url + `/token?token=${req.user}`);
   }
 );
+
+app.get("/auth/user", authenticateJWT, async (req: Request, res: Response) => {
+  const userInfo = req.user as any;
+  if (userInfo) {
+    const user = await userServ.getUserByEmail(userInfo.email as string);
+    return res.status(200).json(userMapper.toUserResponse(user as User));
+  } else return res.status(404).json({ error: "You are not logged in!" });
+});
 
 app.use("/", apiRouter);
 

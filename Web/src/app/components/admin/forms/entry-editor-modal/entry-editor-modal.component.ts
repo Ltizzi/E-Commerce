@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EntryService } from 'src/app/services/entry.service';
+import { EventService } from 'src/app/services/event.service';
 import { Entry } from 'src/common/models/entry';
 import { Stock } from 'src/common/models/stock';
 
@@ -53,7 +54,10 @@ export class EntryEditorModalComponent {
 
   successOperation: boolean = false;
 
-  constructor(private entryServ: EntryService) {}
+  constructor(
+    private entryServ: EntryService,
+    private eventServ: EventService
+  ) {}
 
   ngOnInit(): void {
     this.successOperation = false;
@@ -68,6 +72,7 @@ export class EntryEditorModalComponent {
           stock_id: this.stock.stock_id as number,
         };
         this.entryServ.create(entry).subscribe((data: any) => {
+          this.eventServ.emit('updateEntries');
           this.successOperation = true;
           this.reloadStocks.emit(true);
           setTimeout(() => {
@@ -83,6 +88,7 @@ export class EntryEditorModalComponent {
           stock_id: this.entryToEdit.stock_id,
         };
         this.entryServ.update(entry).subscribe((data: any) => {
+          this.eventServ.emit('updateEntries');
           this.successOperation = true;
           this.reloadEntries.emit(true);
           setTimeout(() => {

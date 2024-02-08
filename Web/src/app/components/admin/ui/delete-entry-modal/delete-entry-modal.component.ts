@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EntryService } from 'src/app/services/entry.service';
+import { EventService } from 'src/app/services/event.service';
 import { Entry } from 'src/common/models/entry';
 
 @Component({
@@ -15,10 +16,14 @@ export class DeleteEntryModalComponent {
 
   successOperation: boolean = false;
 
-  constructor(private entryServ: EntryService) {}
+  constructor(
+    private entryServ: EntryService,
+    private eventServ: EventService
+  ) {}
 
   deleteEntry() {
     this.entryServ.delete(this.entry.entry_id as number).subscribe((data) => {
+      this.eventServ.emit('updateEntries');
       this.successOperation = true;
       setTimeout(() => {
         this.successOperation = false;

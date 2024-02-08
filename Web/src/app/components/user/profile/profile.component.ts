@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { PurchaseService } from 'src/app/services/purchase.service';
+import { Purchase } from 'src/common/models/purchase';
 
 import { User } from 'src/common/models/user';
 
@@ -10,8 +12,13 @@ import { User } from 'src/common/models/user';
 })
 export class ProfileComponent {
   user!: User;
+  totalPurchase: number = 0;
+  purchases!: Array<Purchase>;
 
-  constructor(private authServ: AuthService) {}
+  constructor(
+    private authServ: AuthService,
+    private purchServ: PurchaseService
+  ) {}
 
   ngOnInit(): void {
     if (!localStorage.getItem('user')) {
@@ -19,5 +26,13 @@ export class ProfileComponent {
         this.user = data as User;
       });
     } else this.user = JSON.parse(localStorage.getItem('user') as string);
+    if (this.user) {
+      this.purchServ
+        .getByUserId(this.user.user_id as number)
+        .subscribe((data: any) => {
+          this.purchases = data;
+          this.totalPurchase = this.purchases.length;
+        });
+    }
   }
 }

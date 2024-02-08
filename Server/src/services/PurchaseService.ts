@@ -36,7 +36,7 @@ export class PurchaseService {
   }
 
   async countPurchases(): Promise<number> {
-    return await this.purchaseRepo.count();
+    return await this.purchaseRepo.count({ where: { soft_delete: false } });
   }
 
   async getPurchaseById(id: number): Promise<PurchaseEntity | null> {
@@ -47,11 +47,11 @@ export class PurchaseService {
   }
 
   async getPurchasesByUserId(user_id: number): Promise<Array<PurchaseEntity>> {
-    const user: UserEntity = (await this.userRepo.findOneBy({
-      user_id: user_id,
-      soft_delete: false,
-    })) as UserEntity;
-    return await this.purchaseRepo.findBy({ user: user });
+    // const user: UserEntity = (await this.userRepo.findOneBy({
+    //   user_id: user_id,
+    //   soft_delete: false,
+    // })) as UserEntity;
+    return await this.purchaseRepo.findBy({ user_id });
   }
 
   async savePurchase(purchase: Purchase): Promise<PurchaseEntity | null> {

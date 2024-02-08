@@ -11,14 +11,19 @@ export class NavBarComponent {
   loggedIn = false;
   URL_DEV = 'http://localhost:8080/auth/google';
   URL_PRODUCTION = '';
+  isAdmin = false;
 
   ngOnInit(): void {
-    setTimeout(() => {
-      if (localStorage.getItem('user')) {
-        this.user = JSON.parse(localStorage.getItem('user') as string);
-        this.loggedIn = true;
+    // setTimeout(() => {
+    if (localStorage.getItem('user')) {
+      this.user = JSON.parse(localStorage.getItem('user') as string);
+      this.loggedIn = true;
+      if (this.user.roles.includes('ADMIN')) {
+        console.log('es admin!');
+        this.isAdmin = true;
       }
-    }, 1000);
+    }
+    // }, 1000);
   }
 
   handleAuth() {
@@ -26,6 +31,7 @@ export class NavBarComponent {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       this.loggedIn = false;
+      this.isAdmin = false;
     } else {
       window.location.href = this.URL_DEV || this.URL_PRODUCTION;
     }

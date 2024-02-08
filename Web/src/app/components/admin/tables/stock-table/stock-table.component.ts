@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Stock } from 'src/common/models/stock';
 import { StockService } from 'src/app/services/stock.service';
 import { PaginationService } from 'src/app/services/ui/pagination.service';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-stock-table',
@@ -29,13 +30,17 @@ export class StockTableComponent {
 
   constructor(
     private stockServ: StockService,
-    private pagination: PaginationService
+    private pagination: PaginationService,
+    private eventServ: EventService
   ) {}
 
   ngOnInit(): void {
     this.stockServ.getTotal().subscribe((data: any) => {
       this.totalStocks = data.total;
       this.pages = this.pagination.build(this.ITEMS_PER_PAGE, this.totalStocks);
+    });
+    this.eventServ.subscribe('updateStock').subscribe((data) => {
+      this.reloadStocks();
     });
     this.fetchStocks(1, this.ITEMS_PER_PAGE);
     this.currentPage = this.pagination.getCurrentPage();

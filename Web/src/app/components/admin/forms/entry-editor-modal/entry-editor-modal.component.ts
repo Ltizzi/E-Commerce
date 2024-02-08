@@ -73,6 +73,7 @@ export class EntryEditorModalComponent {
         };
         this.entryServ.create(entry).subscribe((data: any) => {
           this.eventServ.emit('updateEntries');
+          this.eventServ.emit('updateStock');
           this.successOperation = true;
           this.reloadStocks.emit(true);
           setTimeout(() => {
@@ -89,6 +90,7 @@ export class EntryEditorModalComponent {
         };
         this.entryServ.update(entry).subscribe((data: any) => {
           this.eventServ.emit('updateEntries');
+          this.eventServ.emit('updateStock');
           this.successOperation = true;
           this.reloadEntries.emit(true);
           setTimeout(() => {

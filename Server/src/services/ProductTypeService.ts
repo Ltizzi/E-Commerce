@@ -38,7 +38,7 @@ export class ProductTypeService {
   }
 
   async countTypes(): Promise<number> {
-    return await this.typeRepo.count();
+    return await this.typeRepo.count({ where: { soft_delete: false } });
   }
 
   async getTypeById(id: number): Promise<ProductTypeEntity | null> {

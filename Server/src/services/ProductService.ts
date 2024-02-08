@@ -47,7 +47,7 @@ export class ProductService {
   }
 
   async countProducts(): Promise<number> {
-    return await this.productRepo.count();
+    return await this.productRepo.count({ where: { soft_delete: false } });
   }
 
   async getProductById(id: number): Promise<ProductEntity | null> {

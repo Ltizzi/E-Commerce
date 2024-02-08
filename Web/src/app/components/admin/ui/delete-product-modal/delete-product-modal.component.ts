@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { EventService } from 'src/app/services/event.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -14,7 +15,10 @@ export class DeleteProductModalComponent {
 
   successOperation: boolean = false;
 
-  constructor(private prodServ: ProductService) {}
+  constructor(
+    private prodServ: ProductService,
+    private eventServ: EventService
+  ) {}
 
   close() {
     this.show = !this.show;
@@ -27,6 +31,7 @@ export class DeleteProductModalComponent {
 
   deleteProduct() {
     this.prodServ.delete(this.product.id).subscribe((data) => {
+      this.eventServ.emit('updateProducts');
       this.successOperation = true;
       setTimeout(() => {
         this.successOperation = false;

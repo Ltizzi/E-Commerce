@@ -46,6 +46,7 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { SuccessComponent } from './components/success/success.component';
 import { TokenComponent } from './token/token.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { EventService } from './services/event.service';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     ShopOrderService,
     ModalService,
     NewProductModalComponent,
+    EventService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

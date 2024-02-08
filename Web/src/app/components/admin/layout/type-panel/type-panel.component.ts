@@ -1,5 +1,6 @@
 import { Component, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { EventService } from 'src/app/services/event.service';
 import { ProductTypeService } from 'src/app/services/product-type.service';
 import { ProductType } from 'src/common/models/type';
 
@@ -45,7 +46,10 @@ export class TypePanelComponent {
     ],
   };
 
-  constructor(private typeServ: ProductTypeService) {}
+  constructor(
+    private typeServ: ProductTypeService,
+    private eventServ: EventService
+  ) {}
 
   ngOnInit(): void {
     this.successOperation = false;
@@ -58,6 +62,7 @@ export class TypePanelComponent {
       };
 
       this.typeServ.create(newType).subscribe((data) => {
+        this.eventServ.emit('updateTypes');
         this.successOperation = true;
         this.shouldReload = true;
         this.newTypeForm.value.name = '';
@@ -104,6 +109,7 @@ export class TypePanelComponent {
       .subscribe((data) => {
         this.successDelete = true;
         this.shouldReload = true;
+        this.eventServ.emit('updateTypes');
         setTimeout(() => {
           this.successDelete = false;
           this.showDeleteType = !this.showDeleteType;
@@ -119,6 +125,7 @@ export class TypePanelComponent {
       };
 
       this.typeServ.update(updatedType).subscribe((data) => {
+        this.eventServ.emit('updateTypes');
         this.successEdit = true;
         this.shouldReload = true;
         this.editTypeForm.value.name = '';

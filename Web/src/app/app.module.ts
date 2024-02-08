@@ -47,6 +47,7 @@ import { SuccessComponent } from './components/success/success.component';
 import { TokenComponent } from './token/token.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { EventService } from './services/event.service';
+import { ProfileComponent } from './components/user/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { EventService } from './services/event.service';
     OrdersComponent,
     SuccessComponent,
     TokenComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

@@ -21,7 +21,7 @@
         <div
           class="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500"
         >
-          <img [src]="user.avatar" alt="" />
+          <img [src]="user.avatar" alt="" class="rounded-full" />
           <!-- <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-24 w-24"
@@ -54,10 +54,14 @@
     </div>
     <div class="mt-20 text-center border-b pb-12">
       <h1 class="text-4xl font-medium text-gray-700">
-        {{ user.username }}, <span class="font-light text-gray-500">27</span>
+        {{ user.username }},
+        <span class="font-light text-gray-500">{{ age }}</span>
       </h1>
       <p class="font-light text-gray-600 mt-3">
         {{ user.name }} {{ user.lastname }}
+      </p>
+      <p class="font-light text-gray-600 mt-3">
+        <span class="font-semibold">Birthday:</span> {{ birthday }}
       </p>
       <p class="mt-8 text-gray-500">{{ user.email }}</p>
     </div>
@@ -79,6 +83,7 @@
     [modal_show]="showProfileEditorModal"
     [user]="user"
     (closeModal)="showProfileEditor()"
-    (reloadProfile)="(reloadUserData)"
+    (reloadProfile)="reloadUserData()"
+    (updatedProfile)="(user)"
   ></app-editprofilemodal>
 </div>

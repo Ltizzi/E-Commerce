@@ -25,6 +25,7 @@ export class EditprofilemodalComponent {
   @Input('user') user!: User;
   @Output() closeModal = new EventEmitter<boolean>();
   @Output() reloadProfile = new EventEmitter<boolean>();
+  @Output() updatedProfile = new EventEmitter<User>();
 
   editProfileForm!: FormGroup;
   success = false;
@@ -63,6 +64,7 @@ export class EditprofilemodalComponent {
           this.dateValidator(),
         ]),
       });
+      this.avatarUrl = this.editProfileForm.value.avatar;
     }
   }
 
@@ -128,6 +130,15 @@ export class EditprofilemodalComponent {
         roles: this.user.roles,
       };
 
+      console.log(updatedProfile);
+      this.userServ.update(updatedProfile).subscribe((data: any) => {
+        if (data.user_id == this.user.user_id) {
+          localStorage.setItem('user', data);
+          this.updatedProfile.emit(data);
+          this.reloadProfile.emit();
+          this.close();
+        }
+      });
       // call to userServ to update
     }
   }

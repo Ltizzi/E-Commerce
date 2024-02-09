@@ -31,7 +31,9 @@ export class NavBarComponent {
     const carts: Array<Cart> = JSON.parse(
       localStorage.getItem('carts') as string
     );
-    this.cart_counter = carts.length;
+    if (carts) {
+      this.cart_counter = carts.length;
+    }
     // }, 1000);
     this.eventServ.subscribe('updateCartCounter').subscribe((data) => {
       if (data) {

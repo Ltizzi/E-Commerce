@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
+import { EventService } from 'src/app/services/event.service';
 import { ProductService } from 'src/app/services/product.service';
 import { StockService } from 'src/app/services/stock.service';
 import { Cart } from 'src/common/models/cart';
@@ -24,7 +25,8 @@ export class ProductPageComponent {
     private route: ActivatedRoute,
     private stockServ: StockService,
     private cartServ: CartService,
-    private router: Router
+    private router: Router,
+    private eventServ: EventService
   ) {}
 
   ngOnInit(): void {
@@ -80,6 +82,7 @@ export class ProductPageComponent {
         localStorage.setItem('carts', JSON.stringify(carts));
       }
       this.cartServ.create(cart).subscribe((cartResponse: any) => {
+        this.eventServ.emit('updateCartCounter', true);
         this.router.navigate(['/purchase']);
       });
     }

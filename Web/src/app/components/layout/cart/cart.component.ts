@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
+import { EventService } from 'src/app/services/event.service';
 import { ProductService } from 'src/app/services/product.service';
 import { Cart } from 'src/common/models/cart';
 import { Discount } from 'src/common/models/discount';
@@ -20,7 +21,7 @@ export class CartComponent {
   successOperation: boolean = false;
   failOperation: boolean = false;
 
-  constructor(private cartServ: CartService) {}
+  constructor(private cartServ: CartService, private eventServ: EventService) {}
 
   ngOnInit() {
     if (localStorage.getItem('carts')) {
@@ -34,6 +35,7 @@ export class CartComponent {
     this.products = this.products.filter((prod) => prod != cart);
     localStorage.setItem('carts', JSON.stringify(this.products));
     this.calcPriceToPay(0);
+    this.eventServ.emit('updateCartCounter', false);
   }
 
   saveCarts() {

@@ -4,6 +4,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/common/models/product';
 import { Router } from '@angular/router';
 import { PaginationService } from 'src/app/services/ui/pagination.service';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-product-table',
@@ -28,7 +29,8 @@ export class ProductTableComponent {
   constructor(
     private prodServ: ProductService,
     private router: Router,
-    private pagination: PaginationService
+    private pagination: PaginationService,
+    private eventServ: EventService
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +40,9 @@ export class ProductTableComponent {
         this.ITEMS_PER_PAGE,
         this.totalProducts
       );
+    });
+    this.eventServ.subscribe('updateProducts').subscribe((data) => {
+      this.reloadProducts();
     });
 
     this.fetchProducts(1, this.ITEMS_PER_PAGE);

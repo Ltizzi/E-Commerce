@@ -102,8 +102,12 @@ app.get(
 
 app.get("/auth/user", authenticateJWT, async (req: Request, res: Response) => {
   const userInfo = req.user as any;
+  console.log("userInfo");
+  console.log(userInfo);
   if (userInfo) {
     const user = await userServ.getUserByEmail(userInfo.email as string);
+    console.log("/auth/user");
+    console.log(user);
     return res.status(200).json(userMapper.toUserResponse(user as User));
   } else return res.status(404).json({ error: "You are not logged in!" });
 });

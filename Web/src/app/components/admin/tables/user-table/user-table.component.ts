@@ -24,7 +24,6 @@ export class UserTableComponent {
 
   constructor(
     private userServ: UserService,
-    private router: Router,
     private pagination: PaginationService
   ) {}
 

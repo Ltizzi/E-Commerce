@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { EventService } from 'src/app/services/event.service';
+import { Cart } from 'src/common/models/cart';
 import { User } from 'src/common/models/user';
 
 @Component({
@@ -12,6 +14,9 @@ export class NavBarComponent {
   URL_DEV = 'http://localhost:8080/auth/google';
   URL_PRODUCTION = '';
   isAdmin = false;
+  cart_counter = 0;
+
+  constructor(private eventServ: EventService) {}
 
   ngOnInit(): void {
     // setTimeout(() => {
@@ -23,7 +28,17 @@ export class NavBarComponent {
         this.isAdmin = true;
       }
     }
+    const carts: Array<Cart> = JSON.parse(
+      localStorage.getItem('carts') as string
+    );
+    this.cart_counter = carts.length;
     // }, 1000);
+    this.eventServ.subscribe('updateCartCounter').subscribe((data) => {
+      if (data) {
+        this.cart_counter += 1;
+      } else this.cart_counter -= 1;
+      if (this.cart_counter < 0) this.cart_counter = 0;
+    });
   }
 
   handleAuth() {

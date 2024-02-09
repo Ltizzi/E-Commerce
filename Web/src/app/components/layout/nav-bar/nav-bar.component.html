@@ -31,7 +31,12 @@
         routerLink="/products"
         >Catálogo</a
       >
-      <a class="mr-5 hover:text-gray-900" routerLink="/purchase">Carrito</a>
+      <a class="mr-5 hover:text-gray-900" routerLink="/purchase">Carrito </a>
+      <span
+        class="bg-indigo-500 text-white rounded-full px-2 py-0.5 font-semibold text-xs mb-2 -ml-5 mr-2"
+        *ngIf="cart_counter > 0"
+        >{{ cart_counter }}</span
+      >
       <a
         class="mr-5 hover:text-gray-900 hover:cursor-pointer"
         routerLink="/admin"

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { EventService } from 'src/app/services/event.service';
 import { StockService } from 'src/app/services/stock.service';
 import { Cart } from 'src/common/models/cart';
 import { Product } from 'src/common/models/product';
@@ -27,7 +28,11 @@ export class ProductCardComponent {
     return this._product;
   }
 
-  constructor(private router: Router, private stockServ: StockService) {}
+  constructor(
+    private router: Router,
+    private stockServ: StockService,
+    private eventServ: EventService
+  ) {}
 
   ngOnInit(): void {
     if (localStorage.getItem('user')) {
@@ -62,6 +67,7 @@ export class ProductCardComponent {
       carts.push(cart);
       this.addCartsToLocalStorage(carts);
     }
+    this.eventServ.emit('updateCartCounter', true);
   }
 
   addCartsToLocalStorage(carts: Array<Cart>) {

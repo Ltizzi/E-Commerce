@@ -54,10 +54,12 @@ export class CartComponent {
       });
       cartSuccesCounter += 1;
     }
+
     console.log(this.products.length, ' ', cartSuccesCounter);
     if (this.products.length == cartSuccesCounter) this.successOperation = true;
     //localStorage.setItem('carts', JSON.stringify(this.products));
     // if (this.successOperation) localStorage.removeItem('carts');
+
     setTimeout(() => {
       this.displayOrders.emit(true);
     }, 3000);

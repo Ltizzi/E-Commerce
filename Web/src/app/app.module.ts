@@ -48,6 +48,7 @@ import { TokenComponent } from './token/token.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { EventService } from './services/event.service';
 import { ProfileComponent } from './components/user/profile/profile.component';
+import { EditprofilemodalComponent } from './components/user/editprofilemodal/editprofilemodal.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { ProfileComponent } from './components/user/profile/profile.component';
     SuccessComponent,
     TokenComponent,
     ProfileComponent,
+    EditprofilemodalComponent,
   ],
   imports: [
     BrowserModule,

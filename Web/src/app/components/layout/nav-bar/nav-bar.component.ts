@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
+import { API_URL } from 'src/common/common';
 import { Cart } from 'src/common/models/cart';
 import { User } from 'src/common/models/user';
 
@@ -11,8 +12,7 @@ import { User } from 'src/common/models/user';
 export class NavBarComponent {
   user!: User;
   loggedIn = false;
-  URL_DEV = 'http://localhost:8080/auth/google';
-  URL_PRODUCTION = '';
+  URL = `${API_URL}auth/google`;
   isAdmin = false;
   cart_counter = 0;
 
@@ -48,7 +48,7 @@ export class NavBarComponent {
       this.loggedIn = false;
       this.isAdmin = false;
     } else {
-      window.location.href = this.URL_DEV || this.URL_PRODUCTION;
+      window.location.href = this.URL;
     }
   }
 }

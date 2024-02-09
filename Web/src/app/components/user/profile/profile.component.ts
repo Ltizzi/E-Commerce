@@ -15,6 +15,8 @@ export class ProfileComponent {
   totalPurchase: number = 0;
   purchases!: Array<Purchase>;
 
+  showProfileEditorModal = false;
+
   constructor(
     private authServ: AuthService,
     private purchServ: PurchaseService
@@ -22,9 +24,7 @@ export class ProfileComponent {
 
   ngOnInit(): void {
     if (!localStorage.getItem('user')) {
-      this.authServ.getUser().subscribe((data) => {
-        this.user = data as User;
-      });
+      this.reloadUserData();
     } else this.user = JSON.parse(localStorage.getItem('user') as string);
     if (this.user) {
       this.purchServ
@@ -34,5 +34,16 @@ export class ProfileComponent {
           this.totalPurchase = this.purchases.length;
         });
     }
+  }
+
+  showProfileEditor() {
+    this.showProfileEditorModal = !this.showProfileEditorModal;
+    // console.log('asdasd', this.showProfileEditorModal);
+  }
+
+  reloadUserData() {
+    this.authServ.getUser().subscribe((data) => {
+      this.user = data as User;
+    });
   }
 }

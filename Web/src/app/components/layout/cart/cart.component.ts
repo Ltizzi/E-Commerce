@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
+import { ProductService } from 'src/app/services/product.service';
 import { Cart } from 'src/common/models/cart';
 import { Discount } from 'src/common/models/discount';
 import { Product } from 'src/common/models/product';
@@ -38,6 +39,7 @@ export class CartComponent {
   saveCarts() {
     let arrChecker: Array<Cart> = [];
     console.log(this.products);
+    let cartSuccesCounter = 0;
     for (const cart of this.products) {
       // cart.total = cart.product.price * cart.cantidad;
       this.cartServ.create(cart).subscribe((data: any) => {
@@ -48,11 +50,14 @@ export class CartComponent {
           arrChecker.push(data);
         }
       });
+      cartSuccesCounter += 1;
     }
 
-    this.successOperation = true;
+    console.log(this.products.length, ' ', cartSuccesCounter);
+    if (this.products.length == cartSuccesCounter) this.successOperation = true;
     //localStorage.setItem('carts', JSON.stringify(this.products));
-    localStorage.removeItem('carts');
+    // if (this.successOperation) localStorage.removeItem('carts');
+
     setTimeout(() => {
       this.displayOrders.emit(true);
     }, 3000);

@@ -78,7 +78,7 @@ export class OrdersComponent {
     };
     this.purchServ.create(purchase).subscribe((data: any) => {
       this.purchaseSucces = true;
-      localStorage.removeItem('cart');
+      localStorage.removeItem('carts');
       this.successPurchase.emit(data.orders);
     });
   }

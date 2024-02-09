@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { EventService } from 'src/app/services/event.service';
+import { StockService } from 'src/app/services/stock.service';
 import { Cart } from 'src/common/models/cart';
 import { Product } from 'src/common/models/product';
 import { User } from 'src/common/models/user';
@@ -13,6 +15,7 @@ export class ProductCardComponent {
   private _product!: Product;
   isLoaded = false;
   user!: User;
+  stock = false;
 
   @Input('data')
   set product(value: Product) {
@@ -25,12 +28,21 @@ export class ProductCardComponent {
     return this._product;
   }
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private stockServ: StockService,
+    private eventServ: EventService
+  ) {}
 
   ngOnInit(): void {
     if (localStorage.getItem('user')) {
       this.user = JSON.parse(localStorage.getItem('user') as string);
     }
+    this.stockServ
+      .checkStock(this._product.product_id as number)
+      .subscribe((data: any) => {
+        if (data.stock) this.stock = true;
+      });
   }
 
   goToProduct(id: number | undefined, event: Event) {
@@ -55,6 +67,7 @@ export class ProductCardComponent {
       carts.push(cart);
       this.addCartsToLocalStorage(carts);
     }
+    this.eventServ.emit('updateCartCounter', true);
   }
 
   addCartsToLocalStorage(carts: Array<Cart>) {

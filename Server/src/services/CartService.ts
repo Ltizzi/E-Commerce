@@ -56,11 +56,12 @@ export class CartService {
     return null;
   }
 
+  //NOW IS A HARD DELETE
   async softDeleteCartById(id: number): Promise<Object> {
     const cartToRemove: CartEntity | null = await this.getCartById(id);
     if (cartToRemove) {
       cartToRemove.soft_delete = true;
-      await this.cartRepo.save(cartToRemove);
+      await this.cartRepo.delete({ cart_id: id });
       return { status: "OK" };
     } else return { error: "Cart not found!" };
   }

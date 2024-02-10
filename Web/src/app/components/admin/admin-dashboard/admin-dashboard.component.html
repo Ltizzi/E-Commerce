@@ -9,6 +9,9 @@
             'text-white bg-indigo rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
               state.actualTab == 'users'
           }"
+          [@cardState]="state.animation.user"
+          (mouseover)="hoverCard('user')"
+          (mouseleave)="leaveCard('user')"
         >
           <h2 class="title-font font-medium sm:text-4xl text-3xl">
             {{ totalUsers }}
@@ -22,6 +25,9 @@
             'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
               state.actualTab == 'products'
           }"
+          [@cardState]="state.animation.products"
+          (mouseover)="hoverCard('products')"
+          (mouseleave)="leaveCard('products')"
         >
           <h2 class="title-font font-medium sm:text-4xl text-3xl">
             {{ totalProducts }}
@@ -35,6 +41,9 @@
             'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
               state.actualTab == 'types'
           }"
+          [@cardState]="state.animation.types"
+          (mouseover)="hoverCard('types')"
+          (mouseleave)="leaveCard('types')"
         >
           <h2 class="title-font font-medium sm:text-4xl text-3xl">
             {{ totalTypes }}
@@ -48,6 +57,9 @@
             'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
               state.actualTab == 'purchases'
           }"
+          [@cardState]="state.animation.purchases"
+          (mouseover)="hoverCard('purchases')"
+          (mouseleave)="leaveCard('purchases')"
         >
           <h2 class="title-font font-medium sm:text-4xl text-3xl">
             {{ totalPurchases }}
@@ -61,6 +73,9 @@
             'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
               state.actualTab == 'stock'
           }"
+          [@cardState]="state.animation.stock"
+          (mouseover)="hoverCard('stock')"
+          (mouseleave)="leaveCard('stock')"
         >
           <h2 class="title-font font-medium sm:text-4xl text-3xl">
             {{ totalStock }}
@@ -74,6 +89,9 @@
             'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
               state.actualTab == 'entries'
           }"
+          [@cardState]="state.animation.entries"
+          (mouseover)="hoverCard('entries')"
+          (mouseleave)="leaveCard('entries')"
         >
           <h2 class="title-font font-medium sm:text-4xl text-3xl">
             {{ totalEntries }}

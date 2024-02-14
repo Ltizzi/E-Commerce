@@ -10,6 +10,7 @@ import { EventService } from 'src/app/services/event.service';
 import { ProductTypeService } from 'src/app/services/product-type.service';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/common/models/product';
+import { State } from 'src/common/models/state';
 import { ProductType } from 'src/common/models/type';
 
 @Component({
@@ -111,6 +112,7 @@ export class NewProductModalComponent {
     this.successOperation = false;
     this.urls = [];
   }
+
   ngOnDestroy() {
     this.element.remove();
   }
@@ -140,10 +142,12 @@ export class NewProductModalComponent {
 
   open(): void {
     this.element.style.display = 'block';
+
     this.show = true;
   }
   close(): void {
     // this.element.style.display = 'none';
+
     this.show = false;
     this.closeModal.emit(this.show);
   }

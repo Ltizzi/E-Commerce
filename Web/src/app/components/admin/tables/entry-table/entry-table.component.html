@@ -1,7 +1,10 @@
 <div
   class="relative overflow-x-auto shadow-md rounded-lg mt-10 w-10/12 mx-auto"
 >
-  <table class="w-full text-sm text-left text-gray-500">
+  <table
+    class="w-full text-sm text-left text-gray-500 h-96"
+    [@in&Out]="state.animation.table"
+  >
     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
       <tr>
         <th scope="col" class="px-6 py-3">Entry Id</th>
@@ -101,19 +104,18 @@
       </li>
     </ul>
   </nav>
-
-  <app-entry-editor-modal
-    [newOrEdit]="false"
-    [entryToEdit]="entryToEdit"
-    [show]="isEditorDialogOpen"
-    *ngIf="isEditorDialogOpen"
-  ></app-entry-editor-modal>
-  <app-delete-entry-modal
-    *ngIf="isDeleteDialogOpen"
-    [show]="isDeleteDialogOpen"
-    [entry]="entryToDelete"
-    (closeModal)="(closeDeleteDialog)"
-    (reloadEntries)="(reloadEntries)"
-  >
-  </app-delete-entry-modal>
 </div>
+<app-entry-editor-modal
+  [newOrEdit]="false"
+  [entryToEdit]="entryToEdit"
+  [show]="isEditorDialogOpen"
+  *ngIf="isEditorDialogOpen"
+></app-entry-editor-modal>
+<app-delete-entry-modal
+  *ngIf="isDeleteDialogOpen"
+  [show]="isDeleteDialogOpen"
+  [entry]="entryToDelete"
+  (closeModal)="(closeDeleteDialog)"
+  (reloadEntries)="(reloadEntries)"
+>
+</app-delete-entry-modal>

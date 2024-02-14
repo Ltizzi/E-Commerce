@@ -3,11 +3,21 @@ import { Component } from '@angular/core';
 import { Purchase } from 'src/common/models/purchase';
 import { PurchaseService } from 'src/app/services/purchase.service';
 import { PaginationService } from 'src/app/services/ui/pagination.service';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { State } from 'src/common/models/state';
+import { inAndOutAnimation } from 'src/common/animations';
 
 @Component({
   selector: 'app-purchase-table',
   templateUrl: './purchase-table.component.html',
   styleUrls: ['./purchase-table.component.css'],
+  animations: [inAndOutAnimation],
 })
 export class PurchaseTableComponent {
   purchases: Array<Purchase> = [];
@@ -20,6 +30,13 @@ export class PurchaseTableComponent {
   pages!: Array<number>;
   totalPurchases!: number;
   currentPage!: number;
+
+  state: State = {
+    animation: {
+      table: 'out',
+    },
+    show: false,
+  };
 
   constructor(
     private purchServ: PurchaseService,
@@ -36,6 +53,8 @@ export class PurchaseTableComponent {
     });
     this.fetchPurchases(1, this.ITEMS_PER_PAGE);
     this.currentPage = this.pagination.getCurrentPage();
+    this.state.show = true;
+    this.showTable();
   }
 
   //DATA FETCH
@@ -56,19 +75,37 @@ export class PurchaseTableComponent {
 
   //PAGINATION
 
+  hideTable() {
+    setTimeout(() => {
+      this.state.animation.table = 'out';
+    }, 50);
+  }
+
+  showTable() {
+    setTimeout(() => {
+      this.state.animation.table = 'in';
+    }, 200);
+  }
+
   goNext() {
+    this.hideTable();
     this.currentPage = this.pagination.goNext();
     this.fetchPurchases(this.currentPage, this.ITEMS_PER_PAGE);
+    this.showTable();
   }
 
   goPrevious() {
+    this.hideTable();
     this.currentPage = this.pagination.goPrevious();
     this.fetchPurchases(this.currentPage, this.ITEMS_PER_PAGE);
+    this.showTable();
   }
 
   goPage(page: number) {
+    this.hideTable();
     this.currentPage = this.pagination.goPage(page);
     this.fetchPurchases(this.currentPage, this.ITEMS_PER_PAGE);
+    this.showTable();
   }
 
   //ACTIONS

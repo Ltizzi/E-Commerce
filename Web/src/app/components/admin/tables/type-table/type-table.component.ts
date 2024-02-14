@@ -9,11 +9,36 @@ import {
 import { ProductType } from 'src/common/models/type';
 import { ProductTypeService } from 'src/app/services/product-type.service';
 import { PaginationService } from 'src/app/services/ui/pagination.service';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { State } from 'src/common/models/state';
 
 @Component({
   selector: 'app-type-table',
   templateUrl: './type-table.component.html',
   styleUrls: ['./type-table.component.css'],
+  animations: [
+    trigger('tableState', [
+      state(
+        'hide',
+        style({
+          opacity: 0,
+          transform: 'scale(0.5) translateY(200px)',
+        })
+      ),
+      state(
+        'show',
+        style({ opacity: 1, transform: 'scale(1) translateY(0px)' })
+      ),
+      transition('show=>hide', animate(50)),
+      transition('hide=>show', animate(150)),
+    ]),
+  ],
 })
 export class TypeTableComponent {
   @Input() reload!: boolean;
@@ -31,6 +56,13 @@ export class TypeTableComponent {
   totalTypes!: number;
   currentPage!: number;
 
+  state: State = {
+    show: false,
+    animation: {
+      page: 'show',
+    },
+  };
+
   constructor(
     private typeServ: ProductTypeService,
     private pagination: PaginationService
@@ -43,6 +75,7 @@ export class TypeTableComponent {
     });
     this.fetchTypes(1, this.ITEMS_PER_PAGE);
     this.currentPage = this.pagination.getCurrentPage();
+    this.showTable();
   }
 
   //refresh on new type
@@ -76,19 +109,37 @@ export class TypeTableComponent {
 
   //PAGINATION
 
+  hideTable() {
+    this.state.show = false;
+    this.state.animation.page = 'hide';
+  }
+
+  showTable() {
+    setTimeout(() => {
+      this.state.animation.page = 'show';
+      this.state.show = true;
+    }, 150);
+  }
+
   goNext() {
+    this.hideTable();
     this.currentPage = this.pagination.goNext();
     this.fetchTypes(this.currentPage, this.ITEMS_PER_PAGE);
+    this.showTable();
   }
 
   goPrevious() {
+    this.hideTable();
     this.currentPage = this.pagination.goPrevious();
     this.fetchTypes(this.currentPage, this.ITEMS_PER_PAGE);
+    this.showTable();
   }
 
   goPage(page: number) {
+    this.hideTable();
     this.currentPage = this.pagination.goPage(page);
     this.fetchTypes(this.currentPage, this.ITEMS_PER_PAGE);
+    this.showTable();
   }
 
   editType(type: ProductType) {

@@ -5,11 +5,38 @@ import { Product } from 'src/common/models/product';
 import { Router } from '@angular/router';
 import { PaginationService } from 'src/app/services/ui/pagination.service';
 import { EventService } from 'src/app/services/event.service';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { State } from 'src/common/models/state';
 
 @Component({
   selector: 'app-product-table',
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.css'],
+  animations: [
+    trigger('tableState', [
+      state(
+        'firstLoad',
+        style({
+          opacity: 0,
+          transform: 'scale(0.9)',
+        })
+      ),
+      state(
+        'normal',
+        style({
+          opacity: 1,
+          transform: 'scale(1)',
+        })
+      ),
+      transition('firstLoad<=>normal', animate(300)),
+    ]),
+  ],
 })
 export class ProductTableComponent {
   products: Array<Product> = [];
@@ -25,6 +52,12 @@ export class ProductTableComponent {
   pages!: Array<number>;
   totalProducts!: number;
   currentPage!: number;
+
+  state: State = {
+    animation: {
+      table: 'firstLoad',
+    },
+  };
 
   constructor(
     private prodServ: ProductService,
@@ -58,6 +91,7 @@ export class ProductTableComponent {
       .subscribe((data: any) => {
         this.products = data;
         this.currentPage = page;
+        this.state.animation.table = 'normal';
       });
   }
 

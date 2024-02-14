@@ -2,6 +2,9 @@
   <button
     (click)="openModal()"
     class="w-32 bg-emerald-600 text-white rounded-xl shadow-lg shadow-gray-700 py-1 transform transition-all hover:scale-110 mx-auto ml-0"
+    [@inAndOut]="showbtn"
+    (mouseover)="showbtn = 'hover'"
+    (mouseleave)="showbtn = 'leave'"
   >
     New Product
   </button>

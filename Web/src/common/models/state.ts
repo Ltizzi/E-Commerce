@@ -3,4 +3,5 @@ export interface State {
   animation?: any;
   number?: any;
   show?: boolean;
+  reloading?: boolean;
 }

@@ -2,20 +2,29 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventService } from 'src/app/services/event.service';
 import { StockService } from 'src/app/services/stock.service';
+import { fadeIndAndFadeOutAnimation } from 'src/common/animations';
 import { Cart } from 'src/common/models/cart';
 import { Product } from 'src/common/models/product';
+import { State } from 'src/common/models/state';
 import { User } from 'src/common/models/user';
 
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.css'],
+  animations: [fadeIndAndFadeOutAnimation],
 })
 export class ProductCardComponent {
   private _product!: Product;
   isLoaded = false;
   user!: User;
   stock = false;
+
+  state: State = {
+    animation: {
+      card: 'out',
+    },
+  };
 
   @Input('data')
   set product(value: Product) {
@@ -43,6 +52,9 @@ export class ProductCardComponent {
       .subscribe((data: any) => {
         if (data.stock) this.stock = true;
       });
+    setTimeout(() => {
+      this.state.animation.card = 'in';
+    }, 200);
   }
 
   goToProduct(id: number | undefined, event: Event) {

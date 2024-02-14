@@ -1,11 +1,13 @@
-<div
-  class="flex flex-row flex-wrap gap-5 w-10/12 mx-auto justify-start"
-  *ngIf="isLoaded"
->
-  <ng-container *ngIf="isLoaded">
-    <app-product-card
-      *ngFor="let product of products"
-      [data]="product"
-    ></app-product-card>
-  </ng-container>
+<div [ngClass]="!isLoaded ? 'h-screen' : 'h-full'">
+  <div
+    class="flex flex-row flex-wrap gap-5 w-10/12 mx-auto justify-start"
+    *ngIf="isLoaded"
+  >
+    <ng-container *ngIf="isLoaded">
+      <app-product-card
+        *ngFor="let product of products"
+        [data]="product"
+      ></app-product-card>
+    </ng-container>
+  </div>
 </div>

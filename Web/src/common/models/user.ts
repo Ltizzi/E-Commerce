@@ -12,4 +12,5 @@ export interface User {
   carts: Array<Cart>;
   purchases: Array<Purchase>;
   roles: Array<String>;
+  state?: string;
 }

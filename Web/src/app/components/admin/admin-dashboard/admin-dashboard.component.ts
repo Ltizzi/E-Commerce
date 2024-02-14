@@ -24,14 +24,14 @@ import { State } from 'src/common/models/state';
       state(
         'firstLoad',
         style({
-          transform: 'translateX(-500px) scale(0.7)',
+          transform: 'translateY(50px) scale(0.7)',
           opacity: 0,
         })
       ),
       state(
         'normal',
         style({
-          transform: 'translateX(0px) scale(0.9) ',
+          transform: 'translateY(0px) scale(0.9) ',
           opacity: 1,
         })
       ),
@@ -39,12 +39,15 @@ import { State } from 'src/common/models/state';
         'hover',
         style({
           transform: 'scale(0.99)',
+          backgroundColor: '#4f46e5',
+          color: 'white',
         })
       ),
       state(
         'selected',
         style({
           transform: 'scale(1)',
+          backgroundColor: '#818cf8',
         })
       ),
       transition('firstLoad => normal', animate(300)),
@@ -125,7 +128,7 @@ export class AdminDashboardComponent {
       for (let prop in this.state.animation) {
         this.state.animation[prop] = 'normal';
       }
-    }, 500);
+    }, 100);
   }
 
   changeTab(tab: string) {

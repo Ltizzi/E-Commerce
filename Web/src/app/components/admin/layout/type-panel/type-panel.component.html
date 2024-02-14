@@ -4,9 +4,18 @@
     [reload]="shouldReload"
     (typeToEdit)="editType($event)"
     (typeToDelete)="deleteType($event)"
+    [@state]="state.animation.layout"
   />
+
   <div class="w-1/2">
-    <div class="mt-10" *ngIf="showNewTypeForm && !showDeleteType">
+    <!--CREATE showNewTypeForm && !showDeleteType -->
+    <!--EDIT !showNewTypeForm && !showDeleteType -->
+    <!-- DELETE: showDeleteType -->
+    <div
+      class="mt-10"
+      *ngIf="state.actualTab == 'create'"
+      [@state]="state.animation.create"
+    >
       <form [formGroup]="newTypeForm" (ngSubmit)="submitForm()">
         <h1 class="text-gray-900 text-xl py-5 font-semibold">
           New Product Type:
@@ -51,6 +60,9 @@
           <button
             type="submit"
             class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            [@hoverLeave]="state.animation.btn"
+            (mouseover)="state.animation.btn = 'hover'"
+            (mouseleave)="state.animation.btn = 'leave'"
           >
             Submit
           </button>
@@ -63,7 +75,11 @@
         </div>
       </form>
     </div>
-    <div class="mt-10" *ngIf="!showNewTypeForm && !showDeleteType">
+    <div
+      class="mt-10"
+      *ngIf="state.actualTab == 'edit'"
+      [@state]="state.animation.edit"
+    >
       <form
         [formGroup]="editTypeForm"
         (ngSubmit)="submitEditForm()"
@@ -109,6 +125,9 @@
           <button
             type="submit"
             class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            [@hoverLeave]="state.animation.btn"
+            (mouseover)="state.animation.btn = 'hover'"
+            (mouseleave)="state.animation.btn = 'leave'"
           >
             Submit
           </button>
@@ -121,7 +140,8 @@
     </div>
     <div
       class="mt-10 text-center rounded-2xl bg-indigo-50 py-5 shadow-sm shadow-gray-700"
-      *ngIf="showDeleteType"
+      *ngIf="state.actualTab == 'delete'"
+      [@state]="state.animation.delete"
     >
       <h1 class="text-gray-700 text-xl py-5 font-semibold">
         Are you sure you want to delete the product type called "{{
@@ -133,6 +153,9 @@
           type="submit"
           class="text-white bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
           (click)="submitDelete()"
+          [@hoverLeave]="state.animation.btn"
+          (mouseover)="state.animation.btn = 'hover'"
+          (mouseleave)="state.animation.btn = 'leave'"
         >
           Delete
         </button>

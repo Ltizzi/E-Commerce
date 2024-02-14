@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
+import { hoverInAndOutAnimationNav } from 'src/common/animations';
 import { API_URL } from 'src/common/common';
 import { Cart } from 'src/common/models/cart';
+import { State } from 'src/common/models/state';
 import { User } from 'src/common/models/user';
 
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css'],
+  animations: [hoverInAndOutAnimationNav],
 })
 export class NavBarComponent {
   user!: User;
@@ -15,6 +18,17 @@ export class NavBarComponent {
   URL = `${API_URL}auth/google`;
   isAdmin = false;
   cart_counter = 0;
+
+  state: State = {
+    animation: {
+      btn_home: 'leave',
+      btn_catalog: 'leave',
+      btn_cart: 'leave',
+      btn_admin: 'leave',
+      btn_profile: 'leave',
+      btn_signInOut: 'leave',
+    },
+  };
 
   constructor(private eventServ: EventService) {}
 

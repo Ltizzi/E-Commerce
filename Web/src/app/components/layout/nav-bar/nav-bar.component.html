@@ -2,55 +2,86 @@
   <div
     class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center"
   >
-    <a
-      class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
-        viewBox="0 0 24 24"
+    <!--       [@hover&leave]="state.animation.btn_home"
+      (mouseover)="state.animation.btn_home = 'hover'"
+      (mouseleave)="state.animation.btn_home = 'leave'" -->
+    <div class="w-2/5">
+      <a
+        class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
       >
-        <path
-          d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-        ></path>
-      </svg>
-      <span class="ml-3 text-xl hover:cursor-pointer" routerLink="/"
-        >E-Commerce</span
-      >
-    </a>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+          ></path>
+        </svg>
+        <span class="ml-3 text-xl hover:cursor-pointer" routerLink="/"
+          >E-Commerce</span
+        >
+      </a>
+    </div>
+
     <nav
-      class="md:ml-auto flex flex-wrap items-center text-base justify-center"
+      class="md:ml-auto flex flex-wrap items-right text-base justify-center w-1/3 gap-2 text-center"
     >
-      <a
-        class="mr-5 hover:text-gray-900 hover:cursor-pointer"
-        routerLink="/products"
-        >Catálogo</a
-      >
-      <a class="mr-5 hover:text-gray-900" routerLink="/purchase">Carrito </a>
-      <span
-        class="bg-indigo-500 text-white rounded-full px-2 py-0.5 font-semibold text-xs mb-2 -ml-5 mr-2"
-        *ngIf="cart_counter > 0"
-        >{{ cart_counter }}</span
-      >
-      <a
-        class="mr-5 hover:text-gray-900 hover:cursor-pointer"
-        routerLink="/admin"
-        *ngIf="isAdmin"
-        >Admin Dashboard</a
-      >
+      <div class="w-20">
+        <a
+          class="mr-5 hover:text-gray-900 hover:cursor-pointer"
+          routerLink="/products"
+          [@hover&leave]="state.animation.btn_catalog"
+          (mouseover)="state.animation.btn_catalog = 'hover'"
+          (mouseleave)="state.animation.btn_catalog = 'leave'"
+          >Catálogo</a
+        >
+      </div>
+      <div class="w-20">
+        <a
+          class="mr-5 hover:text-gray-900"
+          routerLink="/purchase"
+          [@hover&leave]="state.animation.btn_cart"
+          (mouseover)="state.animation.btn_cart = 'hover'"
+          (mouseleave)="state.animation.btn_cart = 'leave'"
+          >Carrito
+        </a>
+        <span
+          class="bg-indigo-500 text-white rounded-full px-2 py-0.5 font-semibold text-xs mb-2 -ml-5 mr-2"
+          *ngIf="cart_counter > 0"
+          >{{ cart_counter }}</span
+        >
+      </div>
+
+      <div class="w-48">
+        <a
+          class="mr-5 hover:text-gray-900 hover:cursor-pointer"
+          routerLink="/admin"
+          *ngIf="isAdmin"
+          [@hover&leave]="state.animation.btn_admin"
+          (mouseover)="state.animation.btn_admin = 'hover'"
+          (mouseleave)="state.animation.btn_admin = 'leave'"
+          >Admin Dashboard</a
+        >
+      </div>
     </nav>
-    <button
-      class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
-      *ngIf="loggedIn"
-      routerLink="/profile"
-    >
-      {{ user.username }}
-      <!-- <svg
+    <div class="flex flex-row gap-1 items-center">
+      <div class="w-12">
+        <button
+          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
+          *ngIf="loggedIn"
+          routerLink="/profile"
+          [@hover&leave]="state.animation.btn_profile"
+          (mouseover)="state.animation.btn_profile = 'hover'"
+          (mouseleave)="state.animation.btn_profile = 'leave'"
+        >
+          {{ user.username }}
+          <!-- <svg
         fill="none"
         stroke="currentColor"
         stroke-linecap="round"
@@ -61,42 +92,54 @@
       >
         <path d="M5 12h14M12 5l7 7-7 7"></path>
       </svg> -->
-    </button>
-    <button
-      class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
-      *ngIf="!loggedIn"
-      (click)="handleAuth()"
-    >
-      Log in
-      <svg
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        class="w-4 h-4 ml-1"
-        viewBox="0 0 24 24"
-      >
-        <path d="M5 12h14M12 5l7 7-7 7"></path>
-      </svg>
-    </button>
-    <button
-      class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
-      *ngIf="loggedIn"
-      (click)="handleAuth()"
-    >
-      Log out
-      <svg
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        class="w-4 h-4 ml-1"
-        viewBox="0 0 24 24"
-      >
-        <path d="M5 12h14M12 5l7 7-7 7"></path>
-      </svg>
-    </button>
+        </button>
+      </div>
+      <div class="w-12">
+        <button
+          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
+          *ngIf="!loggedIn"
+          (click)="handleAuth()"
+          [@hover&leave]="state.animation.btn_signIntOut"
+          (mouseover)="state.animation.btn_signIntOut = 'hover'"
+          (mouseleave)="state.animation.btn_signIntOut = 'leave'"
+        >
+          Log in
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            class="w-4 h-4 ml-1"
+            viewBox="0 0 24 24"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="w-28">
+        <button
+          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
+          *ngIf="loggedIn"
+          (click)="handleAuth()"
+          [@hover&leave]="state.animation.btn_signIntOut"
+          (mouseover)="state.animation.btn_signIntOut = 'hover'"
+          (mouseleave)="state.animation.btn_signIntOut = 'leave'"
+        >
+          Log out
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            class="w-4 h-4 ml-1"
+            viewBox="0 0 24 24"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
 </header>

@@ -17,6 +17,8 @@ import {
   trigger,
 } from '@angular/animations';
 import { State } from 'src/common/models/state';
+import { fadeIndAndFadeOutAnimation } from 'src/common/animations';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-type-table',
@@ -38,6 +40,7 @@ import { State } from 'src/common/models/state';
       transition('show=>hide', animate(50)),
       transition('hide=>show', animate(150)),
     ]),
+    fadeIndAndFadeOutAnimation,
   ],
 })
 export class TypeTableComponent {
@@ -58,6 +61,7 @@ export class TypeTableComponent {
 
   state: State = {
     show: false,
+    reloading: false,
     animation: {
       page: 'show',
     },
@@ -65,7 +69,8 @@ export class TypeTableComponent {
 
   constructor(
     private typeServ: ProductTypeService,
-    private pagination: PaginationService
+    private pagination: PaginationService,
+    private eventServ: EventService
   ) {}
 
   ngOnInit(): void {
@@ -76,6 +81,10 @@ export class TypeTableComponent {
     this.fetchTypes(1, this.ITEMS_PER_PAGE);
     this.currentPage = this.pagination.getCurrentPage();
     this.showTable();
+    this.eventServ.subscribe('updateTypes').subscribe((data) => {
+      this.fetchTotal();
+      this.reloadTypes();
+    });
   }
 
   //refresh on new type
@@ -87,20 +96,30 @@ export class TypeTableComponent {
   }
 
   fetchTotal() {
+    this.reloadingPage();
     this.typeServ.getTotal().subscribe((data: any) => {
       this.totalTypes = data.total;
       this.pages = this.pagination.build(this.ITEMS_PER_PAGE, this.totalTypes);
+      this.reloadingPage();
     });
   }
 
   fetchTypes(page: number, limit: number) {
     let correctPage = page;
+    this.reloadingPage();
     this.typeServ
       .getAllWithPagination(correctPage, limit)
       .subscribe((data: any) => {
         this.types = data;
         this.currentPage = page;
+        this.reloadingPage();
       });
+  }
+
+  reloadingPage() {
+    setTimeout(() => {
+      this.state.reloading = !this.state.reloading;
+    }, 200);
   }
 
   reloadTypes() {

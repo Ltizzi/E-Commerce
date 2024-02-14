@@ -1,5 +1,6 @@
 <div
   class="relative overflow-x-auto shadow-md rounded-lg mt-10 w-10/12 mx-auto"
+  [@tableState]="state.animation.table"
 >
   <table class="w-full text-sm text-left text-gray-500">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -15,21 +16,24 @@
     </thead>
     <tbody>
       <tr
-        class="bg-white border-b hover:bg-indigo-100"
+        class="bg-white border-b"
         *ngFor="let user of users"
+        [@rowState]="user.state"
+        (mouseover)="user.state = 'hover'"
+        (mouseleave)="user.state = 'normal'"
       >
-        <td class="px-6 py-4">{{ user.user_id }}</td>
+        <td class="px-6 py-4 w-1/12">{{ user.user_id }}</td>
         <th
           scope="row"
-          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap cursor-pointer"
+          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap cursor-pointer w-2/12"
           (click)="goToUser(user.user_id, $event)"
         >
           {{ user.username }}
         </th>
-        <td class="px-6 py-4">{{ user.name + user.lastname }}</td>
-        <td class="px-6 py-4">{{ user.email }}</td>
-        <td class="px-6 py-4">${{ user.purchases }}</td>
-        <td class="px-6 py-4 text-right">
+        <td class="px-6 py-4 w-3/12">{{ user.name + user.lastname }}</td>
+        <td class="px-6 py-4 w-3/12">{{ user.email }}</td>
+        <td class="px-6 py-4 w-2/12">${{ user.purchases }}</td>
+        <td class="px-6 py-4 text-right w-2/12">
           <div class="flex flex-row gap-2">
             <!-- <fa-icon
               [icon]="faPen"
@@ -51,8 +55,11 @@
     <ul class="inline-flex items-center -space-x-px">
       <li>
         <p
-          class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:text-gray-50 hover:bg-indigo-600 hover:cursor-pointer"
+          class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:text-gray-50 hover:cursor-pointer"
           (click)="goPrevious()"
+          [@paginationNavState]="state.animation.navLeft"
+          (mouseleave)="state.animation.navLeft = 'normal'"
+          (mouseover)="state.animation.navLeft = 'hover'"
         >
           <span class="sr-only">Previous</span>
           <svg
@@ -84,6 +91,9 @@
         <p
           class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:text-gray-50 hover:bg-indigo-600 hover:cursor-pointer"
           (click)="goNext()"
+          [@paginationNavState]="state.animation.navRight"
+          (mouseleave)="state.animation.navRight = 'normal'"
+          (mouseover)="state.animation.navRight = 'hover'"
         >
           <span class="sr-only">Next</span>
           <svg

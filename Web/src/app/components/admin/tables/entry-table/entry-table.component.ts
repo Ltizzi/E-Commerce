@@ -3,11 +3,14 @@ import { Component } from '@angular/core';
 import { Entry } from 'src/common/models/entry';
 import { EntryService } from 'src/app/services/entry.service';
 import { PaginationService } from 'src/app/services/ui/pagination.service';
+import { inAndOutAnimation } from 'src/common/animations';
+import { State } from 'src/common/models/state';
 
 @Component({
   selector: 'app-entry-table',
   templateUrl: './entry-table.component.html',
   styleUrls: ['./entry-table.component.css'],
+  animations: [inAndOutAnimation],
 })
 export class EntryTableComponent {
   entries: Array<Entry> = [];
@@ -25,6 +28,12 @@ export class EntryTableComponent {
   totalEntries!: number;
   currentPage!: number;
 
+  state: State = {
+    animation: {
+      table: 'out',
+    },
+  };
+
   constructor(
     private entryServ: EntryService,
     private pagination: PaginationService
@@ -40,6 +49,7 @@ export class EntryTableComponent {
     });
     this.fetchEntries(1, this.ITEMS_PER_PAGE);
     this.currentPage = this.pagination.getCurrentPage();
+    this.showTable();
   }
 
   //Fetch
@@ -60,19 +70,37 @@ export class EntryTableComponent {
 
   //PAgination
 
+  hideTable() {
+    setTimeout(() => {
+      this.state.animation.table = 'out';
+    }, 50);
+  }
+
+  showTable() {
+    setTimeout(() => {
+      this.state.animation.table = 'in';
+    }, 200);
+  }
+
   goNext() {
+    this.hideTable();
     this.currentPage = this.pagination.goNext();
     this.fetchEntries(this.currentPage, this.ITEMS_PER_PAGE);
+    this.showTable();
   }
 
   goPrevious() {
+    this.hideTable();
     this.currentPage = this.pagination.goPrevious();
     this.fetchEntries(this.currentPage, this.ITEMS_PER_PAGE);
+    this.showTable();
   }
 
   goPage(page: number) {
+    this.hideTable();
     this.currentPage = this.pagination.goPage(page);
     this.fetchEntries(this.currentPage, this.ITEMS_PER_PAGE);
+    this.showTable();
   }
 
   //ACTIONS

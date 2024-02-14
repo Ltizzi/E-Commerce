@@ -4,11 +4,14 @@ import { Stock } from 'src/common/models/stock';
 import { StockService } from 'src/app/services/stock.service';
 import { PaginationService } from 'src/app/services/ui/pagination.service';
 import { EventService } from 'src/app/services/event.service';
+import { inAndOutAnimation } from 'src/common/animations';
+import { State } from 'src/common/models/state';
 
 @Component({
   selector: 'app-stock-table',
   templateUrl: './stock-table.component.html',
   styleUrls: ['./stock-table.component.css'],
+  animations: [inAndOutAnimation],
 })
 export class StockTableComponent {
   stocks: Array<Stock> = [];
@@ -28,6 +31,12 @@ export class StockTableComponent {
   totalStocks!: number;
   currentPage!: number;
 
+  state: State = {
+    animation: {
+      table: 'out',
+    },
+  };
+
   constructor(
     private stockServ: StockService,
     private pagination: PaginationService,
@@ -44,6 +53,7 @@ export class StockTableComponent {
     });
     this.fetchStocks(1, this.ITEMS_PER_PAGE);
     this.currentPage = this.pagination.getCurrentPage();
+    this.showTable();
   }
 
   //DATA FETCH
@@ -63,19 +73,37 @@ export class StockTableComponent {
   }
 
   //PAGINATION
+
+  hideTable() {
+    setTimeout(() => {
+      this.state.animation.table = 'out';
+    }, 50);
+  }
+
+  showTable() {
+    setTimeout(() => {
+      this.state.animation.table = 'in';
+    }, 200);
+  }
   goNext() {
+    this.hideTable();
     this.currentPage = this.pagination.goNext();
     this.fetchStocks(this.currentPage, this.ITEMS_PER_PAGE);
+    this.showTable();
   }
 
   goPrevious() {
+    this.hideTable();
     this.currentPage = this.pagination.goPrevious();
     this.fetchStocks(this.currentPage, this.ITEMS_PER_PAGE);
+    this.showTable();
   }
 
   goPage(page: number) {
+    this.hideTable();
     this.currentPage = this.pagination.goPage(page);
     this.fetchStocks(this.currentPage, this.ITEMS_PER_PAGE);
+    this.showTable();
   }
 
   //ACTIONS + MODALS

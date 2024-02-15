@@ -12,7 +12,7 @@ import { UserProfileComponent } from './components/layout/user-profile/user-prof
 import { ProductPageComponent } from './components/product/product-page/product-page.component';
 import { CategoryNavComponent } from './components/product/category-nav/category-nav.component';
 import { LandingComponent } from './components/layout/landing/landing.component';
-import { CartComponent } from './components/layout/cart/cart.component';
+import { CartComponent } from './components/purchase/cart/cart.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DataService } from './services/data.service';
 import { ProductService } from './services/product.service';
@@ -42,8 +42,8 @@ import { TypePanelComponent } from './components/admin/layout/type-panel/type-pa
 import { StockPanelComponent } from './components/admin/layout/stock-panel/stock-panel.component';
 import { EntryPanelComponent } from './components/admin/layout/entry-panel/entry-panel.component';
 import { DeleteEntryModalComponent } from './components/admin/ui/delete-entry-modal/delete-entry-modal.component';
-import { OrdersComponent } from './components/orders/orders.component';
-import { SuccessComponent } from './components/success/success.component';
+import { OrdersComponent } from './components/purchase/orders/orders.component';
+import { SuccessComponent } from './components/purchase/success/success.component';
 import { TokenComponent } from './token/token.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { EventService } from './services/event.service';

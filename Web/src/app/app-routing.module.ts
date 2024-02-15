@@ -5,7 +5,7 @@ import { ProductListComponent } from './components/product/product-list/product-
 import { ProductPageComponent } from './components/product/product-page/product-page.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { PurchaseComponent } from './components/layout/purchase/purchase.component';
-import { OrdersComponent } from './components/orders/orders.component';
+import { OrdersComponent } from './components/purchase/orders/orders.component';
 import { TokenComponent } from './token/token.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 

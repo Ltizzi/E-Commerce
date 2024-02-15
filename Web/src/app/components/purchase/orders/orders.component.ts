@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
+import { EventService } from 'src/app/services/event.service';
 import { PurchaseService } from 'src/app/services/purchase.service';
 import { ShopOrderService } from 'src/app/services/shop-order.service';
 import { Cart } from 'src/common/models/cart';
@@ -28,7 +29,8 @@ export class OrdersComponent {
   constructor(
     private cartServ: CartService,
     private ordServ: ShopOrderService,
-    private purchServ: PurchaseService
+    private purchServ: PurchaseService,
+    private eventServ: EventService
   ) {}
 
   ngOnInit() {
@@ -80,6 +82,7 @@ export class OrdersComponent {
       this.purchaseSucces = true;
       localStorage.removeItem('carts');
       this.successPurchase.emit(data.orders);
+      this.eventServ.emit('clearCart');
     });
   }
 }

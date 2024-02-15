@@ -55,7 +55,11 @@
     </ol>
   </div>
   <div class="flex w-full h-full justify-around">
-    <div class="flex justify-end items-start mt-20 w-4/12" *ngIf="!isMobile">
+    <div
+      class="flex justify-end items-start mt-20 w-4/12"
+      *ngIf="!isMobile"
+      [@in&Out]="state.animation.lateral"
+    >
       <ol
         class="relative items-start text-gray-500 border-l border-gray-200 flex flex-col"
       >
@@ -210,14 +214,20 @@
         (displayOrders)="showOrders()"
         *ngIf="isCartOpen"
         class="w-full -ml-20"
+        [@fadeIn&Out]="state.animation.cart"
       ></app-cart>
       <app-orders
         *ngIf="isOrderOpen"
+        [@fadeIn&Out]="state.animation.order"
         (showCart)="showOrders()"
         (successPurchase)="purchaseComplete($event)"
         (showSuccess)="purchaseComplete($event)"
       ></app-orders>
-      <app-success *ngIf="isSuccessOpen" [orders]="orders"></app-success>
+      <app-success
+        *ngIf="isSuccessOpen"
+        [orders]="orders"
+        [@fadeIn&Out]="state.animation.success"
+      ></app-success>
     </div>
   </div>
 </div>

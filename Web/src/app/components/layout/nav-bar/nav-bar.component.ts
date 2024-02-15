@@ -51,9 +51,14 @@ export class NavBarComponent {
     // }, 1000);
     this.eventServ.subscribe('updateCartCounter').subscribe((data) => {
       if (data) {
+        console.log('UPDATING CART...');
+        console.log(data);
         this.cart_counter += 1;
       } else this.cart_counter -= 1;
       if (this.cart_counter < 0) this.cart_counter = 0;
+    });
+    this.eventServ.subscribe('clearCart').subscribe((data) => {
+      this.cart_counter = 0;
     });
   }
 

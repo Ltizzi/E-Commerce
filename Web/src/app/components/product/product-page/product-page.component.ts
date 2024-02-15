@@ -4,14 +4,25 @@ import { CartService } from 'src/app/services/cart.service';
 import { EventService } from 'src/app/services/event.service';
 import { ProductService } from 'src/app/services/product.service';
 import { StockService } from 'src/app/services/stock.service';
+import {
+  fadeIndAndFadeOutAnimation,
+  hoverInAndOutAnimation,
+  inAndOutAnimation,
+} from 'src/common/animations';
 import { Cart } from 'src/common/models/cart';
 import { Product } from 'src/common/models/product';
+import { State } from 'src/common/models/state';
 import { User } from 'src/common/models/user';
 
 @Component({
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.css'],
+  animations: [
+    fadeIndAndFadeOutAnimation,
+    hoverInAndOutAnimation,
+    inAndOutAnimation,
+  ],
 })
 export class ProductPageComponent {
   product!: Product;
@@ -20,6 +31,15 @@ export class ProductPageComponent {
   isStock!: boolean;
   user!: User;
   bigImgUrl!: string;
+
+  state: State = {
+    animation: {
+      img: 'out',
+      btn: 'leave',
+      imgs: [],
+      page: 'out',
+    },
+  };
 
   constructor(
     private prodServ: ProductService,
@@ -48,18 +68,35 @@ export class ProductPageComponent {
     if (localStorage.getItem('user')) {
       this.user = JSON.parse(localStorage.getItem('user') as string);
     }
+    setTimeout(() => {
+      this.state.animation.page = 'in';
+    }, 100);
   }
 
   getById(id: number) {
     this.prodServ.getById(id).subscribe((data: any) => {
       this.product = data;
       this.bigImgUrl = this.product.imageUrl[0];
+      let counter = 0;
+      this.product.imageUrl.forEach((img) => {
+        this.state.animation.imgs.push({ id: counter, state: 'leave' });
+        counter += 1;
+      });
+      setTimeout(() => {
+        this.state.animation.img = 'in';
+      }, 200);
       this.checkStock();
     });
   }
 
   changePicture(url: string) {
-    this.bigImgUrl = url;
+    setTimeout(() => {
+      this.state.animation.img = 'out';
+    }, 50);
+    setTimeout(() => {
+      this.bigImgUrl = url;
+      this.state.animation.img = 'in';
+    }, 200);
   }
 
   checkStock() {

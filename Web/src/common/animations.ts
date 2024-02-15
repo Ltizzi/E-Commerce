@@ -21,7 +21,7 @@ export const inAndOutAnimation = trigger('in&Out', [
       transform: 'translateX(-200px)',
     })
   ),
-  transition('in<=>out', animate(100)),
+  transition('in<=>out', animate(150)),
 ]);
 
 export const hoverInAndOutAnimationNav = trigger('hover&leave', [
@@ -34,6 +34,18 @@ export const hoverInAndOutAnimationNav = trigger('hover&leave', [
       borderRadius: '0.7rem',
       padding: '0.5rem 0.7rem',
       opacity: 0.9,
+    })
+  ),
+  state('leave', style({ transform: 'scale(1)' })),
+  transition('hover<=>leave', animate(150)),
+]);
+
+export const hoverInAndOutAnimation = trigger('hover&leave', [
+  state(
+    'hover',
+    style({
+      // transform: 'scale(1.1)',
+      transform: 'scale(1.1)',
     })
   ),
   state('leave', style({ transform: 'scale(1)' })),

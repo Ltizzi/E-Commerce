@@ -3,14 +3,19 @@
     <div class="lg:w-4/5 mx-auto flex flex-wrap">
       <div class="grid gap-0 2xl:w-1/2">
         <div>
+          <!-- product.imageUrl[0] -->
           <img
             class="rounded-lg lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center 2xl:w-2/3"
-            src="{{ product.imageUrl[0] }}"
+            src="{{ bigImgUrl }}"
             alt=""
           />
         </div>
         <div class="grid grid-cols-5 gap-4 mt-5">
-          <div *ngFor="let img of product.imageUrl">
+          <div
+            *ngFor="let img of product.imageUrl"
+            (click)="changePicture(img)"
+            class="hover:cursor-pointer"
+          >
             <img
               class="h-32 w-auto max-w-full rounded-lg"
               src="{{ img }}"

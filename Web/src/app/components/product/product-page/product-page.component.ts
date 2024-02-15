@@ -19,6 +19,7 @@ export class ProductPageComponent {
   isLoaded: Boolean = false;
   isStock!: boolean;
   user!: User;
+  bigImgUrl!: string;
 
   constructor(
     private prodServ: ProductService,
@@ -52,8 +53,13 @@ export class ProductPageComponent {
   getById(id: number) {
     this.prodServ.getById(id).subscribe((data: any) => {
       this.product = data;
+      this.bigImgUrl = this.product.imageUrl[0];
       this.checkStock();
     });
+  }
+
+  changePicture(url: string) {
+    this.bigImgUrl = url;
   }
 
   checkStock() {

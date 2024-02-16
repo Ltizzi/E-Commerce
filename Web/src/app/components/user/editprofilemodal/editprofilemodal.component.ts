@@ -128,6 +128,8 @@ export class EditprofilemodalComponent {
         carts: this.user.carts,
         purchases: this.user.purchases,
         roles: this.user.roles,
+        favourites: this.user.favourites,
+        reviews: this.user.reviews,
       };
 
       console.log(updatedProfile);

@@ -140,11 +140,19 @@ export class UserController {
         prod_id,
         userInfo.email
       )) as FavResponse;
-      return res
-        .status(200)
-        .json(prodMapper.toArrayProductResponse(userFavs.userFavs));
+      return res.status(200).json(userFavs);
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
+    }
+  }
+  async httpFavChecker(req: Request, res: Response): Promise<Response> {
+    try {
+      const prod_id = req.query.product_id as unknown as number;
+      const userInfo = req.user as JWTUserInfo;
+      const isFav = await userServ.checkIsFav(prod_id, userInfo.email);
+      return res.status(200).json({ isFav: isFav });
+    } catch (err: any) {
+      return res.status(400).json({ error: err.message });
     }
   }
 }

@@ -10,6 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EventService } from 'src/app/services/event.service';
 import { ProductTypeService } from 'src/app/services/product-type.service';
 import { ProductService } from 'src/app/services/product.service';
+import { Product } from 'src/common/models/product';
 import { ProductType } from 'src/common/models/type';
 
 @Component({
@@ -19,7 +20,7 @@ import { ProductType } from 'src/common/models/type';
 })
 export class EditProductModalComponent {
   @Input('data') show!: boolean;
-  @Input('product') product!: any;
+  @Input('product') product!: Product;
   @Output() closeModal = new EventEmitter<boolean>();
   @Output() reloadProducts = new EventEmitter<boolean>();
 
@@ -47,7 +48,7 @@ export class EditProductModalComponent {
           Validators.minLength(3),
           Validators.maxLength(2000),
         ]),
-        prod_type: new FormControl(this.product.prod_type, Validators.required),
+        type: new FormControl(this.product.type, Validators.required),
       });
     }
   }
@@ -131,7 +132,7 @@ export class EditProductModalComponent {
           type.name == (this.editProductForm.value.prod_type as string)
       );
 
-      let updatedProduct: any = {
+      let updatedProduct: Product = {
         product_id: this.product.product_id,
         name: this.editProductForm.value.name as string,
         brand: this.editProductForm.value.brand as string,
@@ -139,6 +140,8 @@ export class EditProductModalComponent {
         about: this.editProductForm.value.about as string,
         imageUrl: this.urls,
         type: type as ProductType,
+        rating: this.product.rating,
+        total_reviews: this.product.total_reviews,
       };
 
       // for (let prop in updatedProduct) {

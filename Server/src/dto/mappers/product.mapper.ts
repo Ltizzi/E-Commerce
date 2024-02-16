@@ -46,6 +46,7 @@ export class ProductMapper {
 
   toArrayProductResponse(products: Array<Product>): Array<ProductResponse> {
     let prodsRes: Array<ProductResponse> = [];
+
     if (products)
       products.forEach((prod) => prodsRes.push(this.toProductResponse(prod)));
     return prodsRes;

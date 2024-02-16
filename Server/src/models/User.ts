@@ -1,5 +1,7 @@
 import { Cart } from "./Cart";
+import { Product } from "./Product";
 import { Purchase } from "./Purchase";
+import { Review } from "./Review";
 import { RoleEnum } from "./RoleEnum";
 
 export interface User {
@@ -17,4 +19,6 @@ export interface User {
   soft_delete: boolean;
   carts: Array<Cart>;
   purchases: Array<Purchase>;
+  favourites: Array<Product>;
+  reviews: Array<Review>;
 }

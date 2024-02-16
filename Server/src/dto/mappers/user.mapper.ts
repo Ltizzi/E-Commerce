@@ -7,11 +7,13 @@ import { CartResponse } from "../responses/cart.response";
 import { PurchaseResponse } from "../responses/purchase.response";
 import { UserResponse } from "../responses/user.response";
 import { CartMapper } from "./cart.mapper";
+import { ProductMapper } from "./product.mapper";
 import { PurchaseMapper } from "./purchase.mapper";
 
 const userServ = new UserService();
 const cartMapper = new CartMapper();
 const purchMapper = new PurchaseMapper();
+const prodMapper = new ProductMapper();
 
 export class UserMapper {
   toUserResponse(user: User): UserResponse {
@@ -27,6 +29,8 @@ export class UserMapper {
     if (user.purchases)
       res.purchases = purchMapper.toArrayPurchaseResponse(user.purchases);
     res.roles = user.roles;
+    res.favourites = prodMapper.toArrayProductResponse(user.favourites) || [];
+    res.reviews = user.reviews || [];
     return res;
   }
 
@@ -50,6 +54,9 @@ export class UserMapper {
       );
     }
     if (userReq.roles) user.roles = userReq.roles;
+    user.favourites =
+      (await prodMapper.toArrayProductEntity(userReq.favourites)) || [];
+    user.reviews = userReq.reviews || [];
     return user;
   }
 

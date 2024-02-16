@@ -4,6 +4,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { EventService } from 'src/app/services/event.service';
 import { ProductService } from 'src/app/services/product.service';
 import { StockService } from 'src/app/services/stock.service';
+import { UserService } from 'src/app/services/user.service';
 import {
   fadeIndAndFadeOutAnimation,
   hoverInAndOutAnimation,
@@ -32,12 +33,15 @@ export class ProductPageComponent {
   user!: User;
   bigImgUrl!: string;
 
+  isFav!: boolean;
+
   state: State = {
     animation: {
       img: 'out',
       btn: 'leave',
       imgs: [],
       page: 'out',
+      fav: 'leave',
     },
   };
 
@@ -47,7 +51,8 @@ export class ProductPageComponent {
     private stockServ: StockService,
     private cartServ: CartService,
     private router: Router,
-    private eventServ: EventService
+    private eventServ: EventService,
+    private userServ: UserService
   ) {}
 
   ngOnInit(): void {
@@ -86,6 +91,7 @@ export class ProductPageComponent {
         this.state.animation.img = 'in';
       }, 200);
       this.checkStock();
+      this.checkFav(id);
     });
   }
 
@@ -129,5 +135,25 @@ export class ProductPageComponent {
         this.router.navigate(['/purchase']);
       });
     }
+  }
+
+  checkFav(id: number) {
+    return this.userServ.favChecker(id as number).subscribe((data: any) => {
+      this.isFav = data.isFav;
+      console.log('is fav?: ', this.isFav);
+    });
+  }
+
+  handleFav() {
+    const id = this.product.product_id;
+    if (id)
+      this.userServ.favHandler(id).subscribe((data: any) => {
+        this.user.favourites = data.userFavs;
+        if (data.action == 'added') {
+          this.isFav = true;
+        } else {
+          this.isFav = false;
+        }
+      });
   }
 }

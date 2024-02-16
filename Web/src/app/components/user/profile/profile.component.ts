@@ -1,7 +1,13 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { PurchaseService } from 'src/app/services/purchase.service';
+import {
+  fadeIndAndFadeOutAnimation,
+  hoverInAndOutAnimation,
+  inAndOutAnimation,
+} from 'src/common/animations';
 import { Purchase } from 'src/common/models/purchase';
+import { State } from 'src/common/models/state';
 
 import { User } from 'src/common/models/user';
 
@@ -9,6 +15,7 @@ import { User } from 'src/common/models/user';
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
+  animations: [fadeIndAndFadeOutAnimation, hoverInAndOutAnimation],
 })
 export class ProfileComponent {
   user!: User;
@@ -18,6 +25,14 @@ export class ProfileComponent {
   birthday!: Object;
 
   showProfileEditorModal = false;
+
+  state: State = {
+    animation: {
+      edit_btn: 'leave',
+      delete_btn: 'leave',
+      layout: 'out',
+    },
+  };
 
   constructor(
     private authServ: AuthService,
@@ -38,6 +53,9 @@ export class ProfileComponent {
           this.totalPurchase = this.purchases.length;
         });
     }
+    setTimeout(() => {
+      this.state.animation.layout = 'in';
+    });
   }
 
   showProfileEditor() {

@@ -8,4 +8,6 @@ export interface ProductRequest {
   imageUrl: Array<string>;
   price: number;
   type: ProductTypeRequest;
+  rating: number;
+  total_reviews: number;
 }

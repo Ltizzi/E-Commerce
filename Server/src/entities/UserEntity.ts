@@ -10,9 +10,15 @@ import {
   UpdateDateColumn,
   OneToMany,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
 } from "typeorm";
 import { CartEntity } from "./CartEntity";
 import { PurchaseEntity } from "./PurchaseEntity";
+import { Product } from "../models/Product";
+import { ProductEntity } from "./ProductEntity";
+import { Review } from "../models/Review";
+import { ReviewEntity } from "./ReviewEntity";
 
 @Entity("users")
 export class UserEntity implements User {
@@ -77,4 +83,15 @@ export class UserEntity implements User {
   })
   @JoinColumn({ name: "purchases", referencedColumnName: "purchase_id" })
   purchases!: Purchase[];
+
+  @ManyToMany(() => ProductEntity, { eager: true })
+  @JoinTable()
+  favourites!: Product[];
+
+  @ManyToMany(() => ReviewEntity, (review) => review.user_id, {
+    eager: true,
+    nullable: true,
+  })
+  @JoinTable()
+  reviews!: Review[];
 }

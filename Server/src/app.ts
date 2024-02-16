@@ -15,6 +15,7 @@ import { UserService } from "./services/UserService";
 import { User } from "./models/User";
 import { authenticateJWT } from "./utils/authMiddleware";
 import { UserMapper } from "./dto/mappers/user.mapper";
+import { JWTUserInfo } from "./models/utils/JWTUserInfo";
 
 const app = express();
 const userServ = new UserService();
@@ -53,7 +54,7 @@ passport.use(
         const name = profile.name?.givenName;
         const lastname = profile.name?.familyName;
         const username = profile.displayName.split(" ");
-        const user = {
+        let user = {
           email: profile.emails![0].value,
           username: username[0],
           name: name,
@@ -64,8 +65,8 @@ passport.use(
         console.log("User: ", user);
         const alreadyUser = (await userServ.getUserByEmail(user.email)) as User;
         if (!alreadyUser) {
-          await userServ.saveUser(user as User);
-        }
+          user = (await userServ.saveUser(user as User)) as User;
+        } else user = alreadyUser;
         const tokenUserData = {
           email: user.email,
           roles: user.roles,
@@ -101,7 +102,7 @@ app.get(
 );
 
 app.get("/auth/user", authenticateJWT, async (req: Request, res: Response) => {
-  const userInfo = req.user as any;
+  const userInfo = req.user as JWTUserInfo;
   console.log("userInfo");
   console.log(userInfo);
   if (userInfo) {

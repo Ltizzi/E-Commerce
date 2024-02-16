@@ -1,14 +1,19 @@
+import { ProductMapper } from "../dto/mappers/product.mapper";
 import { UserMapper } from "../dto/mappers/user.mapper";
 import { UserRequest } from "../dto/requests/user.request";
+import { Product } from "../models/Product";
 import { RoleEnum } from "../models/RoleEnum";
 import { User } from "../models/User";
 import { DeleteObjectResponse } from "../models/utils/DeleteObjectResponse";
+import { FavResponse } from "../models/utils/FavResponse";
+import { JWTUserInfo } from "../models/utils/JWTUserInfo";
 import { PaginationParams } from "../models/utils/PaginationParams";
 import { UserService } from "../services/UserService";
 import { Request, Response } from "express";
 
 const userServ = new UserService();
 const mapper = new UserMapper();
+const prodMapper = new ProductMapper();
 
 export class UserController {
   // private userServ: UserService = new UserService();
@@ -119,6 +124,25 @@ export class UserController {
       const id = req.query.user_id as unknown as number;
       const user = (await userServ.addRoleToUser(id, RoleEnum.ADMIN)) as User;
       return res.status(200).json(mapper.toUserResponse(user));
+    } catch (err: any) {
+      return res.status(404).json({ error: err.message });
+    }
+  }
+
+  async httpAddOrRemoveFavProduct(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
+    try {
+      const prod_id = req.query.product_id as unknown as number;
+      const userInfo = req.user as JWTUserInfo;
+      const userFavs = (await userServ.addOrRemoveFavourite(
+        prod_id,
+        userInfo.email
+      )) as FavResponse;
+      return res
+        .status(200)
+        .json(prodMapper.toArrayProductResponse(userFavs.userFavs));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }

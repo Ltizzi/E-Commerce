@@ -1,7 +1,12 @@
 import { AppDataSource } from "../data-source";
 import { UserEntity } from "../entities/UserEntity";
+import { Product } from "../models/Product";
 import { RoleEnum } from "../models/RoleEnum";
 import { User } from "../models/User";
+import { FavResponse } from "../models/utils/FavResponse";
+import { ProductService } from "./ProductService";
+
+const prodServ = new ProductService();
 
 export class UserService {
   private userRepo = AppDataSource.getRepository(UserEntity);
@@ -84,5 +89,52 @@ export class UserService {
       userToUpdate?.roles.push(role);
       return await this.userRepo.save(userToUpdate);
     } else return null;
+  }
+
+  async addOrRemoveFavourite(prod_id: number, email: string): Promise<Object> {
+    try {
+      const product = (await prodServ.getProductById(prod_id)) as Product;
+      const user = (await this.getUserByEmail(email)) as User;
+      const response: FavResponse = {
+        userFavs: [] as Array<Product>,
+        action: "",
+      };
+      let updatedUser = {} as User;
+      console.log("user favs?");
+      console.log(user.favourites);
+      if (user.favourites) {
+        const preIsFav = user.favourites.filter(
+          (fav: Product) => fav.product_id == prod_id
+        );
+        const isFav = preIsFav.length > 0;
+        console.log("is fav? ", isFav);
+        if (!isFav) {
+          user.favourites.push(product);
+          updatedUser = (await this.updateUser(user)) as User;
+          response.action = "added";
+        } else {
+          console.log("PRE");
+          console.log(user.favourites);
+          user.favourites = user.favourites.filter(
+            (favProd: Product) => favProd.product_id != prod_id
+          );
+          console.log("POST");
+          console.log(user.favourites);
+          updatedUser = (await this.updateUser(user)) as User;
+          response.action = "removed";
+        }
+      } else {
+        let favs = [] as Array<Product>;
+        favs.push(product);
+        user.favourites = favs;
+        updatedUser = (await this.updateUser(user)) as User;
+        response.action = "added";
+      }
+      response.userFavs = updatedUser.favourites;
+
+      return response;
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
   }
 }

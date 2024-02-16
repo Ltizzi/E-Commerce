@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { ProductController } from "../controllers/product.controller";
+import { authenticateJWT, isAdmin } from "../utils/authMiddleware";
 
 const productRouter: Router = Router();
 const productController = new ProductController();
@@ -10,9 +11,29 @@ productRouter.get(
   productController.httpGetProductsWithPagination
 );
 productRouter.get("/byId", productController.httpGetProductById);
-productRouter.get("/count", productController.httpGetNumberOfProducts);
-productRouter.post("/new", productController.httpCreateNewProduct);
-productRouter.delete("/delete", productController.httpSoftDeleteProductById);
-productRouter.patch("/update", productController.httpUpdateProduct);
+productRouter.get(
+  "/count",
+  authenticateJWT,
+  isAdmin,
+  productController.httpGetNumberOfProducts
+);
+productRouter.post(
+  "/new",
+  authenticateJWT,
+  isAdmin,
+  productController.httpCreateNewProduct
+);
+productRouter.delete(
+  "/delete",
+  authenticateJWT,
+  isAdmin,
+  productController.httpSoftDeleteProductById
+);
+productRouter.patch(
+  "/update",
+  authenticateJWT,
+  isAdmin,
+  productController.httpUpdateProduct
+);
 
 module.exports = productRouter;

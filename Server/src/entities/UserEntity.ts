@@ -84,7 +84,7 @@ export class UserEntity implements User {
   @JoinColumn({ name: "purchases", referencedColumnName: "purchase_id" })
   purchases!: Purchase[];
 
-  @ManyToMany(() => ProductEntity)
+  @ManyToMany(() => ProductEntity, { eager: true })
   @JoinTable()
   favourites!: Product[];
 

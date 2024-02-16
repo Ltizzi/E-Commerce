@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { UserController } from "../controllers/user.controller";
+import { authenticateJWT } from "../utils/authMiddleware";
 
 const userRouter: Router = Router();
 const userController = new UserController();
@@ -14,5 +15,10 @@ userRouter.post("/new", userController.httpCreateNewUser);
 userRouter.delete("/delete", userController.httpSoftDeleteUser);
 userRouter.patch("/update", userController.httpUpdateUser);
 userRouter.patch("/makeAdmin", userController.httpMakeUserAdmin);
+userRouter.post(
+  "/fav",
+  authenticateJWT,
+  userController.httpAddOrRemoveFavProduct
+);
 
 module.exports = userRouter;

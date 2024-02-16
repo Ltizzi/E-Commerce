@@ -6,6 +6,7 @@ import { RoleEnum } from "../models/RoleEnum";
 import { User } from "../models/User";
 import { DeleteObjectResponse } from "../models/utils/DeleteObjectResponse";
 import { FavResponse } from "../models/utils/FavResponse";
+import { JWTUserInfo } from "../models/utils/JWTUserInfo";
 import { PaginationParams } from "../models/utils/PaginationParams";
 import { UserService } from "../services/UserService";
 import { Request, Response } from "express";
@@ -134,7 +135,7 @@ export class UserController {
   ): Promise<Response> {
     try {
       const prod_id = req.query.product_id as unknown as number;
-      const userInfo = req.user as any;
+      const userInfo = req.user as JWTUserInfo;
       const userFavs = (await userServ.addOrRemoveFavourite(
         prod_id,
         userInfo.email

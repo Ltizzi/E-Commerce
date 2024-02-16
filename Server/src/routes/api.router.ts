@@ -1,3 +1,5 @@
+import { authenticateJWT, isAdmin } from "../utils/authMiddleware";
+
 const express = require("express");
 const userRouter = require("./user.router");
 const typeRouter = require("./productType.router");
@@ -9,13 +11,13 @@ const orderRouter = require("./shopOrder.router");
 const purchaseRouter = require("./purchase.router");
 const apiRouter = express.Router();
 
-apiRouter.use("/user", userRouter);
+apiRouter.use("/user", authenticateJWT, userRouter);
 apiRouter.use("/type", typeRouter);
 apiRouter.use("/product", productRouter);
 apiRouter.use("/stock", stockRouter);
-apiRouter.use("/entry", entryRouter);
-apiRouter.use("/cart", cartRouter);
-apiRouter.use("/order", orderRouter);
-apiRouter.use("/purchase", purchaseRouter);
+apiRouter.use("/entry", isAdmin, entryRouter);
+apiRouter.use("/cart", authenticateJWT, cartRouter);
+apiRouter.use("/order", authenticateJWT, orderRouter);
+apiRouter.use("/purchase", authenticateJWT, purchaseRouter);
 
 module.exports = apiRouter;

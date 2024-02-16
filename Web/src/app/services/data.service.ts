@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, throwError } from 'rxjs';
 import { Product } from 'src/common/models/product';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root',
@@ -70,6 +71,28 @@ export class DataService {
   getByUserId(id: number) {
     return this.http
       .get(this.url + '/byUserId?user_id=' + id, { withCredentials: true })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+
+  favHandler(prod_id: number) {
+    return this.http
+      .post(this.url + '/fav?product_id=' + prod_id, {
+        withCredentials: true,
+      })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+
+  favChecker(prod_id: number) {
+    return this.http
+      .get(this.url + '/isFav?product_id=' + prod_id, {
+        withCredentials: true,
+      })
       .pipe(
         map((response) => response),
         catchError(this.handleError)

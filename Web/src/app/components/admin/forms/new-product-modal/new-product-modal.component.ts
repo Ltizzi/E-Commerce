@@ -131,6 +131,8 @@ export class NewProductModalComponent {
         about: this.newProductForm.value.about as string,
         imageUrl: this.urls,
         type: type as ProductType,
+        rating: 0,
+        total_reviews: 0,
       };
 
       this.prodServ.create(newProduct).subscribe((data) => {

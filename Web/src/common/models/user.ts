@@ -1,4 +1,5 @@
 import { Cart } from './cart';
+import { Product } from './product';
 import { Purchase } from './purchase';
 
 export interface User {
@@ -13,4 +14,6 @@ export interface User {
   purchases: Array<Purchase>;
   roles: Array<String>;
   state?: string;
+  favourites: Array<Product>;
+  reviews: Array<Object>;
 }

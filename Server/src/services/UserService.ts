@@ -1,4 +1,6 @@
 import { AppDataSource } from "../data-source";
+import { ProductMapper } from "../dto/mappers/product.mapper";
+import { ProductResponse } from "../dto/responses/product.response";
 import { UserEntity } from "../entities/UserEntity";
 import { Product } from "../models/Product";
 import { RoleEnum } from "../models/RoleEnum";
@@ -7,6 +9,7 @@ import { FavResponse } from "../models/utils/FavResponse";
 import { ProductService } from "./ProductService";
 
 const prodServ = new ProductService();
+const prodMapper = new ProductMapper();
 
 export class UserService {
   private userRepo = AppDataSource.getRepository(UserEntity);
@@ -96,7 +99,7 @@ export class UserService {
       const product = (await prodServ.getProductById(prod_id)) as Product;
       const user = (await this.getUserByEmail(email)) as User;
       const response: FavResponse = {
-        userFavs: [] as Array<Product>,
+        userFavs: [] as Array<ProductResponse>,
         action: "",
       };
       let updatedUser = {} as User;
@@ -130,9 +133,25 @@ export class UserService {
         updatedUser = (await this.updateUser(user)) as User;
         response.action = "added";
       }
-      response.userFavs = updatedUser.favourites;
+      response.userFavs = prodMapper.toArrayProductResponse(
+        updatedUser.favourites
+      );
 
       return response;
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  }
+
+  async checkIsFav(product_id: number, email: string): Promise<boolean> {
+    try {
+      const product = (await prodServ.getProductById(product_id)) as Product;
+      const user = (await this.getUserByEmail(email)) as User;
+      const isFav = user.favourites.filter(
+        (fav: Product) => fav.product_id == product_id
+      );
+      if (isFav.length > 0) return true;
+      else return false;
     } catch (err: any) {
       throw new Error(err.message);
     }

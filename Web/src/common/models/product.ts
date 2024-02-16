@@ -8,4 +8,6 @@ export interface Product {
   imageUrl: Array<string>;
   price: number;
   type: ProductType;
+  rating: number;
+  total_reviews: number;
 }

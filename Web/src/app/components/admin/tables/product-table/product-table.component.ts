@@ -45,7 +45,7 @@ export class ProductTableComponent {
 
   isEditModalDisplayed: boolean = false;
   showDeleteDialog: boolean = false;
-  productToEdit!: Object;
+  productToEdit!: Product;
   productToDelete!: Object;
 
   ITEMS_PER_PAGE = 5;

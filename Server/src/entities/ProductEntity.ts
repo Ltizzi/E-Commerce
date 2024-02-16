@@ -62,4 +62,13 @@ export class ProductEntity implements Product {
   @ManyToOne(() => ProductTypeEntity, { eager: true, nullable: false })
   @JoinColumn({ name: "prod_type_id" })
   type!: ProductType;
+
+  // @Column({ array: true, nullable: true })
+  // reviews!: Review[];
+
+  @Column({ default: 0, nullable: true })
+  rating!: number;
+
+  @Column({ default: 0, nullable: true })
+  total_reviews!: number;
 }

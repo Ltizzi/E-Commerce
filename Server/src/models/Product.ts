@@ -11,4 +11,7 @@ export interface Product {
   updatedAt: Date;
   soft_delete: boolean;
   type: ProductType;
+  //reviews: Array<Review>;
+  rating: number;
+  total_reviews: number;
 }

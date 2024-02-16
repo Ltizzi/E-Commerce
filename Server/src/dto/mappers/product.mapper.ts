@@ -21,6 +21,8 @@ export class ProductMapper {
     prodRes.imageUrl = prod.imageUrl;
     prodRes.price = prod.price;
     prodRes.type = typeMapper.toProductTypeResponse(prod.type);
+    prodRes.rating = prod.rating;
+    prodRes.total_reviews = prod.total_reviews;
     return prodRes;
   }
 
@@ -37,12 +39,27 @@ export class ProductMapper {
     product.imageUrl = fromProd.imageUrl;
     product.price = fromProd.price;
     product.type = await typeMapper.toProductTypeEntity(fromProd.type);
+    product.rating = fromProd.rating;
+    product.total_reviews = fromProd.total_reviews;
     return product;
   }
 
   toArrayProductResponse(products: Array<Product>): Array<ProductResponse> {
     let prodsRes: Array<ProductResponse> = [];
-    products.forEach((prod) => prodsRes.push(this.toProductResponse(prod)));
+    if (products)
+      products.forEach((prod) => prodsRes.push(this.toProductResponse(prod)));
     return prodsRes;
+  }
+
+  async toArrayProductEntity(
+    prods: Array<ProductRequest>
+  ): Promise<Array<Product>> {
+    let products: Array<Product> = [];
+    if (prods) {
+      prods.forEach(async (prod) =>
+        products.push(await this.toProductEntity(prod))
+      );
+    }
+    return products;
   }
 }

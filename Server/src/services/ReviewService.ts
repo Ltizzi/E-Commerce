@@ -52,6 +52,11 @@ export class ReviewService {
     return reviews;
   }
 
+  async getReviewsFromUser(user_id: number): Promise<Array<Review>> {
+    const reviews = await this.reviewRepo.find({ where: { user_id: user_id } });
+    return reviews;
+  }
+
   async getProductReviewsWithPagination(
     product_id: number,
     page: number,
@@ -65,6 +70,10 @@ export class ReviewService {
       order: { review_id: "ASC" },
     });
     return reviews;
+  }
+
+  async getProductReviews(product_id: number): Promise<Array<Review>> {
+    return await this.reviewRepo.find({ where: { product_id: product_id } });
   }
 
   async getTotalReviewsNumber(): Promise<number> {
@@ -91,8 +100,10 @@ export class ReviewService {
     try {
       const user = await userServ.getUserById(review.user_id);
       const product = await prodServ.getProductById(review.product_id);
+      let userReviews = (await this.getReviewsFromUser(
+        review.user_id
+      )) as Array<Review>;
       if (user && product) {
-        let userReviews = user.reviews || [];
         userReviews.push(review);
         user.reviews = userReviews;
         userServ.saveUser(user);
@@ -112,15 +123,21 @@ export class ReviewService {
       if (oldReview) {
         const user = await userServ.getUserById(review.user_id);
         const product = await prodServ.getProductById(review.product_id);
+        const reviews = await this.getProductReviews(review.product_id);
         if (user && product) {
-          let reviewsWithoutUpdatedReview = user.reviews.filter(
+          let userReviews = await this.getReviewsFromUser(review.user_id);
+          let reviewsWithoutUpdatedReview = userReviews.filter(
             (savedReview: Review) => savedReview.review_id != review.review_id
           );
           reviewsWithoutUpdatedReview.push(review);
+          user.reviews = reviewsWithoutUpdatedReview;
           userServ.updateUser(user);
-          product.rating =
-            (product.rating - oldReview.rating + review.rating) /
-            product.total_reviews;
+          const rating = this.calcRating(
+            reviews,
+            review,
+            product.total_reviews
+          );
+          product.rating = rating;
           prodServ.updateProduct(product);
           return await this.reviewRepo.save(review);
         } else throw new Error("something went wrong");
@@ -128,5 +145,20 @@ export class ReviewService {
     } catch (err: any) {
       return err;
     }
+  }
+
+  calcRating(
+    reviews: Array<Review>,
+    updatedReview: Review,
+    total: number
+  ): number {
+    const reviewWithoutUpdatedReview = reviews.filter(
+      (rev: Review) => rev.review_id != updatedReview.review_id
+    );
+    let ratingSum = 0;
+    reviewWithoutUpdatedReview.forEach((rev: Review) => {
+      ratingSum += rev.rating;
+    });
+    return (ratingSum + updatedReview.rating) / total;
   }
 }

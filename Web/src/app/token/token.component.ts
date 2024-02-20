@@ -13,7 +13,7 @@ export class TokenComponent {
     this.route.queryParamMap.subscribe((params) => {
       console.log(params);
       const token = params.get('token');
-      localStorage.setItem('token', token as string);
+      sessionStorage.setItem('token', token as string);
       this.router.navigate(['/']);
     });
   }

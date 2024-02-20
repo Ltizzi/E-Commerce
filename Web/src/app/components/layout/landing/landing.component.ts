@@ -32,7 +32,7 @@ export class LandingComponent {
   ngOnInit(): void {
     this.authServ.getUser().subscribe((data) => {
       console.log(data);
-      localStorage.setItem('user', JSON.stringify(data));
+      sessionStorage.setItem('user', JSON.stringify(data));
     });
     setTimeout(() => {
       this.state.animation.img = 'in';

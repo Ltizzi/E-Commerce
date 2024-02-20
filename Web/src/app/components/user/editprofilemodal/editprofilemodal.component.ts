@@ -135,7 +135,7 @@ export class EditprofilemodalComponent {
       console.log(updatedProfile);
       this.userServ.update(updatedProfile).subscribe((data: any) => {
         if (data.user_id == this.user.user_id) {
-          localStorage.setItem('user', data);
+          sessionStorage.setItem('user', data);
           this.updatedProfile.emit(data);
           this.reloadProfile.emit();
           this.close();

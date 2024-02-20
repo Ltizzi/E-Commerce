@@ -1,8 +1,10 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   Output,
+  Renderer2,
   SimpleChanges,
 } from '@angular/core';
 import {
@@ -109,10 +111,19 @@ export class EditprofilemodalComponent {
     ],
   };
 
-  constructor(private userServ: UserService) {}
+  constructor(
+    private userServ: UserService,
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) {}
 
   ngOnInit(): void {
     this.avatarUrl = this.user.avatar;
+    this.renderer.appendChild(document.body, this.el.nativeElement);
+  }
+
+  ngOnDestroy(): void {
+    this.renderer.removeChild(document.body, this.el.nativeElement);
   }
 
   submitForm() {

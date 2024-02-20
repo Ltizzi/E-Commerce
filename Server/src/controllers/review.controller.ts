@@ -96,7 +96,7 @@ export class ReviewController {
     res: Response
   ): Promise<Response> {
     try {
-      const user_id = req.query as unknown as number;
+      const user_id = req.query.user_id as unknown as number;
       const total = await reviewServ.getTotalReviewsFromUser(user_id);
       return res.status(200).json({ total: total });
     } catch (err: any) {

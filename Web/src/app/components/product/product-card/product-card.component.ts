@@ -51,8 +51,8 @@ export class ProductCardComponent {
   ) {}
 
   ngOnInit(): void {
-    if (localStorage.getItem('user')) {
-      this.user = JSON.parse(localStorage.getItem('user') as string);
+    if (sessionStorage.getItem('user')) {
+      this.user = JSON.parse(sessionStorage.getItem('user') as string);
     }
     this.stockServ
       .checkStock(this._product.product_id as number)

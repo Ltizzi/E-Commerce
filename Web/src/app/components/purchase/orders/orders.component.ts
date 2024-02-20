@@ -34,8 +34,8 @@ export class OrdersComponent {
   ) {}
 
   ngOnInit() {
-    if (localStorage.getItem('user')) {
-      this.user = JSON.parse(localStorage.getItem('user') as string);
+    if (sessionStorage.getItem('user')) {
+      this.user = JSON.parse(sessionStorage.getItem('user') as string);
     }
     this.cartServ
       .getByUserId(this.user.user_id as number)

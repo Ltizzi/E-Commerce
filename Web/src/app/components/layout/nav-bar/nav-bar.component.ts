@@ -34,8 +34,8 @@ export class NavBarComponent {
 
   ngOnInit(): void {
     // setTimeout(() => {
-    if (localStorage.getItem('user')) {
-      this.user = JSON.parse(localStorage.getItem('user') as string);
+    if (sessionStorage.getItem('user')) {
+      this.user = JSON.parse(sessionStorage.getItem('user') as string);
       this.loggedIn = true;
       if (this.user.roles.includes('ADMIN')) {
         console.log('es admin!');
@@ -64,8 +64,8 @@ export class NavBarComponent {
 
   handleAuth() {
     if (this.loggedIn) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('user');
       this.loggedIn = false;
       this.isAdmin = false;
     } else {

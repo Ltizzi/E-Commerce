@@ -66,7 +66,7 @@ export class ProductEntity implements Product {
   // @Column({ array: true, nullable: true })
   // reviews!: Review[];
 
-  @Column({ default: 0, nullable: true })
+  @Column({ default: 0, nullable: true, type: "numeric" })
   rating!: number;
 
   @Column({ default: 0, nullable: true })

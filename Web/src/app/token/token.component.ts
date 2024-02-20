@@ -11,7 +11,7 @@ export class TokenComponent {
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
-      console.log(params);
+      //   console.log(params);
       const token = params.get('token');
       sessionStorage.setItem('token', token as string);
       this.router.navigate(['/']);

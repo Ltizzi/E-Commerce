@@ -70,8 +70,8 @@ export class ProductPageComponent {
     this.getById(this.id);
     localStorage.setItem('product', JSON.stringify(this.product));
     this.isLoaded = true;
-    if (localStorage.getItem('user')) {
-      this.user = JSON.parse(localStorage.getItem('user') as string);
+    if (sessionStorage.getItem('user')) {
+      this.user = JSON.parse(sessionStorage.getItem('user') as string);
     }
     setTimeout(() => {
       this.state.animation.page = 'in';

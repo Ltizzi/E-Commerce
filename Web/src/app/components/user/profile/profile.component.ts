@@ -40,9 +40,9 @@ export class ProfileComponent {
   ) {}
 
   ngOnInit(): void {
-    if (!localStorage.getItem('user')) {
+    if (!sessionStorage.getItem('user')) {
       this.reloadUserData();
-    } else this.user = JSON.parse(localStorage.getItem('user') as string);
+    } else this.user = JSON.parse(sessionStorage.getItem('user') as string);
     if (this.user) {
       this.age = this.calcAge();
       this.birthday = this.stringifyBirthday();

@@ -36,13 +36,6 @@ export class DataService {
     return this.http.get(this.url + '/count', { withCredentials: true });
   }
 
-  checkStock(id: number) {
-    return this.http.get(this.url + '/checkStock?product_id=' + id).pipe(
-      map((response) => response),
-      catchError(this.handleError)
-    );
-  }
-
   getById(id: number) {
     return this.http
       .get(this.url + '/byId?' + this.urlParam + id, { withCredentials: true })
@@ -75,6 +68,34 @@ export class DataService {
         map((response) => response),
         catchError(this.handleError)
       );
+  }
+
+  getReviewsFromProductIdWithPagination(
+    id: number,
+    page: number,
+    pageSize: number
+  ) {
+    return this.http
+      .get(
+        this.url +
+          '/byProductIdwithPagination?page=' +
+          page +
+          '&pageSize=' +
+          pageSize +
+          '&product_id=' +
+          id
+      )
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+
+  checkStock(id: number) {
+    return this.http.get(this.url + '/checkStock?product_id=' + id).pipe(
+      map((response) => response),
+      catchError(this.handleError)
+    );
   }
 
   favHandler(prod_id: number) {

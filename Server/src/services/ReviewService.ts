@@ -100,6 +100,7 @@ export class ReviewService {
     try {
       const user = await userServ.getUserById(review.user_id);
       const product = await prodServ.getProductById(review.product_id);
+      const reviews = await this.getProductReviews(review.product_id);
       let userReviews = (await this.getReviewsFromUser(
         review.user_id
       )) as Array<Review>;
@@ -108,8 +109,11 @@ export class ReviewService {
         user.reviews = userReviews;
         userServ.saveUser(user);
         product.total_reviews += 1;
-        product.rating =
-          (product.rating + review.rating) / product.total_reviews;
+        product.rating = this.calcRating(
+          reviews,
+          review,
+          product.total_reviews
+        );
         prodServ.updateProduct(product);
         return await this.reviewRepo.save(review);
       } else throw new Error("User not found");
@@ -152,13 +156,15 @@ export class ReviewService {
     updatedReview: Review,
     total: number
   ): number {
-    const reviewWithoutUpdatedReview = reviews.filter(
-      (rev: Review) => rev.review_id != updatedReview.review_id
-    );
-    let ratingSum = 0;
-    reviewWithoutUpdatedReview.forEach((rev: Review) => {
-      ratingSum += rev.rating;
-    });
-    return (ratingSum + updatedReview.rating) / total;
+    if (reviews.length > 0) {
+      const reviewWithoutUpdatedReview = reviews.filter(
+        (rev: Review) => rev.review_id != updatedReview.review_id
+      );
+      let ratingSum = 0;
+      reviewWithoutUpdatedReview.forEach((rev: Review) => {
+        ratingSum += rev.rating;
+      });
+      return (ratingSum + updatedReview.rating) / total;
+    } else return updatedReview.rating;
   }
 }

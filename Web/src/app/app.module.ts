@@ -50,9 +50,9 @@ import { EventService } from './services/event.service';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { EditprofilemodalComponent } from './components/user/editprofilemodal/editprofilemodal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StarsComponent } from './components/product/stars/stars.component';
-import { ReviewComponent } from './components/product/review/review.component';
-import { ReviewListComponent } from './components/product/review-list/review-list.component';
+import { StarsComponent } from './components/review/stars/stars.component';
+import { ReviewComponent } from './components/review/review/review.component';
+import { ReviewListComponent } from './components/review/review-list/review-list.component';
 
 @NgModule({
   declarations: [

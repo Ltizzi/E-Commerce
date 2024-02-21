@@ -12,7 +12,7 @@ export class ReviewListComponent {
   reviews!: Array<Review>;
 
   PAGE = 1;
-  PAGESIZE = 10;
+  PAGESIZE = 3;
 
   constructor(private reviewServ: ReviewService) {}
 

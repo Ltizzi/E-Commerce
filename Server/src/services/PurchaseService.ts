@@ -54,6 +54,27 @@ export class PurchaseService {
     return await this.purchaseRepo.findBy({ user_id });
   }
 
+  async countPurchasesByUserId(user_id: number): Promise<number> {
+    return await this.purchaseRepo.count({
+      where: { user_id: user_id },
+    });
+  }
+
+  async getPurchasesByUserIdWithPagination(
+    user_id: number,
+    page: number,
+    pageSize: number
+  ): Promise<Array<Purchase>> {
+    const skip = (page - 1) * pageSize;
+    return await this.purchaseRepo.find({
+      where: { user_id: user_id },
+      order: { purchase_id: "ASC" },
+      relations: { orders: true, user: false },
+      skip: skip,
+      take: pageSize,
+    });
+  }
+
   async savePurchase(purchase: Purchase): Promise<PurchaseEntity | null> {
     const items: Array<ShopOrder> = purchase.orders;
     let totalIncome: number = 0;

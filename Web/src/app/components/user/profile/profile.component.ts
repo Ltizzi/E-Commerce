@@ -19,6 +19,7 @@ import { User } from 'src/common/models/user';
 })
 export class ProfileComponent {
   user!: User;
+  user_id!: number;
   totalPurchase: number = 0;
   purchases!: Array<Purchase>;
   age!: number;
@@ -46,6 +47,7 @@ export class ProfileComponent {
     if (this.user) {
       this.age = this.calcAge();
       this.birthday = this.stringifyBirthday();
+      this.user_id = this.user.user_id as number;
       this.purchServ
         .getByUserId(this.user.user_id as number)
         .subscribe((data: any) => {

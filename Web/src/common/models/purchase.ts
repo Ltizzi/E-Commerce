@@ -5,4 +5,5 @@ export interface Purchase {
   orders: Array<Order>;
   total_income?: number;
   user_id: number;
+  createdAt?: Date;
 }

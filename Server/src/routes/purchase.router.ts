@@ -13,6 +13,14 @@ purchaseRouter.get(
 purchaseRouter.get("/byUserId", purchaseController.httpPurchasesFromUser);
 purchaseRouter.get("/byId", purchaseController.httpGetPurchaseById);
 purchaseRouter.get("/count", isAdmin, purchaseController.httpGetTotalPurchases);
+purchaseRouter.get(
+  "/countByUser",
+  purchaseController.httpCountPurchasesByUserId
+);
+purchaseRouter.get(
+  "/byUserWithPagination",
+  purchaseController.httpGetPurchasesFromUserWithPagination
+);
 purchaseRouter.post("/new", purchaseController.httpCreateNewPurchase);
 purchaseRouter.delete(
   "/delete",

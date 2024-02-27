@@ -18,6 +18,7 @@ reviewRouter.get(
   "/byProductIdWithPagination",
   reviewController.httpGetProductReviewsWithPagination
 );
+reviewRouter.get("/byUserId", reviewController.httpGetReviewsFromUser);
 reviewRouter.get("/count", reviewController.httpGetTotalReviewsNumber);
 reviewRouter.get("/countByUser", reviewController.httpGetTotalReviewsFromUser);
 reviewRouter.get("/check", reviewController.httpCheckAlreadyReviewed);

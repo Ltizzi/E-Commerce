@@ -140,4 +140,14 @@ export class ReviewController {
       return res.status(404).json({ error: err.message });
     }
   }
+
+  async httpGetReviewsFromUser(req: Request, res: Response): Promise<Response> {
+    try {
+      const user_id = req.query.user_id as unknown as number;
+      const reviews = await reviewServ.getReviewsFromUser(user_id);
+      return res.status(200).json(reviews);
+    } catch (err: any) {
+      return res.status(404).json();
+    }
+  }
 }

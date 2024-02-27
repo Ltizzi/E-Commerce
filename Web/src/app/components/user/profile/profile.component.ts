@@ -6,6 +6,7 @@ import {
   hoverInAndOutAnimation,
   inAndOutAnimation,
 } from 'src/common/animations';
+import { Product } from 'src/common/models/product';
 import { Purchase } from 'src/common/models/purchase';
 import { State } from 'src/common/models/state';
 
@@ -20,6 +21,7 @@ import { User } from 'src/common/models/user';
 export class ProfileComponent {
   user!: User;
   user_id!: number;
+  favs!: Array<Product>;
   totalPurchase: number = 0;
   purchases!: Array<Purchase>;
   age!: number;
@@ -28,6 +30,7 @@ export class ProfileComponent {
   showProfileEditorModal = false;
 
   state: State = {
+    actualTab: 'profile',
     animation: {
       edit_btn: 'leave',
       delete_btn: 'leave',
@@ -48,6 +51,7 @@ export class ProfileComponent {
       this.age = this.calcAge();
       this.birthday = this.stringifyBirthday();
       this.user_id = this.user.user_id as number;
+      this.favs = this.user.favourites;
       this.purchServ
         .getByUserId(this.user.user_id as number)
         .subscribe((data: any) => {
@@ -70,6 +74,11 @@ export class ProfileComponent {
       this.user = data as User;
     });
   }
+
+  changeTab(tab: string) {
+    this.state.actualTab = tab;
+  }
+
   calcAge(): number {
     let birth = this.user.birthday.toString().split('-');
     let year = +birth[0];

@@ -19,6 +19,7 @@ import { User } from 'src/common/models/user';
   animations: [fadeIndAndFadeOutAnimation, hoverInAndOutAnimation],
 })
 export class ProductCardComponent {
+  @Input('fromProfile') fromProfile!: boolean;
   private _product!: Product;
   isLoaded = false;
   isFav!: boolean;

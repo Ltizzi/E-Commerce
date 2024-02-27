@@ -2,7 +2,7 @@
   <div class="flex items-center gap-4">
     <img
       alt=""
-      [src]="user.avatar"
+      [src]="fromProfile ? product.imageUrl[0] : user.avatar"
       class="w-14 h-14 rounded-full object-cover"
     />
 
@@ -12,8 +12,9 @@
       </div>
 
       <p class="mt-0.5 text-lg font-medium text-gray-900">
-        {{ user.username }}
+        {{ fromProfile ? product.name : user.username }}
       </p>
+      <p class="text-sm" *ngIf="fromProfile">{{ product.brand }}</p>
     </div>
   </div>
 

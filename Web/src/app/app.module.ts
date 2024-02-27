@@ -53,6 +53,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StarsComponent } from './components/review/stars/stars.component';
 import { ReviewComponent } from './components/review/review/review.component';
 import { ReviewListComponent } from './components/review/review-list/review-list.component';
+import { PurchaseListComponent } from './components/user/purchase-list/purchase-list.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { ReviewListComponent } from './components/review/review-list/review-list
     StarsComponent,
     ReviewComponent,
     ReviewListComponent,
+    PurchaseListComponent,
   ],
   imports: [
     BrowserModule,

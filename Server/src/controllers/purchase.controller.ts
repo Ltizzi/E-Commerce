@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { PurchaseService } from "../services/PurchaseService";
-import { PaginationParams } from "../models/utils/PaginationParams";
+import {
+  PaginationParams,
+  PaginationParamsWithUser,
+} from "../models/utils/PaginationParams";
 import { Purchase } from "../models/Purchase";
 import { DeleteObjectResponse } from "../models/utils/DeleteObjectResponse";
 import { PurchaseMapper } from "../dto/mappers/purchase.mapper";
@@ -95,6 +98,39 @@ export class PurchaseController {
         await mapper.toPurchaseEntity(purchase)
       )) as Purchase;
       return res.status(200).json(mapper.toPurchaseResponse(updatedPurchase));
+    } catch (err: any) {
+      return res.status(404).json({ error: err.message });
+    }
+  }
+
+  async httpCountPurchasesByUserId(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
+    try {
+      const user_id = req.query.user_id as unknown as number;
+      const totalPurchases = (await purchaseServ.countPurchasesByUserId(
+        user_id
+      )) as number;
+      return res.status(200).json({ total: totalPurchases });
+    } catch (err: any) {
+      return res.status(404).json({ error: err.message });
+    }
+  }
+
+  async httpGetPurchasesFromUserWithPagination(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
+    try {
+      const { user_id, page, pageSize } =
+        req.query as unknown as PaginationParamsWithUser;
+      const purchases = await purchaseServ.getPurchasesByUserIdWithPagination(
+        user_id,
+        page,
+        pageSize
+      );
+      return res.status(200).json(mapper.toArrayPurchaseResponse(purchases));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });
     }

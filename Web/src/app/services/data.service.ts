@@ -70,6 +70,37 @@ export class DataService {
       );
   }
 
+  countPurchasesByUser(id: number) {
+    return this.http
+      .get(this.url + '/countByUser?user_id=' + id, { withCredentials: true })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+
+  getPurchasesFromUserWithPagination(
+    id: number,
+    page: number,
+    pageSize: number
+  ) {
+    return this.http
+      .get(
+        this.url +
+          '/byUserWithPagination?user_id=' +
+          id +
+          '&page=' +
+          page +
+          '&pageSize=' +
+          pageSize,
+        { withCredentials: true }
+      )
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+
   getReviewsFromProductIdWithPagination(
     id: number,
     page: number,

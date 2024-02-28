@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { EventService } from 'src/app/services/event.service';
 import { PurchaseService } from 'src/app/services/purchase.service';
+import { ReviewService } from 'src/app/services/review.service';
 import {
   fadeIndAndFadeOutAnimation,
   hoverInAndOutAnimation,
@@ -27,6 +29,8 @@ export class ProfileComponent {
   age!: number;
   birthday!: Object;
 
+  totalReviews!: number;
+
   showProfileEditorModal = false;
 
   state: State = {
@@ -40,7 +44,9 @@ export class ProfileComponent {
 
   constructor(
     private authServ: AuthService,
-    private purchServ: PurchaseService
+    private purchServ: PurchaseService,
+    private eventServ: EventService,
+    private reviewServ: ReviewService
   ) {}
 
   ngOnInit(): void {
@@ -58,7 +64,11 @@ export class ProfileComponent {
           this.purchases = data;
           this.totalPurchase = this.purchases.length;
         });
+      this.fetchTotalReviews();
     }
+    this.eventServ.subscribe('updateReviewCounter').subscribe((data) => {
+      this.fetchTotalReviews();
+    });
     setTimeout(() => {
       this.state.animation.layout = 'in';
     });
@@ -67,6 +77,12 @@ export class ProfileComponent {
   showProfileEditor() {
     this.showProfileEditorModal = !this.showProfileEditorModal;
     // console.log('asdasd', this.showProfileEditorModal);
+  }
+
+  fetchTotalReviews() {
+    this.reviewServ.countReviewsByUser(this.user_id).subscribe((data: any) => {
+      this.totalReviews = data.total;
+    });
   }
 
   reloadUserData() {

@@ -21,6 +21,7 @@ purchaseRouter.get(
   "/byUserWithPagination",
   purchaseController.httpGetPurchasesFromUserWithPagination
 );
+purchaseRouter.get("/allByUserId", purchaseController.httpPurchasesFromUser);
 purchaseRouter.post("/new", purchaseController.httpCreateNewPurchase);
 purchaseRouter.delete(
   "/delete",

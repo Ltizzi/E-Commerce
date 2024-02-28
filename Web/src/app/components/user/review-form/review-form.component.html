@@ -1,0 +1,166 @@
+<div class="container px-5 py-5 mx-auto flex">
+  <div
+    class="bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative z-10 shadow-md"
+  >
+    <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Review</h2>
+    <p class="leading-relaxed mb-5 text-gray-600">
+      Write a comment about the product you bought
+    </p>
+    <div class="relative mb-4">
+      <div class="flex flex-row">
+        <div
+          (click)="fillStar(1)"
+          class="hover:cursor-pointer"
+          (mouseover)="handleHover(1)"
+          (mouseleave)="handleLeave()"
+        >
+          <svg
+            [attr.fill]="
+              filledStars == 1 || filledStars > 1 ? 'currentColor' : 'none'
+            "
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            class="w-4 h-4 text-indigo-500"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+            ></path>
+          </svg>
+        </div>
+        <div
+          (click)="fillStar(2)"
+          (mouseover)="handleHover(2)"
+          (mouseleave)="handleLeave()"
+          class="hover:cursor-pointer"
+        >
+          <svg
+            [attr.fill]="
+              filledStars == 2 || filledStars > 2 ? 'currentColor' : 'none'
+            "
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            class="w-4 h-4 text-indigo-500"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+            ></path>
+          </svg>
+        </div>
+        <div
+          (click)="fillStar(3)"
+          (mouseover)="handleHover(3)"
+          (mouseleave)="handleLeave()"
+          class="hover:cursor-pointer"
+        >
+          <svg
+            [attr.fill]="
+              filledStars == 3 || filledStars > 3 ? 'currentColor' : 'none'
+            "
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            class="w-4 h-4 text-indigo-500"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+            ></path>
+          </svg>
+        </div>
+        <div
+          (click)="fillStar(4)"
+          (mouseover)="handleHover(4)"
+          (mouseleave)="handleLeave()"
+          class="hover:cursor-pointer"
+        >
+          <svg
+            [attr.fill]="
+              filledStars == 4 || filledStars > 4 ? 'currentColor' : 'none'
+            "
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            class="w-4 h-4 text-indigo-500"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+            ></path>
+          </svg>
+        </div>
+        <div
+          (click)="fillStar(5)"
+          (mouseover)="handleHover(5)"
+          (mouseleave)="handleLeave()"
+          class="hover:cursor-pointer"
+        >
+          <svg
+            [attr.fill]="filledStars == 5 ? 'currentColor' : 'none'"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            class="w-4 h-4 text-indigo-500"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+      <span *ngIf="noRating" class="text-sm text-rose-600 w-full">
+        {{ errorMessages.rating.message }}
+      </span>
+    </div>
+    <form
+      class="relative mb-4"
+      [formGroup]="newReviewForm"
+      (ngSubmit)="submitForm()"
+    >
+      <label for="message" class="leading-7 text-sm text-gray-600"
+        >Comment</label
+      >
+      <textarea
+        required
+        formControlName="text"
+        [ngClass]="{
+          'border-rose-600':
+            newReviewForm.get('text')?.invalid &&
+            newReviewForm.get('text')?.touched
+        }"
+        id="message"
+        name="message"
+        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+      ></textarea>
+      <div *ngFor="let error of errorMessages.text">
+        <span
+          *ngIf="
+            newReviewForm.get('text')?.hasError(error.type) &&
+            newReviewForm.get('text')?.touched
+          "
+          class="text-sm text-rose-600 w-full"
+        >
+          {{ error.message }}
+        </span>
+      </div>
+      <div class="flex justify-center mt-2">
+        <button
+          class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+          type="submit"
+          [disabled]="newReviewForm.invalid"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

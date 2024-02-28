@@ -57,6 +57,8 @@ import { PurchaseListComponent } from './components/user/purchase-list/purchase-
 import { UserReviewListComponent } from './components/user/user-review-list/user-review-list.component';
 import { UserFavListComponent } from './components/user/user-fav-list/user-fav-list.component';
 import { PurchaseModalComponent } from './components/user/purchase-modal/purchase-modal.component';
+import { ReviewBtnComponent } from './components/user/review-btn/review-btn.component';
+import { ReviewFormComponent } from './components/user/review-form/review-form.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +101,8 @@ import { PurchaseModalComponent } from './components/user/purchase-modal/purchas
     UserReviewListComponent,
     UserFavListComponent,
     PurchaseModalComponent,
+    ReviewBtnComponent,
+    ReviewFormComponent,
   ],
   imports: [
     BrowserModule,

@@ -40,7 +40,7 @@
       <ul class="space-y-4">
         <li
           class="flex items-center gap-4 flex-wrap"
-          *ngFor="let order of purchase.orders"
+          *ngFor="let order of pages[page]"
         >
           <img
             [src]="order.product.imageUrl[0]"
@@ -64,11 +64,51 @@
             </dl>
           </div>
         </li>
+        <div
+          class="flex flew-row gap-2 text-white w-full text-center pt-2"
+          *ngIf="showNav"
+        >
+          <button
+            class="block py-2 bg-green-700 hover:bg-green-600 w-1/2"
+            (click)="pageBack()"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-6 h-6 mx-auto"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg></button
+          ><button
+            class="block py-2 bg-green-700 hover:bg-green-600 w-1/2"
+            (click)="pageNext()"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-6 h-6 mx-auto"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </div>
       </ul>
 
       <div class="flex flex-row justify-end gap-4">
         <p>Total:</p>
-        <p class="italic">${{ purchase.total_income }}</p>
+        <p class="italic">${{ purchase.total_income?.toFixed(2) }}</p>
       </div>
 
       <div class="space-y-4 text-center flex flex-col justify-center">

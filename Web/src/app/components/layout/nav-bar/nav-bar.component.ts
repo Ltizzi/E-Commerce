@@ -39,10 +39,11 @@ export class NavBarComponent {
     if (sessionStorage.getItem('user')) {
       this.user = this.fetchUser();
       this.loggedIn = true;
-      if (this.user.roles.includes('ADMIN')) {
-        console.log('es admin!');
-        this.isAdmin = true;
-      }
+      // if (this.user.roles.includes('ADMIN')) {
+      //  // console.log('es admin!');
+      //   this.isAdmin = true;
+      // }
+      this.isAdmin = this.checkAdminRole();
     }
     const carts: Array<Cart> = JSON.parse(
       localStorage.getItem('carts') as string
@@ -65,11 +66,16 @@ export class NavBarComponent {
     this.eventServ.subscribe('loggedIn').subscribe((data) => {
       this.loggedIn = true;
       this.user = this.fetchUser();
+      this.isAdmin = this.checkAdminRole();
     });
   }
 
   fetchUser() {
     return JSON.parse(sessionStorage.getItem('user') as string);
+  }
+
+  checkAdminRole() {
+    return this.user.roles.includes('ADMIN');
   }
 
   handleAuth() {

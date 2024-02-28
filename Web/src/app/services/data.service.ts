@@ -79,6 +79,15 @@ export class DataService {
       );
   }
 
+  getPurchasesByUserId(id: number) {
+    return this.http
+      .get(this.url + '/allByUserId?user_id=' + id, { withCredentials: true })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+
   getPurchasesFromUserWithPagination(
     id: number,
     page: number,
@@ -116,6 +125,28 @@ export class DataService {
           '&product_id=' +
           id
       )
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+
+  countReviewsByUser(user_id: number) {
+    return this.http
+      .get(this.url + '/countByUser?user_id=' + user_id, {
+        withCredentials: true,
+      })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+
+  checkReview(user_id: number, prod_id: number) {
+    return this.http
+      .get(this.url + '/check?user_id=' + user_id + '&product_id=' + prod_id, {
+        withCredentials: true,
+      })
       .pipe(
         map((response) => response),
         catchError(this.handleError)

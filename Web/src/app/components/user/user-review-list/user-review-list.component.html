@@ -1,6 +1,6 @@
 <div class="flex flex-col justify-center mt-24">
   <h1 class="text-4xl text-center font-semibold">Reviews</h1>
-  <div class="flex flex-row flex-wrap justify-start mx-32">
+  <div class="flex flex-row flex-wrap justify-center gap-2">
     <ng-container *ngFor="let review of userReviews">
       <app-review [fromProfile]="true" [review]="review"></app-review>
     </ng-container>

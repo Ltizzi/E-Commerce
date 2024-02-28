@@ -1,5 +1,5 @@
 export interface Review {
-  review_id: number;
+  review_id?: number;
   user_id: number;
   product_id: number;
   rating: number;

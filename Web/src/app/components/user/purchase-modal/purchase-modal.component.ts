@@ -6,7 +6,12 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
+import { Observable } from 'rxjs';
+import { EventService } from 'src/app/services/event.service';
+import { ReviewService } from 'src/app/services/review.service';
+import { Product } from 'src/common/models/product';
 import { Purchase } from 'src/common/models/purchase';
+import { State } from 'src/common/models/state';
 
 @Component({
   selector: 'app-purchase-modal',
@@ -16,18 +21,37 @@ import { Purchase } from 'src/common/models/purchase';
 export class PurchaseModalComponent {
   //@Input('modal_show') show!: boolean;
   @Input('purchase') purchase!: Purchase;
+  @Input('productList') productList!: Array<Product>;
+  @Input('user_id') user_id!: number;
   @Output() closeModal = new EventEmitter<boolean>();
 
   page = 0;
   pages!: Array<any>;
   showNav = false;
 
-  constructor(private renderer: Renderer2, private el: ElementRef) {}
+  reviewProductId!: number;
+
+  state: State = {
+    actualTab: 'list',
+  };
+
+  constructor(
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private eventServ: EventService
+  ) {}
 
   ngOnInit(): void {
     this.renderer.appendChild(document.body, this.el.nativeElement);
     console.log(this.purchase);
     this.pages = this.paginatePurchases();
+    this.eventServ.subscribe('reviewProduct').subscribe((data: any) => {
+      this.reviewProductId = data;
+      this.state.actualTab = 'review';
+    });
+    this.eventServ.subscribe('backToList').subscribe(() => {
+      this.state.actualTab = 'list';
+    });
   }
 
   ngOnDestroy(): void {

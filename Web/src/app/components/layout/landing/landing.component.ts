@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { EventService } from 'src/app/services/event.service';
 import {
   fadeIndAndFadeOutAnimation,
   hoverInAndOutAnimation,
@@ -27,12 +28,15 @@ export class LandingComponent {
     },
   };
 
-  constructor(private route: ActivatedRoute, private authServ: AuthService) {}
+  constructor(private authServ: AuthService, private eventServ: EventService) {}
 
   ngOnInit(): void {
-    this.authServ.getUser().subscribe((data) => {
+    this.authServ.getUser().subscribe((data: any) => {
       console.log(data);
       sessionStorage.setItem('user', JSON.stringify(data));
+      if (data.user_id) {
+        this.eventServ.emit('loggedIn');
+      }
     });
     setTimeout(() => {
       this.state.animation.img = 'in';

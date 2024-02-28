@@ -2,9 +2,10 @@ import { Component, Input } from '@angular/core';
 import { PurchaseService } from 'src/app/services/purchase.service';
 import { PaginationService } from 'src/app/services/ui/pagination.service';
 import { inAndOutAnimation } from 'src/common/animations';
+import { Product } from 'src/common/models/product';
 import { Purchase } from 'src/common/models/purchase';
 import { State } from 'src/common/models/state';
-import { User } from 'src/common/models/user';
+import { Order } from 'src/common/models/order';
 
 @Component({
   selector: 'app-purchase-list',
@@ -16,6 +17,9 @@ export class PurchaseListComponent {
   purchases!: Array<Purchase>;
   @Input('user_id') user_id!: number;
   noPurchases!: boolean;
+
+  // allPurchases!: Array<Purchase>;
+  // boughtProducts!: Array<Product>;
 
   showModal = false;
 
@@ -56,8 +60,37 @@ export class PurchaseListComponent {
     this.currentPage = this.pagination.getCurrentPage();
     this.state.show = true;
     this.showTable();
+    // if (!sessionStorage.getItem('compras')) {
+    //   this.purchServ
+    //     .getPurchasesByUserId(this.user_id)
+    //     .subscribe((data: any) => {
+    //       this.allPurchases = data;
+    //       sessionStorage.setItem('compras', JSON.stringify(data));
+    //     });
+    // } else {
+    //   this.allPurchases = JSON.parse(
+    //     sessionStorage.getItem('compras') as string
+    //   );
+    // }
+    //  this.boughtProducts = this.generateBoughtProductsArray();
     // }
   }
+
+  // generateBoughtProductsArray() {
+  //   let products = [] as Array<Product>;
+  //   this.allPurchases.forEach((purch: Purchase) => {
+  //     purch.orders.forEach((order: Order) => {
+  //       const filterProducts = products.filter(
+  //         (prod: Product) => prod.product_id == order.product.product_id
+  //       );
+  //       if (filterProducts.length == 0) {
+  //         products.push(order.product);
+  //       }
+  //     });
+  //   });
+  //   //   console.log(products);
+  //   return products;
+  // }
 
   fetchPurchases(page: number, limit: number) {
     let correctPage = page;

@@ -141,5 +141,6 @@
 <app-purchase-modal
   *ngIf="showModal"
   (closeModal)="closeModal()"
+  [user_id]="user_id"
   [purchase]="purchaseDetails"
 ></app-purchase-modal>

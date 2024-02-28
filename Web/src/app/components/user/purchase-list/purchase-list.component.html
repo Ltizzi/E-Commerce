@@ -39,7 +39,7 @@
             </th>
 
             <th
-              class="title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br w-2/12"
+              class="title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br w-2/12 text-center"
             >
               Details
             </th>
@@ -68,7 +68,8 @@
             </td>
             <td class="w-10 text-center">
               <button
-                class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                (click)="showDetails(purch, $event)"
               >
                 Details
               </button>
@@ -136,3 +137,9 @@
     </nav>
   </div>
 </section>
+
+<app-purchase-modal
+  *ngIf="showModal"
+  (closeModal)="closeModal()"
+  [purchase]="purchaseDetails"
+></app-purchase-modal>

@@ -17,6 +17,10 @@ export class PurchaseListComponent {
   @Input('user_id') user_id!: number;
   noPurchases!: boolean;
 
+  showModal = false;
+
+  purchaseDetails!: Purchase;
+
   ITEMS_PER_PAGE = 5;
   pages!: Array<number>;
   totalPurchases!: number;
@@ -92,6 +96,16 @@ export class PurchaseListComponent {
     setTimeout(() => {
       this.state.animation.table = 'in';
     }, 200);
+  }
+
+  showDetails(purch: Purchase, event: Event) {
+    this.purchaseDetails = purch;
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.purchaseDetails = {} as Purchase;
   }
 
   goNext() {

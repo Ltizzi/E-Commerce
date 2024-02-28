@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { EventService } from 'src/app/services/event.service';
 import { hoverInAndOutAnimationNav } from 'src/common/animations';
 import { API_URL } from 'src/common/common';
@@ -30,12 +31,13 @@ export class NavBarComponent {
     },
   };
 
-  constructor(private eventServ: EventService) {}
+  constructor(private eventServ: EventService, private router: Router) {}
 
   ngOnInit(): void {
     // setTimeout(() => {
+
     if (sessionStorage.getItem('user')) {
-      this.user = JSON.parse(sessionStorage.getItem('user') as string);
+      this.user = this.fetchUser();
       this.loggedIn = true;
       if (this.user.roles.includes('ADMIN')) {
         console.log('es admin!');
@@ -60,6 +62,14 @@ export class NavBarComponent {
     this.eventServ.subscribe('clearCart').subscribe((data) => {
       this.cart_counter = 0;
     });
+    this.eventServ.subscribe('loggedIn').subscribe((data) => {
+      this.loggedIn = true;
+      this.user = this.fetchUser();
+    });
+  }
+
+  fetchUser() {
+    return JSON.parse(sessionStorage.getItem('user') as string);
   }
 
   handleAuth() {
@@ -68,6 +78,7 @@ export class NavBarComponent {
       sessionStorage.removeItem('user');
       this.loggedIn = false;
       this.isAdmin = false;
+      this.router.navigate(['/']);
     } else {
       window.location.href = this.URL;
     }

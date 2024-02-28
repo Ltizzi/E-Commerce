@@ -63,8 +63,8 @@
                 </p>
               </div>
             </td>
-            <td class="px-4 py-3 text-lg text-gray-900">
-              ${{ purch.total_income }}
+            <td class="px-4 py-3 text-lg text-gray-900 text-end">
+              ${{ purch.total_income?.toFixed(2) }}
             </td>
             <td class="w-10 text-center">
               <button

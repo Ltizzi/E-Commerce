@@ -62,3 +62,9 @@ export const fadeIndAndFadeOutAnimation = trigger('fadeIn&Out', [
   state('out', style({ opacity: 0, transform: 'scale(0.75)' })),
   transition('in<=>out', animate(200)),
 ]);
+
+export const simpleFadeInAndFadeOutAnimation = trigger('simpleFadeIn&Out', [
+  state('in', style({ opacity: 1 })),
+  state('out', style({ opacity: 0 })),
+  transition('in<=>out', animate(200)),
+]);

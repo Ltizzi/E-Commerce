@@ -6,9 +6,11 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
-import { Observable } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
-import { ReviewService } from 'src/app/services/review.service';
+import {
+  fadeIndAndFadeOutAnimation,
+  simpleFadeInAndFadeOutAnimation,
+} from 'src/common/animations';
 import { Product } from 'src/common/models/product';
 import { Purchase } from 'src/common/models/purchase';
 import { State } from 'src/common/models/state';
@@ -17,6 +19,7 @@ import { State } from 'src/common/models/state';
   selector: 'app-purchase-modal',
   templateUrl: './purchase-modal.component.html',
   styleUrl: './purchase-modal.component.css',
+  animations: [fadeIndAndFadeOutAnimation, simpleFadeInAndFadeOutAnimation],
 })
 export class PurchaseModalComponent {
   //@Input('modal_show') show!: boolean;
@@ -33,6 +36,11 @@ export class PurchaseModalComponent {
 
   state: State = {
     actualTab: 'list',
+    animation: {
+      modal: 'out',
+      list: 'out',
+      review: 'out',
+    },
   };
 
   constructor(
@@ -48,14 +56,24 @@ export class PurchaseModalComponent {
     this.eventServ.subscribe('reviewProduct').subscribe((data: any) => {
       this.reviewProductId = data;
       this.state.actualTab = 'review';
+      setTimeout(() => {
+        this.state.animation.review = 'in';
+      }, 50);
     });
     this.eventServ.subscribe('backToList').subscribe(() => {
       this.state.actualTab = 'list';
     });
+    setTimeout(() => {
+      this.state.animation.modal = 'in';
+      this.state.animation.list = 'in';
+    }, 100);
   }
 
   ngOnDestroy(): void {
     this.renderer.removeChild(document.body, this.el.nativeElement);
+    setTimeout(() => {
+      this.state.animation = 'in';
+    }, 100);
   }
 
   open(): void {
@@ -64,15 +82,30 @@ export class PurchaseModalComponent {
 
   close(): void {
     //  this.show = !this.show;
+    setTimeout(() => {
+      this.state.animation = 'out';
+    }, 100);
     this.closeModal.emit(false);
   }
 
   pageBack() {
-    if (this.page > 0) this.page -= 1;
+    setTimeout(() => {
+      this.state.animation.list = 'out';
+    }, 75);
+    setTimeout(() => {
+      if (this.page > 0) this.page -= 1;
+      this.state.animation.list = 'in';
+    }, 200);
   }
 
   pageNext() {
-    if (this.page < this.pages.length - 1) this.page += 1;
+    setTimeout(() => {
+      this.state.animation.list = 'out';
+    }, 75);
+    setTimeout(() => {
+      if (this.page < this.pages.length - 1) this.page += 1;
+      this.state.animation.list = 'in';
+    }, 200);
   }
 
   paginatePurchases() {

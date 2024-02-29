@@ -12,8 +12,12 @@
     aria-modal="true"
     role="dialog"
     tabindex="-1"
+    [@fadeIn&Out]="state.animation.modal"
   >
-    <div *ngIf="state.actualTab == 'list'">
+    <div
+      *ngIf="state.actualTab == 'list'"
+      [@simpleFadeIn&Out]="state.animation.list"
+    >
       <h1 class="font-semibold text-xl text-center mb-5">Purchase Details</h1>
       <button
         class="absolute end-4 top-4 text-gray-600 transition hover:scale-110"
@@ -138,6 +142,7 @@
       *ngIf="state.actualTab == 'review'"
       [user_id]="user_id"
       [product_id]="reviewProductId"
+      [@fadeIn&Out]="state.animation.review"
     ></app-review-form>
   </div>
   <!-- <div

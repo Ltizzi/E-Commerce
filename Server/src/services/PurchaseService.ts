@@ -1,3 +1,4 @@
+import { Between } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { PurchaseEntity } from "../entities/PurchaseEntity";
 import { StockEntity } from "../entities/StockEntity";
@@ -73,6 +74,87 @@ export class PurchaseService {
       skip: skip,
       take: pageSize,
     });
+  }
+
+  private calcIncome(purchases: Array<Purchase>): number {
+    let income = 0;
+    purchases.forEach((purch: Purchase) => {
+      income += purch.total_income;
+    });
+    return income;
+  }
+
+  async getTotalIncome(): Promise<number> {
+    const purchases = await this.purchaseRepo.find({
+      where: { soft_delete: false },
+      relations: { orders: false, user: false },
+    });
+    if (purchases) {
+      return this.calcIncome(purchases);
+    } else throw new Error("Something went wrong while calculating income");
+  }
+
+  async getYearIncome(): Promise<number> {
+    const actualYear = new Date().getFullYear();
+    const purchases = await this.purchaseRepo.find({
+      where: {
+        createdAt: Between(
+          new Date(`${actualYear}-01-01T00:00:00Z`),
+          new Date(`${actualYear}-12-31T23:59:59Z`)
+        ),
+        soft_delete: false,
+      },
+      relations: { orders: false, user: false },
+    });
+    if (purchases) {
+      return this.calcIncome(purchases);
+    } else throw new Error("Something went wrong while calculating income");
+  }
+
+  async getMonthlyIncome(): Promise<number> {
+    const actualMonth = new Date().getMonth() + 1;
+    const actualYear = new Date().getFullYear();
+    const now = new Date();
+    console.log("ACTUAL DATE: ", now);
+    console.log("MONTH: ", actualMonth);
+    console.log("YEAR: ", actualYear);
+    console.log(
+      `${actualYear}-${
+        actualMonth > 9 ? actualMonth : "0" + actualMonth
+      }-01T00:00:00Z`
+    );
+    const purchases = await this.purchaseRepo.find({
+      where: {
+        createdAt: Between(
+          new Date(
+            `${actualYear}-${
+              actualMonth > 9 ? actualMonth : "0" + actualMonth
+            }-01T00:00:00Z`
+          ),
+          now
+        ),
+        soft_delete: false,
+      },
+      relations: { orders: false, user: false },
+    });
+    if (purchases) {
+      return this.calcIncome(purchases);
+    } else throw new Error("Something went wrong while calculating income");
+  }
+
+  async getWeeklyIncome(): Promise<number> {
+    const now = new Date();
+    const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const purchases = await this.purchaseRepo.find({
+      where: {
+        createdAt: Between(sevenDaysAgo, now),
+        soft_delete: false,
+      },
+      relations: { orders: false, user: false },
+    });
+    if (purchases) {
+      return this.calcIncome(purchases);
+    } else throw new Error("Something went wrong while calculating income");
   }
 
   async savePurchase(purchase: Purchase): Promise<PurchaseEntity | null> {

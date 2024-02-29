@@ -135,4 +135,40 @@ export class PurchaseController {
       return res.status(404).json({ error: err.message });
     }
   }
+
+  async httpGetTotalIncome(req: Request, res: Response): Promise<Response> {
+    try {
+      const income = await purchaseServ.getTotalIncome();
+      return res.status(200).json({ total: income });
+    } catch (err: any) {
+      return res.status(404).json({ error: err.message });
+    }
+  }
+
+  async httpGetAnnualIncome(req: Request, res: Response): Promise<Response> {
+    try {
+      const income = await purchaseServ.getYearIncome();
+      return res.status(200).json({ total: income });
+    } catch (err: any) {
+      return res.status(404).json({ error: err.message });
+    }
+  }
+
+  async httpGetMonthlyIncome(req: Request, res: Response): Promise<Response> {
+    try {
+      const income = await purchaseServ.getMonthlyIncome();
+      return res.status(200).json({ total: income });
+    } catch (err: any) {
+      return res.status(404).json({ error: err.message });
+    }
+  }
+
+  async httpGetWeeklyIncome(req: Request, res: Response): Promise<Response> {
+    try {
+      const income = await purchaseServ.getWeeklyIncome();
+      return res.status(200).json({ total: income });
+    } catch (err: any) {
+      return res.status(404).json({ error: err.message });
+    }
+  }
 }

@@ -110,6 +110,7 @@ export class ProductCardComponent {
       this.userServ.favHandler(id).subscribe((data: any) => {
         if (data.action == 'added') this.isFav = true;
         else this.isFav = false;
+        this.eventServ.emit('updateFavCount');
       });
   }
 }

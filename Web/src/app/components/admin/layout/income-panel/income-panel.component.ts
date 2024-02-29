@@ -17,6 +17,7 @@ export class IncomePanelComponent {
     weekly: 'k',
   };
   @Input('total') totalIncome!: number;
+  @Input('simbol') simbol!: string;
   annualIncome!: number;
   monthlyIncome!: number;
   weeklyIncome!: number;
@@ -34,28 +35,19 @@ export class IncomePanelComponent {
       .getAnnualIncome()
       .subscribe(
         (data: any) =>
-          (this.annualIncome = this.calcIncomeTemplate(
-            data.total,
-            this.incomeSimbol.annual
-          ))
+          (this.annualIncome = this.calcIncomeTemplate(data.total, 'annual'))
       );
     this.purchServ
       .getMonthlyIncome()
       .subscribe(
         (data: any) =>
-          (this.monthlyIncome = this.calcIncomeTemplate(
-            data.total,
-            this.incomeSimbol.monthly
-          ))
+          (this.monthlyIncome = this.calcIncomeTemplate(data.total, 'monthly'))
       );
     this.purchServ
       .getWeeklyIncome()
       .subscribe(
         (data: any) =>
-          (this.weeklyIncome = this.calcIncomeTemplate(
-            data.total,
-            this.incomeSimbol.weekly
-          ))
+          (this.weeklyIncome = this.calcIncomeTemplate(data.total, 'weekly'))
       );
     setTimeout(() => {
       this.state.animation.panel = 'in';
@@ -68,15 +60,17 @@ export class IncomePanelComponent {
     }, 50);
   }
 
-  calcIncomeTemplate(income: number, type: Object) {
+  calcIncomeTemplate(income: number, type: string) {
     let inc = 0;
     let millon = 1000000;
     let thousand = 1000;
     if (income > millon) {
-      type = 'm';
+      if (type == 'total') this.incomeSimbol.total = 'm';
+      if (type == 'annual') this.incomeSimbol.annual = 'm';
+      if (type == 'monthly') this.incomeSimbol.monthly = 'm';
+      if (type == 'weekly') this.incomeSimbol.weekly = 'm';
       inc = parseFloat((income / millon).toFixed(2));
-    }
-    if (income < millon) {
+    } else if (income < millon) {
       type = 'k';
       inc = parseFloat((income / thousand).toFixed(2));
     }

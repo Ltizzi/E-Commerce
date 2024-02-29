@@ -1,7 +1,7 @@
 <div class="flex flex-col">
   <section class="text-gray-600 body-font">
     <div class="container px-1 py-24 mx-auto">
-      <div class="flex flex-wrap -m-4 text-center gap-32 text-gray-900">
+      <div class="flex flex-wrap -m-4 text-center gap-20 text-gray-900">
         <div
           class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
           (click)="changeTab('users')"
@@ -98,6 +98,22 @@
           </h2>
           <p class="leading-relaxed">Entries</p>
         </div>
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-48 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
+          (click)="changeTab('income')"
+          [ngClass]="{
+            'text-white bg-indigo rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
+              state.actualTab == 'income'
+          }"
+          [@cardState]="state.animation.user"
+          (mouseover)="hoverCard('income')"
+          (mouseleave)="leaveCard('income')"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl text-center">
+            ${{ totalIncome }}{{ incomeSimbol }}
+          </h2>
+          <p class="leading-relaxed text-center">Total Income</p>
+        </div>
       </div>
     </div>
   </section>
@@ -111,4 +127,8 @@
   ></app-purchase-table>
   <app-stock-table *ngIf="state.actualTab == 'stock'"></app-stock-table>
   <app-entry-panel *ngIf="state.actualTab == 'entries'"></app-entry-panel>
+  <app-income-panel
+    *ngIf="state.actualTab == 'income'"
+    [total]="totalIncome"
+  ></app-income-panel>
 </div>

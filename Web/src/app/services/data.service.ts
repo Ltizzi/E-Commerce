@@ -110,6 +110,42 @@ export class DataService {
       );
   }
 
+  getTotalIncome() {
+    return this.http
+      .get(this.url + '/totalIncome', { withCredentials: true })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+
+  getAnnualIncome() {
+    return this.http
+      .get(this.url + '/annualIncome', { withCredentials: true })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+
+  getMonthlyIncome() {
+    return this.http
+      .get(this.url + '/monthlyIncome', { withCredentials: true })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+
+  getWeeklyIncome() {
+    return this.http
+      .get(this.url + '/weeklyIncome', { withCredentials: true })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+
   getReviewsFromProductIdWithPagination(
     id: number,
     page: number,

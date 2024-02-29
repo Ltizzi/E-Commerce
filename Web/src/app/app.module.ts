@@ -59,6 +59,7 @@ import { UserFavListComponent } from './components/user/user-fav-list/user-fav-l
 import { PurchaseModalComponent } from './components/user/purchase-modal/purchase-modal.component';
 import { ReviewBtnComponent } from './components/user/review-btn/review-btn.component';
 import { ReviewFormComponent } from './components/user/review-form/review-form.component';
+import { IncomePanelComponent } from './components/admin/layout/income-panel/income-panel.component';
 
 @NgModule({
   declarations: [
@@ -103,6 +104,7 @@ import { ReviewFormComponent } from './components/user/review-form/review-form.c
     PurchaseModalComponent,
     ReviewBtnComponent,
     ReviewFormComponent,
+    IncomePanelComponent,
   ],
   imports: [
     BrowserModule,

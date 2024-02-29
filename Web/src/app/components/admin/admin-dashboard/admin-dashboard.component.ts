@@ -14,6 +14,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { State } from 'src/common/models/state';
+import { inAndOutAnimation } from 'src/common/animations';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -65,6 +66,8 @@ export class AdminDashboardComponent {
   totalPurchases!: number;
   totalStock!: number;
   totalEntries!: number;
+  totalIncome!: number;
+  incomeSimbol!: string;
   events: string[] = [
     'updateProducts',
     'updateTypes',
@@ -81,6 +84,7 @@ export class AdminDashboardComponent {
       purchases: 'firstLoad',
       stock: 'firstLoad',
       entries: 'firstLoad',
+      income: 'firstLoad',
     },
   };
   firstLoad = true;
@@ -106,6 +110,11 @@ export class AdminDashboardComponent {
     this.purchServ
       .getTotal()
       .subscribe((data: any) => (this.totalPurchases = data.total));
+    this.purchServ
+      .getTotalIncome()
+      .subscribe(
+        (data: any) => (this.totalIncome = this.calcIncomeTemplate(data.total))
+      );
     this.events.forEach((event) => {
       this.eventServ.subscribe(event).subscribe((data) => {
         if (event == 'updateProducts') {
@@ -129,6 +138,22 @@ export class AdminDashboardComponent {
         this.state.animation[prop] = 'normal';
       }
     }, 100);
+  }
+
+  calcIncomeTemplate(income: number) {
+    let inc = 0;
+    let millon = 1000000;
+    let thousand = 1000;
+    if (income > millon) {
+      this.incomeSimbol = 'm';
+      inc = parseFloat((income / millon).toFixed(1));
+    }
+    if (income < millon) {
+      this.incomeSimbol = 'k';
+      inc = parseFloat((income / thousand).toFixed(1));
+    }
+
+    return inc;
   }
 
   changeTab(tab: string) {

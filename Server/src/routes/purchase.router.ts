@@ -29,5 +29,9 @@ purchaseRouter.delete(
   purchaseController.httpSoftDeletePurchaseById
 );
 purchaseRouter.patch("/update", isAdmin, purchaseController.httpUpdatePurchase);
+purchaseRouter.get("/totalIncome", purchaseController.httpGetTotalIncome);
+purchaseRouter.get("/annualIncome", purchaseController.httpGetAnnualIncome);
+purchaseRouter.get("/monthlyIncome", purchaseController.httpGetMonthlyIncome);
+purchaseRouter.get("/weeklyIncome", purchaseController.httpGetWeeklyIncome);
 
 module.exports = purchaseRouter;

@@ -2,8 +2,6 @@ import { AppDataSource } from "../data-source";
 import { ProductEntity } from "../entities/ProductEntity";
 import { StockEntity } from "../entities/StockEntity";
 import { Product } from "../models/Product";
-import { StockEntry } from "../models/StockEntry";
-import { Cart } from "../models/Cart";
 
 export class ProductService {
   private productRepo = AppDataSource.getRepository(ProductEntity);

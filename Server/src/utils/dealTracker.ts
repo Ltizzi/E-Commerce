@@ -66,7 +66,10 @@ export class DealTracker {
     if (dealToUpdate) {
       console.log("Generating timer for deal id: " + dealToUpdate.deal_id) +
         " . . .";
-      console.log("Time remaining: " + deal.timeRemaining);
+      console.log(
+        "Time remaining: " +
+          this.generateTimeTemplate(deal.timeRemaining as number)
+      );
       setTimeout(async () => {
         const outdatedDeal = (await this.dealServ.restoreProductPrice(
           dealToUpdate
@@ -83,5 +86,20 @@ export class DealTracker {
     this.queue = this.queue.filter(
       (dealCheck) => dealCheck.deal?.deal_id != deal_id
     );
+  }
+
+  private generateTimeTemplate(time: number) {
+    let seconds = time / 1000;
+    if (seconds < 60) return `${seconds.toFixed(2)} seconds`;
+    let minutes = seconds / 60;
+    if (minutes < 60) return `${minutes.toFixed(2)} minutes`;
+    let hours = minutes / 60;
+    if (hours < 24) return `${hours.toFixed(2)} hours`;
+    let days = hours / 24;
+    if (days < 7) return `${days.toFixed(2)} days`;
+    let weeks = days / 7;
+    if (weeks < 4) return `${weeks.toFixed(2)} weeks`;
+    let months = weeks / 4;
+    if (months < 12) return `${months.toFixed(2)} months`;
   }
 }

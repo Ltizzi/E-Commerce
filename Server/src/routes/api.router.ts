@@ -10,6 +10,7 @@ const cartRouter = require("./cart.router");
 const orderRouter = require("./shopOrder.router");
 const purchaseRouter = require("./purchase.router");
 const reviewRouter = require("./review.router");
+const dealRouter = require("./deal.router");
 const apiRouter = express.Router();
 
 apiRouter.use("/user", authenticateJWT, userRouter);
@@ -21,5 +22,6 @@ apiRouter.use("/cart", authenticateJWT, cartRouter);
 apiRouter.use("/order", authenticateJWT, orderRouter);
 apiRouter.use("/purchase", authenticateJWT, purchaseRouter);
 apiRouter.use("/review", reviewRouter);
+apiRouter.use("/deal", dealRouter);
 
 module.exports = apiRouter;

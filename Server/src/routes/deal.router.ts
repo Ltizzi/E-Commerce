@@ -14,8 +14,8 @@ dealRouter.get(
   dealController.httpCheckProductHasDealsById
 );
 dealRouter.get("/count", dealController.httpCountDeals);
-dealRouter.post("/new", isAdmin, dealController.httpSaveDeal);
-dealRouter.delete("/delete", isAdmin, dealController.httpSoftDeleteDealById);
-dealRouter.patch("/update", isAdmin, dealController.httpUpdateDeal);
+dealRouter.post("/new", dealController.httpSaveDeal);
+dealRouter.delete("/delete", dealController.httpSoftDeleteDealById);
+dealRouter.patch("/update", dealController.httpUpdateDeal);
 
 module.exports = dealRouter;

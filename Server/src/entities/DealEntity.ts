@@ -2,8 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -19,8 +21,11 @@ export class DealEntity implements Deal {
   @Column({ nullable: false })
   product_id!: number;
 
-  @ManyToMany(() => ProductEntity, { eager: true, nullable: false })
-  @JoinTable()
+  @ManyToOne(() => ProductEntity, (product) => product.product_id, {
+    eager: true,
+    nullable: false,
+  })
+  @JoinColumn({ name: "product", referencedColumnName: "product_id" })
   product!: Product;
 
   @Column({ default: 0, nullable: true })
@@ -32,7 +37,7 @@ export class DealEntity implements Deal {
   @Column({ nullable: true, type: "numeric" })
   discountedPrice!: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, type: "numeric" })
   fullPrice!: number;
 
   @Column({ default: 48, nullable: false })

@@ -13,6 +13,7 @@ export class DealService {
   async getDeals(): Promise<Array<Deal>> {
     const deals = await this.dealRepo.find({
       where: { soft_delete: false },
+      relations: { product: true },
       order: { deal_id: "ASC" },
     });
     return deals;
@@ -25,6 +26,7 @@ export class DealService {
     const skip = (page - 1) * pageSize;
     const deals = await this.dealRepo.find({
       where: { soft_delete: false },
+      relations: { product: true },
       skip: skip,
       take: pageSize,
       order: { deal_id: "ASC" },
@@ -51,10 +53,11 @@ export class DealService {
     const dealCheckerRes = {} as DealCheckerResponse;
     if (deal) {
       const now = new Date();
+      console.log(now);
+      console.log(deal.endAt);
       dealCheckerRes.hasDeal = true;
       dealCheckerRes.deal = deal;
-      dealCheckerRes.timeRemaining =
-        deal.endAt.getMilliseconds() - now.getMilliseconds();
+      dealCheckerRes.timeRemaining = deal.endAt.getTime() - now.getTime();
     } else {
       dealCheckerRes.hasDeal = false;
       dealCheckerRes.deal = null;

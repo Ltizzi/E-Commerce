@@ -1,5 +1,4 @@
 import { AppDataSource } from "../data-source";
-import { DealMapper } from "../dto/mappers/deal.mapper";
 import { DealEntity } from "../entities/DealEntity";
 import { Deal } from "../models/Deal";
 import { Product } from "../models/Product";
@@ -106,6 +105,15 @@ export class DealService {
     prod.price = deal.discountedPrice;
     const updatedProd = (await this.prodServ.updateProduct(prod)) as Product;
     deal.product = updatedProd;
+    return await this.dealRepo.save(deal);
+  }
+
+  async restoreProductPrice(deal: Deal): Promise<Deal | null> {
+    const prod = deal.product;
+    prod.price = deal.fullPrice;
+    const restoredProd = (await this.prodServ.updateProduct(prod)) as Product;
+    deal.product = restoredProd;
+    deal.soft_delete = true;
     return await this.dealRepo.save(deal);
   }
 

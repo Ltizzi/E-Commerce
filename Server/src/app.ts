@@ -16,10 +16,12 @@ import { User } from "./models/User";
 import { authenticateJWT } from "./utils/authMiddleware";
 import { UserMapper } from "./dto/mappers/user.mapper";
 import { JWTUserInfo } from "./models/utils/JWTUserInfo";
+import { DealTracker } from "./utils/dealTracker";
 
 const app = express();
 const userServ = new UserService();
 const userMapper = new UserMapper();
+const dealTracker = DealTracker.getInstance();
 
 app.use(express.json());
 startDBConnection();
@@ -115,9 +117,17 @@ app.get("/auth/user", authenticateJWT, async (req: Request, res: Response) => {
 
 app.use("/", apiRouter);
 
+//startDealTracker();
+
+async function startDealTracker() {
+  await dealTracker.dealTrackerBuilder();
+}
+
 async function startDBConnection() {
   await AppDataSource.initialize()
-    .then(() => {})
+    .then(() => {
+      startDealTracker();
+    })
     .catch((error) => console.log(error));
 }
 

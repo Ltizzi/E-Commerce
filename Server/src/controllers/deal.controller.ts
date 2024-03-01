@@ -6,9 +6,11 @@ import { Deal } from "../models/Deal";
 import { DealCheckerResponse } from "../models/utils/DealCheckerResponse";
 import { DealRequest } from "../dto/requests/deal.request";
 import { DeleteObjectResponse } from "../models/utils/DeleteObjectResponse";
+import { DealTracker } from "../utils/dealTracker";
 
 const dealServ = new DealService();
 const mapper = new DealMapper();
+const dealTracker = DealTracker.getInstance();
 
 export class DealController {
   async httpGetDeals(req: Request, res: Response): Promise<Response> {
@@ -84,6 +86,10 @@ export class DealController {
       const newDeal = (await dealServ.saveDeal(
         await mapper.toDealEntity(dealReq)
       )) as Deal;
+      const dealCheckerRes = await dealServ.checkProductHasDealById(
+        newDeal.product_id
+      );
+      await dealTracker.addNewTimer(dealCheckerRes);
       return res.status(200).json(mapper.toDealResponse(newDeal));
     } catch (err: any) {
       return res.status(404).json({ error: err.message });

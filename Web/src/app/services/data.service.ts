@@ -1,8 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, throwError } from 'rxjs';
-import { Product } from 'src/common/models/product';
-import { response } from 'express';
 
 @Injectable({
   providedIn: 'root',
@@ -70,6 +68,8 @@ export class DataService {
       );
   }
 
+  //PURCHASES
+
   countPurchasesByUser(id: number) {
     return this.http
       .get(this.url + '/countByUser?user_id=' + id, { withCredentials: true })
@@ -110,6 +110,32 @@ export class DataService {
       );
   }
 
+  //DEALS
+
+  getDealByProductId(id: number) {
+    return this.http
+      .get(this.url + '/byProductId?product_id=' + id, {
+        withCredentials: true,
+      })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+
+  checkProductHasDeal(id: number) {
+    return this.http
+      .get(this.url + '/checkByProductId?product_id=' + id, {
+        withCredentials: true,
+      })
+      .pipe(
+        map((response) => response),
+        catchError(this.handleError)
+      );
+  }
+
+  //INCOME
+
   getTotalIncome() {
     return this.http
       .get(this.url + '/totalIncome', { withCredentials: true })
@@ -145,6 +171,8 @@ export class DataService {
         catchError(this.handleError)
       );
   }
+
+  //REVIEWS
 
   getReviewsFromProductIdWithPagination(
     id: number,
@@ -196,6 +224,8 @@ export class DataService {
     );
   }
 
+  //WISHLIST
+
   favHandler(prod_id: number) {
     return this.http
       .post(this.url + '/fav?product_id=' + prod_id, {
@@ -217,6 +247,8 @@ export class DataService {
         catchError(this.handleError)
       );
   }
+
+  //DEALS
 
   create(resource: any) {
     return this.http

@@ -6,7 +6,7 @@ const dealRouter: Router = Router();
 const dealController = new DealController();
 
 dealRouter.get("/all", dealController.httpGetDeals);
-dealRouter.get("/allWithPagination", dealController.httpGetDealsWithPagination);
+dealRouter.get("/withPagination", dealController.httpGetDealsWithPagination);
 dealRouter.get("/byId", dealController.httpGetDealById);
 dealRouter.get("/byProductId", dealController.httpGetDealByProductId);
 dealRouter.get(

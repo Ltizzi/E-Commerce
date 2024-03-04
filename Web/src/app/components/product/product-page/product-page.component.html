@@ -50,71 +50,6 @@
         <div class="flex mb-4">
           <span class="flex items-center">
             <app-stars [rating]="product.rating"></app-stars>
-            <!-- <svg
-              fill="currentColor"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              class="w-4 h-4 text-indigo-500"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-              ></path>
-            </svg>
-            <svg
-              fill="currentColor"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              class="w-4 h-4 text-indigo-500"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-              ></path>
-            </svg>
-            <svg
-              fill="currentColor"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              class="w-4 h-4 text-indigo-500"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-              ></path>
-            </svg>
-            <svg
-              fill="currentColor"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              class="w-4 h-4 text-indigo-500"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-              ></path>
-            </svg>
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              class="w-4 h-4 text-indigo-500"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-              ></path>
-            </svg> -->
             <span class="text-gray-600 ml-3"
               >{{ product.total_reviews }} Reviews</span
             >
@@ -178,9 +113,24 @@
         </p>
 
         <div class="flex mt-10">
-          <span class="title-font font-medium text-2xl text-gray-900"
-            >${{ product.price }}</span
-          >
+          <div class="flex flex-row gap-2 items-center align-middle">
+            <span
+              class="title-font font-medium text-xl text-gray-900"
+              [ngClass]="dealChecker.hasDeal ? 'line-through text-red-600' : ''"
+              >${{
+                dealChecker.hasDeal ? dealChecker.deal.fullPrice : product.price
+              }}</span
+            >
+            <span
+              class="title-font text-xl text-white font-semibold bg-emerald-500 rounded-md px-1.5 text-center"
+              *ngIf="dealChecker.hasDeal"
+              >${{ product.price.toFixed(2) }}
+            </span>
+            <span *ngIf="dealChecker.hasDeal" class="text-gray-600 text-sm"
+              >{{ dealChecker.deal.discount }}% discount!</span
+            >
+          </div>
+
           <button
             class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded disabled:bg-gray-500"
             (click)="addToCart()"

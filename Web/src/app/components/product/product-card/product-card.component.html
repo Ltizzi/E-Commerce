@@ -1,6 +1,7 @@
 <div
   class="group relative block overflow-hidden w-72"
   [@fadeIn&Out]="state.animation.card"
+  *ngIf="isLoaded"
 >
   <button
     class="absolute end-4 top-4 z-10 opacity-80 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75"
@@ -76,7 +77,27 @@
     </h3>
 
     <p class="mt-1.5 text-sm text-gray-700">{{ product.brand }}</p>
-    <p class="mt-1.5 text-sm text-gray-700">${{ product.price }}</p>
+    <div class="flex flex-row gap-2">
+      <p
+        class="mt-1.5 text-sm text-gray-700"
+        [ngClass]="
+          dealCheckerResponse.hasDeal ? 'line-through text-red-600' : ''
+        "
+      >
+        ${{
+          dealCheckerResponse.hasDeal
+            ? dealCheckerResponse.deal.fullPrice
+            : product.price
+        }}
+      </p>
+      <p
+        class="mt-1.5 text-sm text-white bg-emerald-500 rounded-md px-0.5 font-extrabold"
+        *ngIf="dealCheckerResponse.hasDeal"
+      >
+        $ {{ product.price.toFixed(2) }}
+      </p>
+    </div>
+
     <div class="mt-4">
       <button
         class="block w-full rounded bg-indigo-500 p-4 text-yellow-50 text-sm font-medium transition hover:scale-105 disabled:bg-gray-500"

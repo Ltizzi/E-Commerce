@@ -64,7 +64,8 @@ export class DealController {
       const dealCheckRes = (await dealServ.checkProductHasDealById(
         product_id
       )) as DealCheckerResponse;
-      dealCheckRes.deal = mapper.toDealResponse(dealCheckRes.deal as Deal);
+      if (dealCheckRes.hasDeal)
+        dealCheckRes.deal = mapper.toDealResponse(dealCheckRes.deal as Deal);
       return res.status(200).json(dealCheckRes);
     } catch (err: any) {
       return res.status(404).json({ error: err.message });

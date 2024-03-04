@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
+import { DealService } from 'src/app/services/deal.service';
 import { EventService } from 'src/app/services/event.service';
 import { ProductService } from 'src/app/services/product.service';
 import { StockService } from 'src/app/services/stock.service';
@@ -11,6 +12,7 @@ import {
   inAndOutAnimation,
 } from 'src/common/animations';
 import { Cart } from 'src/common/models/cart';
+import { DealCheckerResponse } from 'src/common/models/dealCheckerResponse';
 import { Product } from 'src/common/models/product';
 import { State } from 'src/common/models/state';
 import { User } from 'src/common/models/user';
@@ -32,6 +34,7 @@ export class ProductPageComponent {
   isStock!: boolean;
   user!: User;
   bigImgUrl!: string;
+  dealChecker!: DealCheckerResponse;
 
   isFav!: boolean;
 
@@ -52,7 +55,8 @@ export class ProductPageComponent {
     private cartServ: CartService,
     private router: Router,
     private eventServ: EventService,
-    private userServ: UserService
+    private userServ: UserService,
+    private dealServ: DealService
   ) {}
 
   ngOnInit(): void {
@@ -68,8 +72,8 @@ export class ProductPageComponent {
     //   }
     // } else {
     this.getById(this.id);
+    this.checkDeal();
     localStorage.setItem('product', JSON.stringify(this.product));
-    this.isLoaded = true;
     if (sessionStorage.getItem('user')) {
       this.user = JSON.parse(sessionStorage.getItem('user') as string);
     }
@@ -92,6 +96,13 @@ export class ProductPageComponent {
       }, 200);
       this.checkStock();
       this.checkFav(id);
+    });
+  }
+
+  checkDeal() {
+    this.dealServ.checkProductHasDeal(this.id).subscribe((data: any) => {
+      this.dealChecker = data;
+      this.isLoaded = true;
     });
   }
 

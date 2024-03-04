@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { DealService } from 'src/app/services/deal.service';
 import { EventService } from 'src/app/services/event.service';
 import { StockService } from 'src/app/services/stock.service';
 import { UserService } from 'src/app/services/user.service';
@@ -8,6 +9,7 @@ import {
   hoverInAndOutAnimation,
 } from 'src/common/animations';
 import { Cart } from 'src/common/models/cart';
+import { DealCheckerResponse } from 'src/common/models/dealCheckerResponse';
 import { Product } from 'src/common/models/product';
 import { State } from 'src/common/models/state';
 import { User } from 'src/common/models/user';
@@ -23,6 +25,7 @@ export class ProductCardComponent {
   private _product!: Product;
   isLoaded = false;
   isFav!: boolean;
+  dealCheckerResponse!: DealCheckerResponse;
   user!: User;
   stock = false;
 
@@ -48,13 +51,20 @@ export class ProductCardComponent {
     private router: Router,
     private stockServ: StockService,
     private eventServ: EventService,
-    private userServ: UserService
+    private userServ: UserService,
+    private dealServ: DealService
   ) {}
 
   ngOnInit(): void {
     if (sessionStorage.getItem('user')) {
       this.user = JSON.parse(sessionStorage.getItem('user') as string);
     }
+    this.dealServ
+      .checkProductHasDeal(this._product.product_id as number)
+      .subscribe((data: any) => {
+        this.dealCheckerResponse = data;
+        this.isLoaded = true;
+      });
     this.stockServ
       .checkStock(this._product.product_id as number)
       .subscribe((data: any) => {

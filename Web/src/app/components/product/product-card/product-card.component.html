@@ -77,7 +77,7 @@
     </h3>
 
     <p class="mt-1.5 text-sm text-gray-700">{{ product.brand }}</p>
-    <div class="flex flex-row gap-2">
+    <div class="flex flex-row gap-2" *ngIf="dealCheckerResponse != undefined">
       <p
         class="mt-1.5 text-sm text-gray-700"
         [ngClass]="

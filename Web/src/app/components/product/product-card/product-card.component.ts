@@ -109,7 +109,7 @@ export class ProductCardComponent {
   checkIsFav(id: number) {
     return this.userServ.favChecker(id).subscribe((data: any) => {
       this.isFav = data.isFav;
-      console.log('is ' + this.product.name + ' fav?: ', this.isFav);
+      //      console.log('is ' + this.product.name + ' fav?: ', this.isFav);
     });
   }
 

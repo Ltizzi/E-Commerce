@@ -52,6 +52,17 @@ export class DealTracker {
         this.queue.push(dealCheckerRes);
         await this.addNewTimer(dealCheckerRes);
       }
+      if (
+        dealCheckerRes.hasDeal &&
+        dealCheckerRes.timeRemaining &&
+        dealCheckerRes.timeRemaining < 0 &&
+        dealCheckerRes.deal
+      ) {
+        const id = dealCheckerRes.deal.deal_id;
+        console.log("removing deal..." + id);
+        await this.dealServ.softDeleteDeaById(id);
+        this.removeDealFromQueue(dealCheckerRes.deal.deal_id);
+      }
     });
   }
 

@@ -14,7 +14,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { State } from 'src/common/models/state';
-import { inAndOutAnimation } from 'src/common/animations';
+import { DealService } from 'src/app/services/deal.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -63,6 +63,7 @@ export class AdminDashboardComponent {
   totalUsers!: number;
   totalTypes!: number;
   totalProducts!: number;
+  totalDeals!: number;
   totalPurchases!: number;
   totalStock!: number;
   totalEntries!: number;
@@ -73,6 +74,7 @@ export class AdminDashboardComponent {
     'updateTypes',
     'updateStock',
     'updateEntries',
+    'updateDeals',
   ];
 
   state: State = {
@@ -85,6 +87,7 @@ export class AdminDashboardComponent {
       stock: 'firstLoad',
       entries: 'firstLoad',
       income: 'firstLoad',
+      deals: 'firstLoad',
     },
   };
   firstLoad = true;
@@ -96,12 +99,14 @@ export class AdminDashboardComponent {
     private stockServ: StockService,
     private entryServ: EntryService,
     private purchServ: PurchaseService,
-    private eventServ: EventService
+    private eventServ: EventService,
+    private dealServ: DealService
   ) {}
 
   ngOnInit() {
     this.updateProducts();
     this.updateTypes();
+    this.updateDeals();
     this.userServ
       .getTotal()
       .subscribe((data: any) => (this.totalUsers = data.total));
@@ -128,6 +133,9 @@ export class AdminDashboardComponent {
         }
         if (event == 'updateEntries') {
           this.updateEntries();
+        }
+        if (event == 'updateDeals') {
+          this.updateDeals();
         }
       });
     });
@@ -179,6 +187,12 @@ export class AdminDashboardComponent {
         this.state.animation[prop] = 'hover';
       }
     }
+  }
+
+  updateDeals() {
+    this.dealServ
+      .getTotal()
+      .subscribe((data: any) => (this.totalDeals = data.total));
   }
 
   updateProducts() {

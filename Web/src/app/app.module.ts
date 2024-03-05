@@ -60,6 +60,7 @@ import { PurchaseModalComponent } from './components/user/purchase-modal/purchas
 import { ReviewBtnComponent } from './components/user/review-btn/review-btn.component';
 import { ReviewFormComponent } from './components/user/review-form/review-form.component';
 import { IncomePanelComponent } from './components/admin/layout/income-panel/income-panel.component';
+import { DealTableComponent } from './components/admin/tables/deal-table/deal-table.component';
 
 @NgModule({
   declarations: [
@@ -105,6 +106,7 @@ import { IncomePanelComponent } from './components/admin/layout/income-panel/inc
     ReviewBtnComponent,
     ReviewFormComponent,
     IncomePanelComponent,
+    DealTableComponent,
   ],
   imports: [
     BrowserModule,

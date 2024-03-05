@@ -2,18 +2,21 @@ import { Between } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { PurchaseEntity } from "../entities/PurchaseEntity";
 import { StockEntity } from "../entities/StockEntity";
-import { UserEntity } from "../entities/UserEntity";
 import { Product } from "../models/Product";
 import { Purchase } from "../models/Purchase";
 import { ShopOrder } from "../models/ShopOrder";
 import { Stock } from "../models/Stock";
-import { StockService } from "./StockService";
+import { DealService } from "./DealService";
+import { DealMapper } from "../dto/mappers/deal.mapper";
+import { Deal } from "../models/Deal";
 
 export class PurchaseService {
   private purchaseRepo = AppDataSource.getRepository(PurchaseEntity);
-  private userRepo = AppDataSource.getRepository(UserEntity);
+  // private userRepo = AppDataSource.getRepository(UserEntity);
   private stockRepo = AppDataSource.getRepository(StockEntity);
-  private stockService = new StockService();
+  // private stockService = new StockService();
+  private dealServ = new DealService();
+  private dealMapper = new DealMapper();
 
   async getPurchasesWithPagination(
     page: number,
@@ -168,6 +171,7 @@ export class PurchaseService {
         const stock = (await this.stockRepo.findOneBy({
           product_id: product.product_id,
         })) as Stock;
+        this.handleDeal(product.product_id, item.cantidad);
         if (stock) {
           totalIncome += item.total;
           stock.cantidad -= item.cantidad;
@@ -225,6 +229,7 @@ export class PurchaseService {
           product_id: product.product_id,
         })) as Stock;
         total_income += item.total;
+        this.handleDeal(product.product_id, item.cantidad);
         if (oldItem.length == 1) {
           stock.cantidad -= oldItem[0].cantidad;
         } else
@@ -240,5 +245,16 @@ export class PurchaseService {
     purchase.createdAt = oldPurchase.createdAt;
     purchase.soft_delete = oldPurchase.soft_delete;
     return await this.purchaseRepo.save(purchase);
+  }
+
+  async handleDeal(id: number, cantidad: number) {
+    const hasDeal = await this.dealServ.checkProductHasDealById(id);
+    if (hasDeal.hasDeal) {
+      const deal = hasDeal.deal as Deal;
+      if (deal) {
+        deal.units -= cantidad;
+        await this.dealServ.updateDeal(deal);
+      }
+    }
   }
 }

@@ -50,7 +50,7 @@ export class DealService {
   async checkProductHasDealById(id: number): Promise<DealCheckerResponse> {
     const deal = await this.getDealByProductId(id);
     const dealCheckerRes = {} as DealCheckerResponse;
-    if (deal) {
+    if (deal && deal.units > 0) {
       const now = new Date();
       console.log(now);
       console.log(deal.endAt);

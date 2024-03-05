@@ -34,22 +34,7 @@
           </h2>
           <p class="leading-relaxed">Products</p>
         </div>
-        <div
-          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
-          (click)="changeTab('deals')"
-          [ngClass]="{
-            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
-              state.actualTab == 'deals'
-          }"
-          [@cardState]="state.animation.deals"
-          (mouseover)="hoverCard('deals')"
-          (mouseleave)="leaveCard('deals')"
-        >
-          <h2 class="title-font font-medium sm:text-4xl text-3xl">
-            {{ totalDeals }}
-          </h2>
-          <p class="leading-relaxed">Deals</p>
-        </div>
+
         <div
           class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
           (click)="changeTab('types')"
@@ -65,6 +50,22 @@
             {{ totalTypes }}
           </h2>
           <p class="leading-relaxed">Types</p>
+        </div>
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
+          (click)="changeTab('deals')"
+          [ngClass]="{
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
+              state.actualTab == 'deals'
+          }"
+          [@cardState]="state.animation.deals"
+          (mouseover)="hoverCard('deals')"
+          (mouseleave)="leaveCard('deals')"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl">
+            {{ totalDeals }}
+          </h2>
+          <p class="leading-relaxed">Deals</p>
         </div>
         <div
           class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"

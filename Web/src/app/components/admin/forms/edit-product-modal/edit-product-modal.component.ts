@@ -100,7 +100,7 @@ export class EditProductModalComponent {
         message: 'Description has a maximum of 2000 characters',
       },
     ],
-    prod_type: [{ type: 'required', message: 'Product type is required' }],
+    type: [{ type: 'required', message: 'Product type is required' }],
   };
 
   constructor(
@@ -129,9 +129,8 @@ export class EditProductModalComponent {
     if (this.editProductForm.valid) {
       let type = this.types.find(
         (type: ProductType) =>
-          type.name == (this.editProductForm.value.prod_type as string)
+          type.name == (this.editProductForm.value.type as string)
       );
-
       let updatedProduct: Product = {
         product_id: this.product.product_id,
         name: this.editProductForm.value.name as string,

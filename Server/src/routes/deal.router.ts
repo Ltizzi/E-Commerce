@@ -5,17 +5,21 @@ import { isAdmin } from "../utils/authMiddleware";
 const dealRouter: Router = Router();
 const dealController = new DealController();
 
-dealRouter.get("/all", dealController.httpGetDeals);
-dealRouter.get("/withPagination", dealController.httpGetDealsWithPagination);
-dealRouter.get("/byId", dealController.httpGetDealById);
-dealRouter.get("/byProductId", dealController.httpGetDealByProductId);
+dealRouter.get("/all", isAdmin, dealController.httpGetDeals);
+dealRouter.get(
+  "/withPagination",
+  isAdmin,
+  dealController.httpGetDealsWithPagination
+);
+dealRouter.get("/byId", isAdmin, dealController.httpGetDealById);
+dealRouter.get("/byProductId", isAdmin, dealController.httpGetDealByProductId);
 dealRouter.get(
   "/checkByProductId",
   dealController.httpCheckProductHasDealsById
 );
-dealRouter.get("/count", dealController.httpCountDeals);
-dealRouter.post("/new", dealController.httpSaveDeal);
-dealRouter.delete("/delete", dealController.httpSoftDeleteDealById);
-dealRouter.patch("/update", dealController.httpUpdateDeal);
+dealRouter.get("/count", isAdmin, dealController.httpCountDeals);
+dealRouter.post("/new", isAdmin, dealController.httpSaveDeal);
+dealRouter.delete("/delete", isAdmin, dealController.httpSoftDeleteDealById);
+dealRouter.patch("/update", isAdmin, dealController.httpUpdateDeal);
 
 module.exports = dealRouter;

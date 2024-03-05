@@ -43,7 +43,7 @@ export class DealTracker {
       const dealCheckerRes = await this.dealServ.checkProductHasDealById(
         deal.product_id
       );
-      console.log(dealCheckerRes);
+      //    console.log(dealCheckerRes);
       if (
         dealCheckerRes.hasDeal &&
         dealCheckerRes.timeRemaining &&
@@ -59,7 +59,8 @@ export class DealTracker {
         dealCheckerRes.deal
       ) {
         const id = dealCheckerRes.deal.deal_id;
-        console.log("removing deal..." + id);
+        console.log("removing deal id nº... ");
+        console.log(id);
         await this.dealServ.softDeleteDeaById(id);
         this.removeDealFromQueue(dealCheckerRes.deal.deal_id);
       }

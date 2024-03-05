@@ -6,6 +6,7 @@ import { Product } from 'src/common/models/product';
 import { Purchase } from 'src/common/models/purchase';
 import { State } from 'src/common/models/state';
 import { Order } from 'src/common/models/order';
+import { DateUtilsService } from 'src/app/services/ui/date-utils.service';
 
 @Component({
   selector: 'app-purchase-list',
@@ -39,7 +40,8 @@ export class PurchaseListComponent {
 
   constructor(
     private purchServ: PurchaseService,
-    private pagination: PaginationService
+    private pagination: PaginationService,
+    private dateUtils: DateUtilsService
   ) {}
 
   ngOnInit(): void {
@@ -107,16 +109,7 @@ export class PurchaseListComponent {
   }
 
   generateDateTemplate(incDate: any) {
-    let date = new Date(incDate);
-    const year = date.getFullYear().toString();
-    const month = (date.getMonth() + 1).toString();
-    const day = date.getDay().toString();
-    const hour = date.getHours().toString();
-    const minutes = date.getMinutes().toString();
-
-    return `${day}/${month}/${year} at ${hour.length < 2 ? '0' + hour : hour}:${
-      minutes.length < 2 ? '0' + minutes : minutes
-    }`;
+    return this.dateUtils.generateDateTemplate(incDate);
   }
 
   hideTable() {

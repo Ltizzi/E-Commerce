@@ -7,6 +7,7 @@ import { DealService } from 'src/app/services/deal.service';
 import { PaginationService } from 'src/app/services/ui/pagination.service';
 import { EventService } from 'src/app/services/event.service';
 import { Router } from '@angular/router';
+import { DateUtilsService } from 'src/app/services/ui/date-utils.service';
 
 @Component({
   selector: 'app-deal-table',
@@ -39,7 +40,8 @@ export class DealTableComponent {
     private dealServ: DealService,
     private router: Router,
     private pagination: PaginationService,
-    private eventServ: EventService
+    private eventServ: EventService,
+    private dateUtils: DateUtilsService
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +72,10 @@ export class DealTableComponent {
 
   reloadDeals() {
     this.fetchDeals(this.currentPage, this.ITEMS_PER_PAGE);
+  }
+
+  generateDateTemplate(date: any) {
+    return this.dateUtils.generateDateTemplate(date);
   }
 
   hideTable() {
@@ -116,8 +122,9 @@ export class DealTableComponent {
   }
 
   showEditModal(deal: Deal) {
-    this.isEditModalDisplayed = !this.isEditModalDisplayed;
+    this.dealToEdit = {} as Deal;
     this.dealToEdit = deal;
+    this.isEditModalDisplayed = !this.isEditModalDisplayed;
   }
 
   closeDeleteDialog() {

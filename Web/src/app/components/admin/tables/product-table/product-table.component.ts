@@ -43,10 +43,12 @@ export class ProductTableComponent {
   faPen = faPen;
   faTrashCan = faTrashCan;
 
+  showNewDealDialog: boolean = false;
   isEditModalDisplayed: boolean = false;
   showDeleteDialog: boolean = false;
   productToEdit!: Product;
   productToDelete!: Object;
+  productToDiscount!: Product;
 
   ITEMS_PER_PAGE = 5;
   pages!: Array<number>;
@@ -148,6 +150,11 @@ export class ProductTableComponent {
   deleteProduct(product: Product) {
     this.productToDelete = product;
     this.showDeleteDialog = !this.showDeleteDialog;
+  }
+
+  showNewDealModal(product: Product) {
+    this.productToDiscount = product;
+    this.showNewDealDialog = !this.showNewDealDialog;
   }
 
   showEditModal(product: Product) {

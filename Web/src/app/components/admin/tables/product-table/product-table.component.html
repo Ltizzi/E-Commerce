@@ -28,9 +28,15 @@
         </th>
         <td class="px-6 py-4 w-2/12">{{ product.brand }}</td>
         <td class="px-6 py-4 w-2/12">{{ product.type.name }}</td>
-        <td class="px-6 py-4 w-1/12">${{ product.price }}</td>
+        <td class="px-6 py-4 w-1/12">${{ product.price.toFixed(2) }}</td>
         <td class="px-6 py-4 text-right w-2/12">
-          <div class="flex flex-row gap-2">
+          <div class="flex flex-row gap-1">
+            <button
+              class="rounded-full bg-emerald-500 h-9 w-9 shadow-xl shadow-gray-500 text-white"
+              (click)="showNewDealModal(product)"
+            >
+              $
+            </button>
             <fa-icon
               [icon]="faPen"
               class="bg-violet-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer hover:bg-violet-700"
@@ -119,3 +125,8 @@
   (reloadProducts)="(reloadProducts)"
 >
 </app-delete-product-modal>
+<app-new-deal-modal
+  *ngIf="showNewDealDialog"
+  [product]="productToDiscount"
+  [modal_show]="showNewDealDialog"
+></app-new-deal-modal>

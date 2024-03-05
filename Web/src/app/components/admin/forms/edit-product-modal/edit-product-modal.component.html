@@ -176,11 +176,11 @@
               <select
                 id="type"
                 class="bg-gray-50 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-                formControlName="prod_type"
+                formControlName="type"
                 [ngClass]="{
                   'border-rose-600':
-                    editProductForm.get('prod_type')?.invalid &&
-                    editProductForm.get('prod_type')?.touched
+                    editProductForm.get('type')?.invalid &&
+                    editProductForm.get('type')?.touched
                 }"
               >
                 <option selected>Pick a type</option>
@@ -188,11 +188,11 @@
                   {{ type.name }}
                 </option>
               </select>
-              <div *ngFor="let error of errorMessages.prod_type">
+              <div *ngFor="let error of errorMessages.type">
                 <span
                   *ngIf="
-                    editProductForm.get('prod_type')?.hasError(error.type) &&
-                    editProductForm.get('prod_type')?.touched
+                    editProductForm.get('type')?.hasError(error.type) &&
+                    editProductForm.get('type')?.touched
                   "
                   class="text-sm text-rose-600"
                 >

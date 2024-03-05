@@ -35,8 +35,10 @@
         <td class="px-6 py-4 w-1/12">${{ deal.product.price.toFixed(2) }}</td>
         <td class="px-6 py-4 w-1/12">{{ deal.units }}</td>
         <td class="px-6 py-4 w-2/12">{{ deal.duration }}</td>
-        <td class="px-6 py-4 w-1/12">{{ deal.startAt }}</td>
-        <td class="px-6 py-4 w-1/12">{{ deal.endAt }}</td>
+        <td class="px-6 py-4 w-1/12">
+          {{ generateDateTemplate(deal.startAt) }}
+        </td>
+        <td class="px-6 py-4 w-1/12">{{ generateDateTemplate(deal.endAt) }}</td>
         <td class="px-6 py-4 text-right w-2/12">
           <div class="flex flex-row gap-2">
             <fa-icon
@@ -112,18 +114,8 @@
     </ul>
   </nav>
 </div>
-<!-- <app-edit-product-modal
-  *ngIf="isEditModalDisplayed"
-  [data]="isEditModalDisplayed"
-  [product]="productToEdit"
-  (closeModal)="(closeModal)"
-  (reloadProducts)="(reloadProducts)"
-></app-edit-product-modal>
-<app-delete-product-modal
-  *ngIf="showDeleteDialog"
-  [data]="showDeleteDialog"
-  [product]="productToDelete"
-  (closeModal)="(closeDeleteDialog)"
-  (reloadProducts)="(reloadProducts)"
->
-</app-delete-product-modal> -->
+<app-edit-deal-modal
+  *ngIf="showEditModal"
+  [deal]="dealToEdit"
+  [modal_show]="isEditModalDisplayed"
+></app-edit-deal-modal>

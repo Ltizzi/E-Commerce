@@ -8,6 +8,7 @@ import { PurchaseComponent } from './components/layout/purchase/purchase.compone
 import { OrdersComponent } from './components/purchase/orders/orders.component';
 import { TokenComponent } from './token/token.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
+import { FeaturedComponent } from './components/layout/featured/featured.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'order', component: OrdersComponent },
   { path: 'token', component: TokenComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'featured', component: FeaturedComponent },
 ];
 
 @NgModule({

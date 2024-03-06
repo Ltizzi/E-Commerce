@@ -23,7 +23,7 @@ export class DealTableComponent {
   isEditModalDisplayed: boolean = false;
   showDeleteDialog: boolean = false;
   dealToEdit!: Deal;
-  dealToDelete!: Object;
+  dealToDelete!: Deal;
 
   ITEMS_PER_PAGE = 5;
   pages!: Array<number>;
@@ -117,8 +117,9 @@ export class DealTableComponent {
   }
 
   deleteDeal(deal: Deal) {
+    console.log('asdas');
     this.dealToDelete = deal;
-    this.showDeleteDialog = !this.showDeleteDialog;
+    this.showDeleteDialog = true;
   }
 
   showEditModal(deal: Deal) {

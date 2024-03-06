@@ -14,7 +14,7 @@ export class StarsComponent {
   partialFill = 0;
 
   ngOnInit(): void {
-    this.emptyStars = 5 - this.rating;
+    this.emptyStars = Math.floor(5 - this.rating);
     this.filledStars = Math.floor(this.rating);
     this.partialFill = this.rating - this.filledStars;
     console.log('STARS');

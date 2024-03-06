@@ -25,6 +25,7 @@ export class LandingComponent {
       img: 'out',
       text: 'out',
       btn: 'leave',
+      btnFeatured: 'leave',
     },
   };
 

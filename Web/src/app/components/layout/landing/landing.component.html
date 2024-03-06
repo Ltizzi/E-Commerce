@@ -17,7 +17,7 @@
         Microprocesadores. Placas de video. Memorias Ram. Almacenamiento.
         Impresoras. Software. Coolers. Periféricos. Insumos.
       </p>
-      <div class="flex justify-center">
+      <div class="flex justify-center gap-5">
         <button
           class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg hover:cursor-pointer"
           routerLink="/products"
@@ -26,6 +26,15 @@
           (mouseleave)="state.animation.btn = 'leave'"
         >
           Ver catálogo
+        </button>
+        <button
+          class="inline-flex text-white bg-violet-500 border-0 py-2 px-6 focus:outline-none hover:bg-violet-600 rounded text-lg hover:cursor-pointer"
+          routerLink="/featured"
+          [@hover&leave]="state.animation.btnFeatured"
+          (mouseover)="state.animation.btnFeatured = 'hover'"
+          (mouseleave)="state.animation.btnFeatured = 'leave'"
+        >
+          Find Deals
         </button>
       </div>
     </div>

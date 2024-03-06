@@ -9,12 +9,12 @@ import { Component, Input } from '@angular/core';
 })
 export class StarsComponent {
   @Input('rating') rating!: number;
-  emtpyStars = 0;
+  emptyStars = 0;
   filledStars = 0;
   partialFill = 0;
 
   ngOnInit(): void {
-    this.emtpyStars = 5 - this.rating;
+    this.emptyStars = 5 - this.rating;
     this.filledStars = Math.floor(this.rating);
     this.partialFill = this.rating - this.filledStars;
     console.log('STARS');
@@ -23,6 +23,6 @@ export class StarsComponent {
     console.log('partial:');
     console.log(this.partialFill);
     console.log('empty:');
-    console.log(this.emtpyStars);
+    console.log(this.emptyStars);
   }
 }

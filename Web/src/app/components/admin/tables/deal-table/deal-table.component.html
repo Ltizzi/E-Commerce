@@ -119,3 +119,10 @@
   [deal]="dealToEdit"
   [modal_show]="isEditModalDisplayed"
 ></app-edit-deal-modal>
+<app-delete-deal-modal
+  *ngIf="showDeleteDialog"
+  [deal]="dealToDelete"
+  [show]="showDeleteDialog"
+  (closeModal)="closeDeleteDialog()"
+  (reloadDeals)="reloadDeals()"
+></app-delete-deal-modal>

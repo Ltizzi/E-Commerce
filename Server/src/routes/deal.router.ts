@@ -5,7 +5,7 @@ import { isAdmin } from "../utils/authMiddleware";
 const dealRouter: Router = Router();
 const dealController = new DealController();
 
-dealRouter.get("/all", isAdmin, dealController.httpGetDeals);
+dealRouter.get("/all", dealController.httpGetDeals);
 dealRouter.get(
   "/withPagination",
   isAdmin,

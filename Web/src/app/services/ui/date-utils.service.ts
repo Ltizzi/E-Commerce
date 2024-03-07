@@ -10,7 +10,7 @@ export class DateUtilsService {
     let date = new Date(incDate);
     const year = date.getFullYear().toString();
     const month = (date.getMonth() + 1).toString();
-    const day = (date.getDay() + 3).toString();
+    const day = date.getDate().toString();
     const hour = date.getHours().toString();
     const minutes = date.getMinutes().toString();
 

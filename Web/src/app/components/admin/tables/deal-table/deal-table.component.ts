@@ -75,7 +75,7 @@ export class DealTableComponent {
   }
 
   generateDateTemplate(date: any) {
-    return this.dateUtils.generateDateTemplate(date);
+    return this.dateUtils.generateDateTemplate(date.toLocaleString());
   }
 
   hideTable() {

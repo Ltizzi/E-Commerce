@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { EventService } from 'src/app/services/event.service';
 import { PurchaseService } from 'src/app/services/purchase.service';
@@ -46,7 +47,8 @@ export class ProfileComponent {
     private authServ: AuthService,
     private purchServ: PurchaseService,
     private eventServ: EventService,
-    private reviewServ: ReviewService
+    private reviewServ: ReviewService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -67,9 +69,22 @@ export class ProfileComponent {
     this.eventServ.subscribe('updateFavCount').subscribe((data) => {
       this.reloadUserData();
     });
+
+    this.checkRoutePath();
     setTimeout(() => {
       this.state.animation.layout = 'in';
-    });
+    }, 100);
+  }
+
+  checkRoutePath() {
+    const path = this.route.snapshot.firstChild?.url[0].path;
+    if (path == 'wishlist') {
+      console.log('ASD ENTRO');
+      this.changeTab('favs');
+    } else if (path == 'purchases') {
+      console.log('ASD ENTRO');
+      this.changeTab('purchases');
+    } else this.state.actualTab = 'profile';
   }
 
   showProfileEditor() {

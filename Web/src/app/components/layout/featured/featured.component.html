@@ -1,7 +1,7 @@
-<section class="text-gray-600 body-font">
+<section class="text-gray-600 body-font w-full">
   <div class="container px-5 pb-24 mx-auto flex flex-wrap">
     <div
-      class="flex flex-wrap md:-m-2 -m-1"
+      class="flex flex-wrap md:-m-2 -m-1 bg-gray-100"
       *ngIf="moreThanSixDeals && !isMobile"
     >
       <div class="flex flex-wrap w-1/2">
@@ -183,7 +183,9 @@
   </div>
 </section>
 <div *ngIf="!noDeals">
-  <div class="flex flex-row flex-wrap gap-5 w-10/12 mx-auto justify-start">
+  <div
+    class="flex flex-row flex-wrap gap-5 w-10/12 mx-auto justify-start pt-10"
+  >
     <ng-container>
       <app-product-card
         *ngFor="let product of products"

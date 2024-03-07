@@ -9,6 +9,8 @@ import { OrdersComponent } from './components/purchase/orders/orders.component';
 import { TokenComponent } from './token/token.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { FeaturedComponent } from './components/layout/featured/featured.component';
+import { UserFavListComponent } from './components/user/user-fav-list/user-fav-list.component';
+import { PurchaseListComponent } from './components/user/purchase-list/purchase-list.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -18,7 +20,14 @@ const routes: Routes = [
   { path: 'purchase', component: PurchaseComponent },
   { path: 'order', component: OrdersComponent },
   { path: 'token', component: TokenComponent },
-  { path: 'profile', component: ProfileComponent },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    children: [
+      { path: 'wishlist', component: UserFavListComponent },
+      { path: 'purchases', component: PurchaseListComponent },
+    ],
+  },
   { path: 'featured', component: FeaturedComponent },
 ];
 

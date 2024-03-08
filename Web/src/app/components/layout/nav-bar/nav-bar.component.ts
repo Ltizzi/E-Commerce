@@ -20,6 +20,8 @@ export class NavBarComponent {
   isAdmin = false;
   cart_counter = 0;
 
+  searchQuery!: string;
+
   state: State = {
     animation: {
       btn_home: 'leave',
@@ -88,5 +90,10 @@ export class NavBarComponent {
     } else {
       window.location.href = this.URL;
     }
+  }
+
+  search() {
+    this.router.navigate(['/products']);
+    this.eventServ.emit('updateSearch', this.searchQuery);
   }
 }

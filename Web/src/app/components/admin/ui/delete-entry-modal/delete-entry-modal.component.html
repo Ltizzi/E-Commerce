@@ -1,0 +1,37 @@
+<div
+  id="new-product-modal"
+  class="lg:items-center 2xl:items-center fixed left-0 top-0 z-50 flex h-screen w-screen items-start justify-center"
+  *ngIf="show"
+>
+  <div
+    class="fixed left-0 top-0 z-20 h-full w-full bg-black/50 backdrop-blur-lg"
+    (clic)="close()"
+  >
+    <div
+      class="container fixed z-50 2xl:bottom-1/2 2xl:left-1/4 2xl:right-1/4 w-auto rounded-xl border-2 bg-white px-5 shadow-xl"
+    >
+      <h1 class="text-xl text-slate-800 text-center mt-5">
+        You are about to delete the entry for the product called
+        {{ entry.stock.product.name }} with the id Nº{{ entry.entry_id }}, are
+        you sure?
+      </h1>
+      <div class="flex flex-row justify-around my-5 gap-3">
+        <button
+          class="py-1 px-2 rounded-lg bg-rose-600 text-white text-lg shadow-lg shadow-slate-700 hover:bg-rose-800 hover:cursor-pointer"
+          (click)="deleteEntry()"
+        >
+          Delete
+        </button>
+        <button
+          class="py-1 px-2 rounded-lg bg-indigo-600 text-white text-lg shadow-lg shadow-slate-700 hover:bg-indigo-800 hover:cursor-pointer"
+          (click)="close()"
+        >
+          Go back
+        </button>
+        <p class="text-xl text-green-600 font-bold" *ngIf="successOperation">
+          Success!
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<blockquote
+  class="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8 w-96 max-h-48 h-full"
+>
+  <div class="flex items-center gap-4">
+    <img
+      alt=""
+      [src]="fromProfile ? product.imageUrl[0] : user.avatar"
+      class="w-14 h-14 rounded-full object-cover"
+    />
+
+    <div>
+      <div class="flex justify-start gap-0.5 text-green-500">
+        <app-stars [rating]="review.rating"></app-stars>
+      </div>
+
+      <p class="mt-0.5 text-lg font-medium text-gray-900">
+        {{ fromProfile ? product.name : user.username }}
+      </p>
+      <p class="text-sm" *ngIf="fromProfile">{{ product.brand }}</p>
+    </div>
+  </div>
+
+  <p class="mt-4 text-gray-700">
+    {{ review.text }}
+  </p>
+</blockquote>

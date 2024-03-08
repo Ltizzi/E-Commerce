@@ -1,0 +1,218 @@
+<div
+  id="edit-profile-modal"
+  class="lg:items-center 2xl:items-center fixed left-0 top-0 z-50 flex h-screen w-screen items-start justify-center"
+  *ngIf="show"
+>
+  <div
+    class="fixed left-0 top-0 z-20 h-full w-full bg-black/50 backdrop-blur-lg"
+    (click)="close()"
+  ></div>
+  <div
+    class="container fixed z-50 2xl:bottom-1/3 2xl:py-5 2xl:left-1/4 2xl:right-1/4 w-auto rounded-xl border-2 bg-white px-5 shadow-xl items-center"
+  >
+    <h1 class="font-semibold text-xl text-center mb-5">Edit Profile</h1>
+    <img
+      class="w-16 h-16 rounded-full mx-auto"
+      [src]="avatarUrl"
+      alt="Rounded avatar"
+    />
+
+    <form [formGroup]="editProfileForm" (ngSubmit)="submitForm()">
+      <div class="max-w-md mx-auto">
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            name="avatar"
+            id="avatar"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            [placeholder]="user.avatar"
+            formControlName="avatar"
+            required
+            [ngClass]="{
+              'border-rose-600':
+                editProfileForm.get('avatar')?.invalid &&
+                editProfileForm.get('avatar')?.touched
+            }"
+          />
+          <label
+            for="avatar"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Avatar url</label
+          >
+          <div *ngFor="let error of errorMessages.avatar">
+            <span
+              class="text-sm text-rose-600 w-full"
+              *ngIf="
+                editProfileForm.get('avatar')?.hasError(error.type) &&
+                editProfileForm.get('avatar')?.touched
+              "
+              >{{ error.message }}</span
+            >
+          </div>
+        </div>
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            [placeholder]="user.email"
+            formControlName="email"
+            [ngClass]="{
+              'border-rose-600':
+                editProfileForm.get('email')?.invalid &&
+                editProfileForm.get('email')?.touched
+            }"
+            required
+          />
+          <label
+            for="floating_password"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Email</label
+          >
+          <div *ngFor="let error of errorMessages.email">
+            <span
+              class="text-sm text-rose-600 w-full"
+              *ngIf="
+                editProfileForm.get('email')?.hasError(error.type) &&
+                editProfileForm.get('email')?.touched
+              "
+              >{{ error.message }}</span
+            >
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 md:gap-6">
+          <div class="relative z-0 w-full mb-5 group">
+            <input
+              type="text"
+              name="name"
+              id="name"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              [placeholder]="user.name"
+              formControlName="name"
+              [ngClass]="{
+                'border-rose-600':
+                  editProfileForm.get('name')?.invalid &&
+                  editProfileForm.get('name')?.touched
+              }"
+              required
+            />
+            <label
+              for="floating_first_name"
+              class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >First name</label
+            >
+            <div *ngFor="let error of errorMessages.name">
+              <span
+                class="text-sm text-rose-600 w-full"
+                *ngIf="
+                  editProfileForm.get('name')?.hasError(error.type) &&
+                  editProfileForm.get('name')?.touched
+                "
+                >{{ error.message }}</span
+              >
+            </div>
+          </div>
+          <div class="relative z-0 w-full mb-5 group">
+            <input
+              type="text"
+              name="lastname"
+              id="lastname"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              [placeholder]="user.lastname"
+              formControlName="lastname"
+              [ngClass]="{
+                'border-rose-600':
+                  editProfileForm.get('lastname')?.invalid &&
+                  editProfileForm.get('lastname')?.touched
+              }"
+              required
+            />
+            <label
+              for="floating_last_name"
+              class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Last name</label
+            >
+            <div *ngFor="let error of errorMessages.lastname">
+              <span
+                class="text-sm text-rose-600 w-full"
+                *ngIf="
+                  editProfileForm.get('lastname')?.hasError(error.type) &&
+                  editProfileForm.get('lastname')?.touched
+                "
+                >{{ error.message }}</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 md:gap-6">
+          <div class="relative z-0 w-full mb-5 group">
+            <input
+              type="text"
+              class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              [placeholder]="user.username"
+              formControlName="username"
+              [ngClass]="{
+                'border-rose-600':
+                  editProfileForm.get('username')?.invalid &&
+                  editProfileForm.get('username')?.touched
+              }"
+              required
+            />
+            <label
+              for="username"
+              class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Username</label
+            >
+            <div *ngFor="let error of errorMessages.username">
+              <span
+                class="text-sm text-rose-600 w-full"
+                *ngIf="
+                  editProfileForm.get('username')?.hasError(error.type) &&
+                  editProfileForm.get('username')?.touched
+                "
+                >{{ error.message }}</span
+              >
+            </div>
+          </div>
+          <div class="relative z-0 w-full mb-5 group">
+            <input
+              type="date"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              [placeholder]="user.birthday"
+              formControlName="birthday"
+              [ngClass]="{
+                'border-rose-600':
+                  editProfileForm.get('birthday')?.invalid &&
+                  editProfileForm.get('birthday')?.touched
+              }"
+              required
+            />
+            <label
+              for="birthday"
+              class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >Birthday</label
+            >
+            <div *ngFor="let error of errorMessages.birthday">
+              <span
+                class="text-sm text-rose-600 w-full"
+                *ngIf="
+                  editProfileForm.get('birthday')?.hasError(error.type) &&
+                  editProfileForm.get('birthday')?.touched
+                "
+                >{{ error.message }}</span
+              >
+            </div>
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,128 @@
+<div
+  class="relative overflow-x-auto shadow-md sm:rounded-lg mt-10 flex flex-col mx-auto justify-center"
+  [@in&Out]="state.animation.table"
+>
+  <table class="w-5/6 mx-auto text-sm text-left text-gray-500 h-96">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3">Deal Id</th>
+        <th scope="col" class="px-6 py-3">Product name</th>
+        <th scope="col" class="px-6 py-3">Full Price</th>
+        <th scope="col" class="px-6 py-3">Discount</th>
+        <th scope="col" class="px-6 py-3">Discounted Price</th>
+        <th scope="col" class="px-6 py-3">Units</th>
+        <th scope="col" class="px-6 py-3">Time</th>
+        <th scope="col" class="px-6 py-3">Deal started at</th>
+        <th scope="col" class="px-6 py-3">Deal end at</th>
+        <th scope="col" class="px-6 py-3">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        class="bg-white border-b hover:bg-indigo-100 transition ease-in-out duration-30000 hover:font-bold"
+        *ngFor="let deal of deals"
+      >
+        <td class="px-6 py-4 w-1/12">{{ deal.deal_id }}</td>
+        <th
+          scope="row"
+          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap cursor-pointer w-4/12"
+          (click)="goToProduct(deal.product_id, $event)"
+        >
+          {{ deal.product.name }}
+        </th>
+        <td class="px-6 py-4 w-2/12">${{ deal.fullPrice?.toFixed(2) }}</td>
+        <td class="px-6 py-4 w-2/12">{{ deal.discount }}</td>
+        <td class="px-6 py-4 w-1/12">${{ deal.product.price.toFixed(2) }}</td>
+        <td class="px-6 py-4 w-1/12">{{ deal.units }}</td>
+        <td class="px-6 py-4 w-2/12">{{ deal.duration }}</td>
+        <td class="px-6 py-4 w-1/12">
+          {{ generateDateTemplate(deal.startAt) }}
+        </td>
+        <td class="px-6 py-4 w-1/12">{{ generateDateTemplate(deal.endAt) }}</td>
+        <td class="px-6 py-4 text-right w-2/12">
+          <div class="flex flex-row gap-2">
+            <fa-icon
+              [icon]="faPen"
+              class="bg-violet-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer hover:bg-violet-700"
+              (click)="showEditModal(deal)"
+            ></fa-icon>
+            <fa-icon
+              [icon]="faTrashCan"
+              class="bg-rose-500 text-white py-1.5 px-2.5 rounded-full shadow-lg shadow-gray-700 hover:cursor-pointer hover:bg-rose-700"
+              (click)="deleteDeal(deal)"
+            ></fa-icon>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <nav aria-label="Page navigation example" class="flex justify-center">
+    <ul class="inline-flex items-center -space-x-px">
+      <li>
+        <p
+          class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:text-gray-50 hover:bg-indigo-600 hover:cursor-pointer transition ease-in-out duration-200"
+          (click)="goPrevious()"
+        >
+          <span class="sr-only">Previous</span>
+          <svg
+            aria-hidden="true"
+            class="w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </p>
+      </li>
+      <li *ngFor="let page of pages">
+        <p
+          class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:text-gray-50 hover:bg-indigo-600 hover:cursor-pointer transition ease-in-out duration-200"
+          (click)="goPage(page)"
+          [ngClass]="{ 'text-white bg-indigo': page === currentPage }"
+        >
+          {{ page }}
+        </p>
+      </li>
+
+      <li>
+        <p
+          class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:text-gray-50 hover:bg-indigo-600 hover:cursor-pointer transition ease-in-out duration-200"
+          (click)="goNext()"
+        >
+          <span class="sr-only">Next</span>
+          <svg
+            aria-hidden="true"
+            class="w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </p>
+      </li>
+    </ul>
+  </nav>
+</div>
+<app-edit-deal-modal
+  *ngIf="showEditModal"
+  [deal]="dealToEdit"
+  [modal_show]="isEditModalDisplayed"
+></app-edit-deal-modal>
+<app-delete-deal-modal
+  *ngIf="showDeleteDialog"
+  [deal]="dealToDelete"
+  [show]="showDeleteDialog"
+  (closeModal)="closeDeleteDialog()"
+  (reloadDeals)="reloadDeals()"
+></app-delete-deal-modal>

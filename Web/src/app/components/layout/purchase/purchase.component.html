@@ -1,0 +1,233 @@
+<div>
+  <div class="" *ngIf="isMobile">
+    <ol class="items-center justify-around w-full flex flex-row gap-4">
+      <li
+        class="flex items-center text-gray-500 dark:text-gray-400 space-x-2.5 hover:cursor-pointer"
+        (click)="changeTab('cart')"
+      >
+        <span
+          class="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0 dark:border-gray-400"
+        >
+          1
+        </span>
+        <span>
+          <h3 class="font-medium leading-tight">Cart</h3>
+        </span>
+      </li>
+      <li
+        class="flex items-center text-gray-500 dark:text-gray-400 space-x-2.5"
+        (click)="changeTab('order')"
+      >
+        <span
+          class="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0 dark:border-gray-400"
+        >
+          2
+        </span>
+        <span>
+          <h3 class="font-medium leading-tight">Order</h3>
+        </span>
+      </li>
+      <li
+        class="flex items-center text-gray-500 dark:text-gray-400 space-x-2.5"
+      >
+        <span
+          class="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0 dark:border-gray-400"
+        >
+          3
+        </span>
+        <span>
+          <h3 class="font-medium leading-tight">Payment</h3>
+        </span>
+      </li>
+      <li
+        class="flex items-center text-gray-500 dark:text-gray-400 space-x-2.5 hover:cursor-pointer"
+        (click)="changeTab('success')"
+      >
+        <span
+          class="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0 dark:border-gray-400"
+        >
+          3
+        </span>
+        <span>
+          <h3 class="font-medium leading-tight">Success</h3>
+        </span>
+      </li>
+    </ol>
+  </div>
+  <div class="flex w-full h-full justify-around">
+    <div
+      class="flex justify-end items-start mt-20 w-4/12"
+      *ngIf="!isMobile"
+      [@in&Out]="state.animation.lateral"
+    >
+      <ol
+        class="relative items-start text-gray-500 border-l border-gray-200 flex flex-col"
+      >
+        <li class="mb-10 ml-6 hover:cursor-pointer" (click)="changeTab('cart')">
+          <span
+            class="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white"
+            *ngIf="isCartOpen"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5 text-green-500"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </span>
+          <span
+            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white"
+            *ngIf="!isCartOpen"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 576 512"
+              class="w-5 h-5 text-gray-500"
+            >
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+              <path
+                d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"
+              />
+            </svg>
+          </span>
+
+          <h3 class="font-medium leading-tight">Cart</h3>
+          <p class="text-sm">Pick products</p>
+        </li>
+        <li
+          class="mb-10 ml-6 hover:cursor-pointer"
+          (click)="changeTab('order')"
+        >
+          <span
+            class="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white"
+            *ngIf="isOrderOpen"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5 text-green-500"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </span>
+          <span
+            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white"
+            *ngIf="!isOrderOpen"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5 text-gray-500"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1zM4 4h3a3 3 0 006 0h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45 4a2.5 2.5 0 10-4.9 0h4.9zM12 9a1 1 0 100 2h3a1 1 0 100-2h-3zm-1 4a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </span>
+          <h3 class="font-medium leading-tight">Shop order</h3>
+          <p class="text-sm">Enter purchase details</p>
+        </li>
+        <li class="mb-10 ml-6 hover:cursor-pointer">
+          <span
+            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5 text-gray-500"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+              <path
+                fill-rule="evenodd"
+                d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </span>
+          <h3 class="font-medium leading-tight">Payment</h3>
+          <p class="text-sm">Payment process</p>
+        </li>
+        <li class="ml-6 hover:cursor-pointer" (click)="changeTab('success')">
+          <span
+            class="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white"
+            *ngIf="isSuccessOpen"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5 text-green-500"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </span>
+          <span
+            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white"
+            *ngIf="!isSuccessOpen"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5 text-gray-500"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+              <path
+                fill-rule="evenodd"
+                d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </span>
+          <h3 class="font-medium leading-tight">Success!</h3>
+          <p class="text-sm">End process</p>
+        </li>
+      </ol>
+    </div>
+    <div class="w-full justify-start flex">
+      <app-cart
+        (displayOrders)="showOrders()"
+        *ngIf="isCartOpen"
+        class="w-full -ml-20"
+        [@fadeIn&Out]="state.animation.cart"
+      ></app-cart>
+      <app-orders
+        *ngIf="isOrderOpen"
+        [@fadeIn&Out]="state.animation.order"
+        (showCart)="showOrders()"
+        (successPurchase)="purchaseComplete($event)"
+        (showSuccess)="purchaseComplete($event)"
+      ></app-orders>
+      <app-success
+        *ngIf="isSuccessOpen"
+        [orders]="orders"
+        [@fadeIn&Out]="state.animation.success"
+      ></app-success>
+    </div>
+  </div>
+</div>

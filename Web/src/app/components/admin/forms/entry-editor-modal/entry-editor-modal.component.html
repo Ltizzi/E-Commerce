@@ -1,0 +1,94 @@
+<div
+  id="new-product-modal"
+  class="lg:items-center 2xl:items-center fixed left-0 top-0 z-50 flex h-screen w-screen items-start justify-center"
+  *ngIf="show"
+>
+  <div
+    class="fixed left-0 top-0 z-20 h-full w-full bg-black/50 backdrop-blur-lg"
+    (clic)="close()"
+  >
+    <div
+      class="container fixed z-50 2xl:bottom-2/4 2xl:left-1/4 2xl:right-1/4 w-auto rounded-xl border-2 bg-white px-5 shadow-xl text-gray-800"
+    >
+      <h1 class="text-center font-bold text-gray-800 text-xl mt-5">
+        Entry Editor
+      </h1>
+
+      <form [formGroup]="entryForm" (ngSubmit)="submitForm()">
+        <div class="mx-5 flex flex-col justify-center">
+          <div class="flex flex-row justify-around gap-5">
+            <div *ngIf="newOrEdit" class="flex flex-row justify-around gap-5">
+              <h1 class="text-lg font-semibold">
+                {{ stock.product.name }}'s stock
+              </h1>
+              <h1 class="text-lg font-semibold">
+                Actual stock: {{ stock.cantidad }}
+              </h1>
+            </div>
+            <div *ngIf="!newOrEdit" class="flex flex-row justify-around gap-5">
+              <h1 class="text-lg font-semibold">
+                {{ entryToEdit.stock.product.name }}'s stock
+              </h1>
+              <h1 class="text-lg font-semibold">
+                Actual stock: {{ entryToEdit.stock.cantidad }}
+              </h1>
+              <!-- <h1 class="text-lg font-semibold">
+                entry quantity: {{ entryToEdit.cantidad }}
+              </h1> -->
+            </div>
+          </div>
+
+          <div class="relative w-52 mx-auto">
+            <input
+              type="number"
+              id="floating_filled"
+              class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              formControlName="cantidad"
+              [ngClass]="{
+                'border-rose-600':
+                  entryForm.get('cantidad')?.invalid &&
+                  entryForm.get('cantidad')?.touched
+              }"
+            />
+            <label
+              for="floating_filled"
+              class="absolute text-base text-gray-500 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-indigo-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+              >Cantidad</label
+            >
+          </div>
+
+          <div *ngFor="let error of errorMessages.cantidad" class="mx-auto">
+            <span
+              class="text-sm text-rose-600 w-full text-center"
+              *ngIf="
+                entryForm.get('cantidad')?.hasError(error.type) &&
+                entryForm.get('cantidad')?.touched
+              "
+              >{{ error.message }}</span
+            >
+          </div>
+        </div>
+
+        <div class="flex flex-row justify-center gap-5 py-5">
+          <button
+            type="submit"
+            class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+          >
+            Submit
+          </button>
+          <button
+            class="text-white bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            type="button"
+            (click)="close()"
+          >
+            Close
+          </button>
+          <p class="text-xl text-green-600 font-bold" *ngIf="successOperation">
+            Success!
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

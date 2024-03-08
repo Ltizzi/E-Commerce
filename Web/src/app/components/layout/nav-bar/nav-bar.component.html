@@ -1,0 +1,178 @@
+<header class="text-gray-600 body-font my-auto items-baseline">
+  <div
+    class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center"
+  >
+    <!--       [@hover&leave]="state.animation.btn_home"
+      (mouseover)="state.animation.btn_home = 'hover'"
+      (mouseleave)="state.animation.btn_home = 'leave'" -->
+    <div class="w-5/12">
+      <a
+        class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+          ></path>
+        </svg>
+        <span class="ml-3 text-xl hover:cursor-pointer" routerLink="/"
+          >E-Commerce</span
+        >
+      </a>
+    </div>
+
+    <nav
+      class="md:ml-auto flex flex-wrap items-center text-base justify-center w-5/12 gap-2 text-center"
+    >
+      <div class="relative w-40">
+        <label for="Search" class="sr-only"> Search </label>
+
+        <input
+          type="text"
+          id="Search"
+          placeholder="Search for..."
+          class="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
+          [(ngModel)]="searchQuery"
+          (input)="search()"
+        />
+
+        <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
+          <button type="button" class="text-gray-600 hover:text-gray-700">
+            <span class="sr-only">Search</span>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-4 w-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              />
+            </svg>
+          </button>
+        </span>
+      </div>
+      <div class="w-20">
+        <a
+          class="mr-5 hover:text-gray-900 hover:cursor-pointer"
+          routerLink="/products"
+          [@hover&leave]="state.animation.btn_catalog"
+          (mouseover)="state.animation.btn_catalog = 'hover'"
+          (mouseleave)="state.animation.btn_catalog = 'leave'"
+          >Catálogo</a
+        >
+      </div>
+
+      <div class="w-24 items-baseline">
+        <a
+          class="mr-5 hover:text-gray-900"
+          routerLink="/purchase"
+          [@hover&leave]="state.animation.btn_cart"
+          (mouseover)="state.animation.btn_cart = 'hover'"
+          (mouseleave)="state.animation.btn_cart = 'leave'"
+          >Carrito
+        </a>
+        <span
+          class="bg-indigo-500 text-white rounded-full px-2 py-0.5 font-semibold text-xs absolute top-6 -ml-5 mr-2"
+          *ngIf="cart_counter > 0"
+          >{{ cart_counter }}</span
+        >
+      </div>
+
+      <div [ngClass]="isAdmin ? 'w-48' : 'w-0'">
+        <a
+          class="mr-5 hover:text-gray-900 hover:cursor-pointer"
+          routerLink="/admin"
+          *ngIf="isAdmin"
+          [@hover&leave]="state.animation.btn_admin"
+          (mouseover)="state.animation.btn_admin = 'hover'"
+          (mouseleave)="state.animation.btn_admin = 'leave'"
+          >Admin Dashboard</a
+        >
+      </div>
+    </nav>
+    <div
+      class="flex flex-row items-center w-2/12 gap-5 lg:gap-3 -ml-14 lg:ml-0"
+    >
+      <div class="w-auto" *ngIf="loggedIn">
+        <button
+          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base md:mt-0"
+          routerLink="/profile"
+          [@hover&leave]="state.animation.btn_profile"
+          (mouseover)="state.animation.btn_profile = 'hover'"
+          (mouseleave)="state.animation.btn_profile = 'leave'"
+        >
+          {{ user.username }}
+          <!-- <svg
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        class="w-4 h-4 ml-1"
+        viewBox="0 0 24 24"
+      >
+        <path d="M5 12h14M12 5l7 7-7 7"></path>
+      </svg> -->
+        </button>
+      </div>
+      <div class="w-full" *ngIf="!loggedIn">
+        <button
+          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base md:mt-0"
+          (click)="handleAuth()"
+          [@hover&leave]="state.animation.btn_signIntOut"
+          (mouseover)="state.animation.btn_signIntOut = 'hover'"
+          (mouseleave)="state.animation.btn_signIntOut = 'leave'"
+        >
+          Log in
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            class="w-4 h-4 ml-1"
+            viewBox="0 0 24 24"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="w-28" *ngIf="loggedIn">
+        <button
+          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base md:mt-0"
+          (click)="handleAuth()"
+          [@hover&leave]="state.animation.btn_signIntOut"
+          (mouseover)="state.animation.btn_signIntOut = 'hover'"
+          (mouseleave)="state.animation.btn_signIntOut = 'leave'"
+        >
+          Log out
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            class="w-4 h-4 ml-1"
+            viewBox="0 0 24 24"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

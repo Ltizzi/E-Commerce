@@ -1,0 +1,153 @@
+<div class="flex flex-col">
+  <section class="text-gray-600 body-font">
+    <div class="container px-1 py-24 mx-auto">
+      <div class="flex flex-wrap -m-4 text-center gap-16 text-gray-900">
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
+          (click)="changeTab('users')"
+          [ngClass]="{
+            'text-white bg-indigo rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
+              state.actualTab == 'users'
+          }"
+          [@cardState]="state.animation.user"
+          (mouseover)="hoverCard('user')"
+          (mouseleave)="leaveCard('user')"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl">
+            {{ totalUsers }}
+          </h2>
+          <p class="leading-relaxed">Users</p>
+        </div>
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
+          (click)="changeTab('products')"
+          [ngClass]="{
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
+              state.actualTab == 'products'
+          }"
+          [@cardState]="state.animation.products"
+          (mouseover)="hoverCard('products')"
+          (mouseleave)="leaveCard('products')"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl">
+            {{ totalProducts }}
+          </h2>
+          <p class="leading-relaxed">Products</p>
+        </div>
+
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
+          (click)="changeTab('types')"
+          [ngClass]="{
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
+              state.actualTab == 'types'
+          }"
+          [@cardState]="state.animation.types"
+          (mouseover)="hoverCard('types')"
+          (mouseleave)="leaveCard('types')"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl">
+            {{ totalTypes }}
+          </h2>
+          <p class="leading-relaxed">Types</p>
+        </div>
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
+          (click)="changeTab('deals')"
+          [ngClass]="{
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
+              state.actualTab == 'deals'
+          }"
+          [@cardState]="state.animation.deals"
+          (mouseover)="hoverCard('deals')"
+          (mouseleave)="leaveCard('deals')"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl">
+            {{ totalDeals }}
+          </h2>
+          <p class="leading-relaxed">Deals</p>
+        </div>
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
+          (click)="changeTab('purchases')"
+          [ngClass]="{
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
+              state.actualTab == 'purchases'
+          }"
+          [@cardState]="state.animation.purchases"
+          (mouseover)="hoverCard('purchases')"
+          (mouseleave)="leaveCard('purchases')"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl">
+            {{ totalPurchases }}
+          </h2>
+          <p class="leading-relaxed">Purchases</p>
+        </div>
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
+          (click)="changeTab('stock')"
+          [ngClass]="{
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
+              state.actualTab == 'stock'
+          }"
+          [@cardState]="state.animation.stock"
+          (mouseover)="hoverCard('stock')"
+          (mouseleave)="leaveCard('stock')"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl">
+            {{ totalStock }}
+          </h2>
+          <p class="leading-relaxed">Stock</p>
+        </div>
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-32 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
+          (click)="changeTab('entries')"
+          [ngClass]="{
+            'text-white bg-indigo  rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
+              state.actualTab == 'entries'
+          }"
+          [@cardState]="state.animation.entries"
+          (mouseover)="hoverCard('entries')"
+          (mouseleave)="leaveCard('entries')"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl">
+            {{ totalEntries }}
+          </h2>
+          <p class="leading-relaxed">Entries</p>
+        </div>
+        <div
+          class="p-4 sm:w-1/4 w-1/2 2xl:w-48 hover:rounded-2xl hover:shadow-lg hover:shadow-gray-200 hover:bg-indigo-100 hover:cursor-pointer"
+          (click)="changeTab('income')"
+          [ngClass]="{
+            'text-white bg-indigo rounded-2xl shadow-lg shadow-gray-600 bg-indigo-hover':
+              state.actualTab == 'income'
+          }"
+          [@cardState]="state.animation.income"
+          (mouseover)="hoverCard('income')"
+          (mouseleave)="leaveCard('income')"
+        >
+          <h2 class="title-font font-medium sm:text-4xl text-3xl text-center">
+            ${{ totalIncome }}{{ incomeSimbol }}
+          </h2>
+          <p class="leading-relaxed text-center">Total Income</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <app-user-table *ngIf="state.actualTab == 'users'"></app-user-table>
+  <app-products-panel
+    *ngIf="state.actualTab == 'products'"
+  ></app-products-panel>
+  <app-type-panel *ngIf="state.actualTab == 'types'"></app-type-panel>
+  <app-purchase-table
+    *ngIf="state.actualTab == 'purchases'"
+  ></app-purchase-table>
+  <app-stock-table *ngIf="state.actualTab == 'stock'"></app-stock-table>
+  <app-entry-panel *ngIf="state.actualTab == 'entries'"></app-entry-panel>
+  <app-income-panel
+    *ngIf="state.actualTab == 'income'"
+    [total]="totalIncome"
+    [simbol]="incomeSimbol"
+  ></app-income-panel>
+  <app-deal-table *ngIf="state.actualTab == 'deals'"></app-deal-table>
+</div>

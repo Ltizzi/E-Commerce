@@ -5,8 +5,8 @@ import { Product } from 'src/common/models/product';
   providedIn: 'root',
 })
 export class SearchService {
-  all_products!: Array<Product>;
-  results!: Array<Product>;
+  private all_products!: Array<Product>;
+  private results!: Array<Product>;
 
   constructor() {
     this.all_products = JSON.parse(
@@ -19,7 +19,17 @@ export class SearchService {
   }
 
   getProducts() {
+    if (!this.all_products) {
+      this.fetchProducts();
+    }
+
     return this.all_products;
+  }
+
+  fetchProducts() {
+    this.all_products = JSON.parse(
+      sessionStorage.getItem('products') as string
+    );
   }
 
   search(value: string): Array<Product> {
@@ -73,6 +83,7 @@ export class SearchService {
   }
 
   searchByType(value: string, products?: Array<Product>): Array<Product> {
+    console.log('SEARCHING BY ', value);
     let results = [] as Array<Product>;
     if (products) {
       results = products.filter((prod: Product) => {
@@ -145,7 +156,7 @@ export class SearchService {
     return results;
   }
 
-  normalizeString(value: string): string {
+  private normalizeString(value: string): string {
     if (value.length > 3) {
       value.toLowerCase();
       let valueSplited = value.slice(1);
@@ -154,7 +165,7 @@ export class SearchService {
     } else return value.toUpperCase();
   }
 
-  deleteDuplicates(array: Array<Product>): Array<Product> {
+  private deleteDuplicates(array: Array<Product>): Array<Product> {
     const uniqueIds = [] as Array<number>;
     const uniqueProducts = array.filter((prod: Product) => {
       if (uniqueIds.includes(prod.product_id as number)) return false;
@@ -164,5 +175,15 @@ export class SearchService {
       }
     });
     return uniqueProducts;
+  }
+
+  getHighestPrice(): number {
+    let highestPrice = 0;
+    this.all_products.forEach((prod: Product) => {
+      if (prod.price > highestPrice) {
+        highestPrice = prod.price;
+      }
+    });
+    return highestPrice;
   }
 }

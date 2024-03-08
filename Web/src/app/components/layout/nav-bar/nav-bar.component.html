@@ -5,7 +5,7 @@
     <!--       [@hover&leave]="state.animation.btn_home"
       (mouseover)="state.animation.btn_home = 'hover'"
       (mouseleave)="state.animation.btn_home = 'leave'" -->
-    <div class="w-1/5">
+    <div class="w-5/12">
       <a
         class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
       >
@@ -30,45 +30,8 @@
     </div>
 
     <nav
-      class="md:ml-auto flex flex-wrap my-auto items-start mx-auto text-base justify-center w-2/5 gap-2 text-center"
+      class="md:ml-auto flex flex-wrap items-center text-base justify-center w-5/12 gap-2 text-center"
     >
-      <div class="w-20">
-        <a
-          class="mr-5 hover:text-gray-900 hover:cursor-pointer"
-          routerLink="/products"
-          [@hover&leave]="state.animation.btn_catalog"
-          (mouseover)="state.animation.btn_catalog = 'hover'"
-          (mouseleave)="state.animation.btn_catalog = 'leave'"
-          >Catálogo</a
-        >
-      </div>
-      <div class="w-24 items-baseline">
-        <a
-          class="mr-5 hover:text-gray-900"
-          routerLink="/purchase"
-          [@hover&leave]="state.animation.btn_cart"
-          (mouseover)="state.animation.btn_cart = 'hover'"
-          (mouseleave)="state.animation.btn_cart = 'leave'"
-          >Carrito
-        </a>
-        <span
-          class="bg-indigo-500 text-white rounded-full px-2 py-0.5 font-semibold text-xs absolute top-6 -ml-5 mr-2"
-          *ngIf="cart_counter > 0"
-          >{{ cart_counter }}</span
-        >
-      </div>
-
-      <div class="w-48">
-        <a
-          class="mr-5 hover:text-gray-900 hover:cursor-pointer"
-          routerLink="/admin"
-          *ngIf="isAdmin"
-          [@hover&leave]="state.animation.btn_admin"
-          (mouseover)="state.animation.btn_admin = 'hover'"
-          (mouseleave)="state.animation.btn_admin = 'leave'"
-          >Admin Dashboard</a
-        >
-      </div>
       <div class="relative w-40">
         <label for="Search" class="sr-only"> Search </label>
 
@@ -102,12 +65,51 @@
           </button>
         </span>
       </div>
+      <div class="w-20">
+        <a
+          class="mr-5 hover:text-gray-900 hover:cursor-pointer"
+          routerLink="/products"
+          [@hover&leave]="state.animation.btn_catalog"
+          (mouseover)="state.animation.btn_catalog = 'hover'"
+          (mouseleave)="state.animation.btn_catalog = 'leave'"
+          >Catálogo</a
+        >
+      </div>
+
+      <div class="w-24 items-baseline">
+        <a
+          class="mr-5 hover:text-gray-900"
+          routerLink="/purchase"
+          [@hover&leave]="state.animation.btn_cart"
+          (mouseover)="state.animation.btn_cart = 'hover'"
+          (mouseleave)="state.animation.btn_cart = 'leave'"
+          >Carrito
+        </a>
+        <span
+          class="bg-indigo-500 text-white rounded-full px-2 py-0.5 font-semibold text-xs absolute top-6 -ml-5 mr-2"
+          *ngIf="cart_counter > 0"
+          >{{ cart_counter }}</span
+        >
+      </div>
+
+      <div [ngClass]="isAdmin ? 'w-48' : 'w-0'">
+        <a
+          class="mr-5 hover:text-gray-900 hover:cursor-pointer"
+          routerLink="/admin"
+          *ngIf="isAdmin"
+          [@hover&leave]="state.animation.btn_admin"
+          (mouseover)="state.animation.btn_admin = 'hover'"
+          (mouseleave)="state.animation.btn_admin = 'leave'"
+          >Admin Dashboard</a
+        >
+      </div>
     </nav>
-    <div class="flex flex-row gap-1 items-center w-1/5">
-      <div class="w-12">
+    <div
+      class="flex flex-row items-center w-2/12 gap-5 lg:gap-3 -ml-14 lg:ml-0"
+    >
+      <div class="w-auto" *ngIf="loggedIn">
         <button
-          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
-          *ngIf="loggedIn"
+          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base md:mt-0"
           routerLink="/profile"
           [@hover&leave]="state.animation.btn_profile"
           (mouseover)="state.animation.btn_profile = 'hover'"
@@ -127,10 +129,9 @@
       </svg> -->
         </button>
       </div>
-      <div class="w-12">
+      <div class="w-full" *ngIf="!loggedIn">
         <button
-          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
-          *ngIf="!loggedIn"
+          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base md:mt-0"
           (click)="handleAuth()"
           [@hover&leave]="state.animation.btn_signIntOut"
           (mouseover)="state.animation.btn_signIntOut = 'hover'"
@@ -150,10 +151,9 @@
           </svg>
         </button>
       </div>
-      <div class="w-28">
+      <div class="w-28" *ngIf="loggedIn">
         <button
-          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
-          *ngIf="loggedIn"
+          class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base md:mt-0"
           (click)="handleAuth()"
           [@hover&leave]="state.animation.btn_signIntOut"
           (mouseover)="state.animation.btn_signIntOut = 'hover'"

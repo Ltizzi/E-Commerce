@@ -57,4 +57,14 @@ export class ProductListComponent {
       return data;
     });
   }
+
+  onFilteredProducts(array: Array<Product>) {
+    this.showAll = false;
+    this.searchedProducts = array;
+  }
+
+  onClearTypeFilter() {
+    this.showAll = true;
+    this.searchedProducts = [];
+  }
 }

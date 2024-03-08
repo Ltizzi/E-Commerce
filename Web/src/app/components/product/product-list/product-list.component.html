@@ -1,6 +1,10 @@
 <div [ngClass]="!isLoaded ? 'h-screen' : 'h-full'">
+  <app-product-filter
+    (filteredProducts)="onFilteredProducts($event)"
+    (clearTypeFilter)="onClearTypeFilter()"
+  ></app-product-filter>
   <div
-    class="flex flex-row flex-wrap gap-5 w-10/12 mx-auto justify-start"
+    class="flex flex-row flex-wrap gap-5 w-full mx-auto justify-start mt-10"
     *ngIf="isLoaded && showAll"
   >
     <ng-container *ngIf="isLoaded && showAll">
@@ -12,7 +16,7 @@
     </ng-container>
   </div>
   <div
-    class="flex flex-row flex-wrap gap-5 w-10/12 mx-auto justify-start"
+    class="flex flex-row flex-wrap gap-5 w-full mx-auto justify-start"
     *ngIf="isLoaded && !showAll"
   >
     <ng-container *ngIf="isLoaded && !showAll">

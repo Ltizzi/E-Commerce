@@ -1,11 +1,11 @@
-<header class="text-gray-600 body-font">
+<header class="text-gray-600 body-font my-auto items-baseline">
   <div
     class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center"
   >
     <!--       [@hover&leave]="state.animation.btn_home"
       (mouseover)="state.animation.btn_home = 'hover'"
       (mouseleave)="state.animation.btn_home = 'leave'" -->
-    <div class="w-2/5">
+    <div class="w-1/5">
       <a
         class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
       >
@@ -30,7 +30,7 @@
     </div>
 
     <nav
-      class="md:ml-auto flex flex-wrap items-right text-base justify-center w-1/3 gap-2 text-center"
+      class="md:ml-auto flex flex-wrap my-auto items-start mx-auto text-base justify-center w-2/5 gap-2 text-center"
     >
       <div class="w-20">
         <a
@@ -69,8 +69,41 @@
           >Admin Dashboard</a
         >
       </div>
+      <div class="relative w-40">
+        <label for="Search" class="sr-only"> Search </label>
+
+        <input
+          type="text"
+          id="Search"
+          placeholder="Search for..."
+          class="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
+          [(ngModel)]="searchQuery"
+          (input)="search()"
+        />
+
+        <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
+          <button type="button" class="text-gray-600 hover:text-gray-700">
+            <span class="sr-only">Search</span>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-4 w-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              />
+            </svg>
+          </button>
+        </span>
+      </div>
     </nav>
-    <div class="flex flex-row gap-1 items-center">
+    <div class="flex flex-row gap-1 items-center w-1/5">
       <div class="w-12">
         <button
           class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"

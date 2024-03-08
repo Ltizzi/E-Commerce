@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { EventService } from 'src/app/services/event.service';
 import { ProductService } from 'src/app/services/product.service';
+import { SearchService } from 'src/app/services/ui/search.service';
 import { Product } from 'src/common/models/product';
 
 @Component({
@@ -10,10 +12,16 @@ import { Product } from 'src/common/models/product';
 })
 export class ProductListComponent {
   products: Array<Product> = [];
+  searchedProducts: Array<Product> = [];
+  showAll = true;
 
   isLoaded: Boolean = false;
 
-  constructor(private prodServ: ProductService, private router: Router) {}
+  constructor(
+    private prodServ: ProductService,
+    private eventServ: EventService,
+    private searchServ: SearchService
+  ) {}
 
   ngOnInit(): void {
     // if (localStorage.getItem('products')) {
@@ -21,11 +29,23 @@ export class ProductListComponent {
     //   this.isLoaded = true;
     // } else {
     //this.getAll();
-    this.prodServ.getAll().subscribe((data: any) => {
-      localStorage.setItem('products', JSON.stringify(data));
-      this.products = data;
-      console.log(this.products);
+    if (!sessionStorage.getItem('products')) {
+      this.prodServ.getAll().subscribe((data: any) => {
+        sessionStorage.setItem('products', JSON.stringify(data));
+        this.products = data;
+        console.log(this.products);
+        this.isLoaded = true;
+        this.showAll = true;
+      });
+    } else {
+      this.products = JSON.parse(sessionStorage.getItem('products') as string);
       this.isLoaded = true;
+      this.showAll = true;
+    }
+
+    this.eventServ.subscribe('updateSearch').subscribe((data) => {
+      this.showAll = false;
+      this.searchedProducts = this.searchServ.search(data);
     });
 
     //}

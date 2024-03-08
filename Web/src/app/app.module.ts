@@ -63,6 +63,7 @@ import { NewDealModalComponent } from './components/admin/forms/new-deal-modal/n
 import { EditDealModalComponent } from './components/admin/forms/edit-deal-modal/edit-deal-modal.component';
 import { DeleteDealModalComponent } from './components/admin/ui/delete-deal-modal/delete-deal-modal.component';
 import { FeaturedComponent } from './components/layout/featured/featured.component';
+import { ProductFilterComponent } from './components/product/product-filter/product-filter.component';
 
 @NgModule({
   declarations: [
@@ -112,6 +113,7 @@ import { FeaturedComponent } from './components/layout/featured/featured.compone
     EditDealModalComponent,
     DeleteDealModalComponent,
     FeaturedComponent,
+    ProductFilterComponent,
   ],
   imports: [
     BrowserModule,

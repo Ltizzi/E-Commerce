@@ -62,13 +62,17 @@ export class OrdersComponent {
   }
 
   confirmOrders() {
-    setTimeout(() => {
-      this.orderSuccess = true;
-    }, 2000);
+    // setTimeout(() => {
+    //   this.orderSuccess = true;
+    // }, 2000);
+    const cartLength = this.carts.length;
 
     for (let cart of this.carts) {
       this.ordServ.create(cart).subscribe((data: any) => {
         this.orders.push(data);
+        if (this.orders.length == cartLength) {
+          this.orderSuccess = true;
+        }
       });
     }
   }

@@ -5,17 +5,17 @@
         <h2
           class="title-font font-medium text-gray-900 tracking-widest text-sm mb-3"
         >
-          Productos
+          Products
         </h2>
         <nav class="list-none mb-10">
           <li>
             <a class="text-gray-600 hover:text-gray-800" routerLink="/products"
-              >Catálogo</a
+              >Catalogue</a
             >
           </li>
           <li>
             <a class="text-gray-600 hover:text-gray-800" routerLink="/featured"
-              >Ofertas</a
+              >Deals</a
             >
           </li>
         </nav>
@@ -29,19 +29,19 @@
         <nav class="list-none mb-10">
           <li>
             <a class="text-gray-600 hover:text-gray-800" routerLink="/profile"
-              >Perfil</a
+              >Profile</a
             >
           </li>
           <li>
             <a class="text-gray-600 hover:text-gray-800" routerLink="/purchase"
-              >Carrito</a
+              >Cart</a
             >
           </li>
           <li>
             <a
               class="text-gray-600 hover:text-gray-800"
               routerLink="/profile/purchases"
-              >Historial de compras</a
+              >Purchase history</a
             >
           </li>
           <li>
@@ -65,7 +65,7 @@
         >
           <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2">
             <label for="footer-field" class="leading-7 text-sm text-gray-600"
-              >Ingrese su e-mail</label
+              >Enter your e-mail</label
             >
             <input
               type="text"
@@ -81,7 +81,7 @@
           </button>
         </div>
         <p class="text-gray-500 text-sm mt-2 md:text-left text-center">
-          Reciba ofertas y novedades
+          Recieve deals and news
         </p>
       </div>
     </div>
@@ -110,7 +110,7 @@
         <span class="ml-3 text-xl">E-Commerce</span>
       </a>
       <p class="text-sm text-gray-500 sm:ml-6 sm:mt-0 mt-4">
-        © 2022 —
+        © {{ getYear() }}
         <a
           href="https://twitter.com/knyttneve"
           rel="noopener noreferrer"
